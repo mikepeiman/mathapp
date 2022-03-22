@@ -4,8 +4,7 @@
 		quotesArray,
 		addedQuotes,
 		storedFileContent,
-		storedQuotesArray,
-		getAllQuotesFromDB
+		storedQuotesArray
 	} from '$stores/quotes.js';
 	import { onMount } from 'svelte';
 	import DisplayQuotes from './DisplayQuotes.svelte';

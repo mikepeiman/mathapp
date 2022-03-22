@@ -3,7 +3,6 @@
 	import Icon from '@iconify/svelte';
 	import { page } from '$app/stores';
 	import { deleteQuote } from '$stores/quotes';
-	import DisplayQuotesEdit from './DisplayQuotesEdit.svelte';
 	import { fade, blur, fly, slide, scale, crossfade } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import { quintOut } from 'svelte/easing';

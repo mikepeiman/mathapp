@@ -1,20 +1,3 @@
-<!-- <script context="module">
-    let url = `/todos.dgraph.json`
-    console.log(`🚀 ~ file: Todos.svelte ~ line 3 ~ url`, url)
-    
-	export const load = async ({ fetch }) => {
-		const res = await fetch(`/todos.dgraph.json`);
-        console.log(`🚀 ~ file: Todos.svelte ~ line 4 ~ load ~ res`, res)
-		if (res.ok) {
-			const { todos } = await res.json();
-            console.log(`🚀 ~ file: Todos.svelte ~ line 6 ~ load ~ todos`, todos)
-			return { props: { todos } };
-		} else {
-            throw new Error(`Failed to load todos: ${res.status}`);
-        }
-	};
-</script> -->
-
 <script>
 
 	export let todos, source, stodos, dtodos

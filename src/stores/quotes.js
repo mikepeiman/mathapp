@@ -77,25 +77,26 @@ export const deleteQuote = (q) => {
 
 }
 
-export const getAllQuotesFromDB = async () => {
-    let dgraph_quotes
-    try {
-        const query = getAllQuotes
-        await dgraph.request(query).then((data) => {
-            console.log(`🚀 ~ file: index.dgraph.json.js ~ line 18 ~ awaitdgraph.request ~ data`, data)
-            dgraph_quotes = data.queryQuote
-            console.log(`🚀 ~ file: index.dgraph.json.js ~ line 19 ~ awaitdgraph.request ~ dgraph_quotes`, dgraph_quotes)
-        })
-        return {
-            status: 200,
-            body: { dgraph_quotes }
-        }
-    } catch (error) {
-        return {
-            body: { error: 'There was a server error: ', error }
-        }
-    }
-}
+// export const getAllQuotesFromDB = async () => {
+//     let dgraph_quotes
+//     try {
+//         const query = getAllQuotes
+//         await dgraph.request(query).then((data) => {
+//             console.log(`🚀 ~ file: index.dgraph.json.js ~ line 18 ~ awaitdgraph.request ~ data`, data.length)
+//             dgraph_quotes = data.queryQuote
+//             console.log(`🚀 ~ file: index.dgraph.json.js ~ line 19 ~ awaitdgraph.request ~ dgraph_quotes`, dgraph_quotes.length)
+//         })
+//         return {
+//             status: 200,
+//             body: { dgraph_quotes }
+//         }
+//     } catch (error) {
+//         return {
+//             body: { error: 'There was a server error: ', error }
+//         }
+//     }
+// }
+
 const getAllQuotes = gql`query MyQuery {
     queryQuote {
       id

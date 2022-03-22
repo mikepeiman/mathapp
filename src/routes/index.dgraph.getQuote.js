@@ -163,9 +163,9 @@ export const get = async ({ url }) => {
   }
 
   try {
-    await dgraph.request(getAllQuotes).then((res) => {
+    await dgraph.request(query, payload).then((res) => {
+      console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 167 ~ awaitdgraph.request ~ res.length `, res.length)
       console.log(`🚀 ~ file: index.dgraph.getQuote.js ~ line 103 ~ awaitdgraph.request ~ payload\n\n`, payload)
-      console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitdgraph.request ~ res\n\n`, res)
       console.log(`🚀 ~ file: index.json.js ~ line 138 ~ awaitdgraph.request ~ res\n\n`, res.length)
       data = res.queryQuote
       queryType === "upsertQuote" || queryType === "addQuote" ? data = res.addQuote.quote : data = res.queryQuote
