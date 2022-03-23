@@ -1,5 +1,5 @@
 <script>
-	import RadialMenu from '$components/RadialMenu.svelte';
+	import OperationsMenu from '$components/OperationsMenu.svelte';
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
 	import Select from 'svelte-select';
@@ -44,13 +44,20 @@
 
 		// get the result
 		result = eval(`${valueA} ${selectedOperation.symbol} ${valueB}`);
+		// selectedOperation.name === "Divide" ? result = result.toFixed(3) : result = result.toFixed(0);
+		selectedOperation.name === "Divide" ? setDivisionPrecision(result) : result
         console.log(`🚀 ~ file: index.svelte ~ line 50 ~ processCalculation ~ result`, result)
+	}
+	
+	function setDivisionPrecision(result) {
+		return valueA % valueB === 0 ? result : result = result.toFixed(3);
 	}
 
 	function newRandomValues() {
 		valueA = Math.ceil(Math.random() * 100);
 		valueB = Math.ceil(Math.random() * 100);
-		result = eval(`${valueA} ${selectedOperation.symbol} ${valueB}`);
+		result = eval(`${valueA} ${selectedOperation.symbol} ${valueB}`)
+		selectedOperation.name === "Divide" ? result = setDivisionPrecision(result) : result
 	}
 	function handleOperationSelect(msg) {
 		console.log(
@@ -78,7 +85,7 @@
 				placeholder="value A"
 			/>
 			<div class="flex flex-col items-center justify-center">
-				<RadialMenu on:operationSelect={handleOperationSelect} />
+				<OperationsMenu on:operationSelect={handleOperationSelect} />
 			</div>
 			<input
 				type="text"
