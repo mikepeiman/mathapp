@@ -34,6 +34,12 @@
     .blog-post-fancy-bg {
         background: linear-gradient(90deg, var(--color-winterblues-300) 0%, var(--color-winterblues-100) 5%, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 80%,var(--color-winterblues-100) 95%, var(--color-winterblues-300) 100%);
     }
+    .basic-underline-text-input {
+        @apply text-center outline-none border-l-0 border-t-0 border-r-0 border-b-2 border-b-lime-500 bg-none bg-transparent focus:ring-0 focus:outline-none
+    }
+    .basic-underline-number-input {
+        @apply text-center outline-none w-12 border-2 border-gray-500 bg-none bg-transparent focus:ring-0 focus:outline-none
+    }
 }
 
 @layer utilities {

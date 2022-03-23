@@ -1,7 +1,7 @@
 <script>
 	import Icon from '@iconify/svelte';
-    import { createEventDispatcher } from 'svelte'
-    const dispatch = createEventDispatcher()
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
 	$: selectedOperation = '';
 
 	let operations = [
@@ -25,11 +25,17 @@
 			symbol: '/',
 			iconname: 'fa-solid:divide'
 		},
+		{
+			name: 'Equals',
+			symbol: '=',
+			iconname: 'fa-solid:equals'
+		}
 	];
 
 	function operationSelect(operation) {
-		selectedOperation = operation;
-        dispatch('operationSelect', operation)
+		operation.symbol !== '=' ? (selectedOperation = operation) : false;
+		dispatch('operationSelect', operation);
+        console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 38 ~ operationSelect ~ operation`, operation)
 	}
 </script>
 
@@ -37,7 +43,8 @@
 	<!-- <div class="btn" on:click={() => operationSelect(operation)} /> -->
 	<!-- <i class="fas" :class="operation.iconname" v-model="selectedOperation"></i> -->
 	<div
-		class="p-2 bg-winterblues-800 rounded-full {selectedOperation.name === operation.name
+		class="p-2 mx-2 w-16 h-16 flex items-center justify-center bg-winterblues-800 rounded-full {selectedOperation.name ===
+		operation.name
 			? 'bg-red-500'
 			: ''} transition-all"
 		on:click={() => operationSelect(operation)}
