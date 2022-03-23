@@ -20,6 +20,8 @@
 		{ value: 'minus', label: 'Minus' }
 	];
 
+	$: selectedOperation = ''
+
 	// create add function
 	const add = (a, b) => a + b;
 	// create subtract function
@@ -39,19 +41,25 @@
 	});
 
 	function processCalculation() {
-		// get the operator
-		const operator = this.getAttribute('data-operator');
-		console.log(`🚀 ~ file: index.svelte ~ line 36 ~ processCalculation ~ operator`, operator);
+
 		// get the result
-		result = eval(`${valueA} ${operator} ${valueB}`);
+		result = eval(`${valueA} ${selectedOperation.symbol} ${valueB}`);
+        console.log(`🚀 ~ file: index.svelte ~ line 50 ~ processCalculation ~ result`, result)
 	}
 
 	function newRandomValues() {
 		valueA = Math.ceil(Math.random() * 100);
 		valueB = Math.ceil(Math.random() * 100);
-		result = multiply(valueA, valueB);
+		result = eval(`${valueA} ${selectedOperation.symbol} ${valueB}`);
 	}
-
+	function handleOperationSelect(msg) {
+		console.log(
+			`🚀 ~ file: index.svelte ~ line 56 ~ functiohandleOperationSelect ~ msg`,
+			msg.detail
+		);
+		selectedOperation = msg.detail;
+		processCalculation()
+	}
 	function handleSelect() {}
 	function handleClear() {}
 </script>
@@ -70,7 +78,7 @@
 				placeholder="value A"
 			/>
 			<div class="flex flex-col items-center justify-center">
-				<RadialMenu />
+				<RadialMenu on:operationSelect={handleOperationSelect} />
 			</div>
 			<input
 				type="text"
@@ -90,6 +98,7 @@
 				placeholder="value C"
 			/>
 		</div>
+		<button on:click={processCalculation} class="p-4 bg-limegreens-400">Calculate</button>
 	</div>
 </div>
 
