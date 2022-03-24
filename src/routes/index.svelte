@@ -2,7 +2,6 @@
 	import OperationsMenu from '$components/OperationsMenu.svelte';
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
-	import Select from 'svelte-select';
 
 	let operations = [
 		{
@@ -39,24 +38,15 @@
 		plus: 'fa-solid:plus',
 		divide: 'fa-solid:divide',
 		equals: 'fa-solid:equals',
-		'list-view': 'dashicons:list-view',
+		'list-view': 'dashicons:list-view'
 	};
 
 	$: selectedOperation = operations[0];
 	let digitsA = 3,
 		digitsB = 3;
 
-	// create add function
-	const add = (a, b) => a + b;
-	// create subtract function
-	const subtract = (a, b) => a - b;
-	// create multiply function
-	const multiply = (a, b) => a * b;
-	// create divide function
-	const divide = (a, b) => a / b;
-
 	let valueA, valueB, result;
-$: result
+	$: result;
 	onMount(() => {
 		// set default values
 		newRandomValues();
@@ -64,21 +54,15 @@ $: result
 	});
 
 	function processCalculation() {
-		// get the result
 		result = eval(`${valueA} ${selectedOperation.symbol} ${valueB}`);
-		// selectedOperation.name === "Divide" ? result = result.toFixed(3) : result = result.toFixed(0);
-		selectedOperation.name === 'Divide' ? result = setDivisionPrecision(result) : result;
-		// return the result
+		selectedOperation.name === 'Divide' ? (result = setDivisionPrecision(result)) : result;
 		return result;
 	}
 
 	function setDivisionPrecision(result) {
-        console.log(`🚀 ~ file: index.svelte ~ line 75 ~ setDivisionPrecision ~ result`, result)
-        console.log(`🚀 ~ file: index.svelte ~ line 77 ~ setDivisionPrecision ~ valueA % valueB === 0 `, valueA % valueB === 0 )
-		result.toFixed(3)
-        console.log(`🚀 ~ file: index.svelte ~ line 78 ~ setDivisionPrecision ~ result.toFixed(3)`, result.toFixed(3))
-		valueA % valueB === 0 ? result : result = result.toFixed(3)
-		return result
+		result.toFixed(3);
+		valueA % valueB === 0 ? result : (result = result.toFixed(3));
+		return result;
 	}
 
 	function newRandomValues() {
@@ -88,25 +72,18 @@ $: result
 		selectedOperation.name === 'Divide' ? (result = setDivisionPrecision(result)) : result;
 	}
 	function handleOperationSelect(msg) {
-		console.log(
-			`🚀 ~ file: index.svelte ~ line 56 ~ functiohandleOperationSelect ~ msg`,
-			msg.detail
-		);
 		msg.detail.symbol !== '=' ? (selectedOperation = msg.detail) : false;
 		processCalculation();
 	}
-	function handleSelect() {}
-	function handleClear() {}
+
 </script>
 
 <div class="flex w-full h-full items-center justify-center">
-	
 	<div
 		class="flex flex-col p-4 bg-winterblues-900 w-[50%] h-[50%] items-center justify-start border-2 border-lime-500 border-opacity-50"
 	>
-		<div class="flex flex-row text-4xl mb-4 text-amber-500 justify-around">
-			<OperationsMenu on:operationSelect={handleOperationSelect} />
-		</div>
+		<OperationsMenu on:operationSelect={handleOperationSelect} />
+
 		<div class="flex flex-row my-10 items-center justify-center bg-winterblues-500 bg-opacity-0">
 			<label for="digitsA" class="p-2">Digits for value A </label>
 			<input
@@ -162,6 +139,10 @@ $: result
 </div>
 
 <style lang="scss" global>
+
+
+
+
 	input[type='text'] {
 		outline: 2px;
 		width: 8ch;

@@ -38,7 +38,7 @@
         console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 38 ~ operationSelect ~ operation`, operation)
 	}
 </script>
-
+<div id="operations-menu" class="flex flex-row text-4xl mb-4 text-amber-500 justify-around">
 {#each operations as operation}
 	<!-- <div class="btn" on:click={() => operationSelect(operation)} /> -->
 	<!-- <i class="fas" :class="operation.iconname" v-model="selectedOperation"></i> -->
@@ -52,3 +52,4 @@
 		<Icon icon={operation.iconname} />
 	</div>
 {/each}
+</div>
