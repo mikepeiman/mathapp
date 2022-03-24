@@ -1,7 +1,7 @@
 <script>
     import Icon from "@iconify/svelte";
-    export let valueA, valueB, result, processCalculation
-    $: selectedOperation = ''
+    export let  processCalculation
+    import { digitsA, digitsB, result, selectedOperation, valueA, valueB} from '$stores/math'
     const icons = {
 		times: 'fa-solid:times',
 		minus: 'fa-solid:minus',
@@ -16,7 +16,7 @@
     <div class="flex">
         <input
             type="text"
-            bind:value={valueA}
+            bind:value={$valueA}
             on:blur={processCalculation}
             class="text-center outline-none ring-none border-l-0 border-t-0 border-r-0 p-0 m-2 border-b-2 border-b-lime-500 bg-none bg-transparent focus:ring-0 focus:outline-none"
             placeholder="value A"
@@ -26,7 +26,7 @@
         </div>
         <input
             type="text"
-            bind:value={valueB}
+            bind:value={$valueB}
             on:blur={processCalculation}
             class="text-center outline-none ring-none border-l-0 border-t-0 border-r-0 p-3 m-2 border-b-2 border-b-lime-500 bg-none bg-transparent focus:ring-0 focus:outline-none"
             placeholder="value B"
@@ -37,7 +37,7 @@
         </div>
         <input
             type="text"
-            bind:value={result}
+            bind:value={$result}
             class="text-center outline-none ring-none border-l-0 border-t-0 border-r-0 p-3 m-2 border-b-2 border-b-lime-500 bg-none bg-transparent focus:ring-0 focus:outline-none"
             placeholder="value C"
         />

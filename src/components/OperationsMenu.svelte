@@ -1,8 +1,9 @@
 <script>
 	import Icon from '@iconify/svelte';
 	import { createEventDispatcher } from 'svelte';
+	import { selectedOperation } from '$stores/math.js';
 	const dispatch = createEventDispatcher();
-	$: selectedOperation = '';
+	// $: selectedOperation = '';
 
 	let operations = [
 		{
@@ -33,23 +34,27 @@
 	];
 
 	function operationSelect(operation) {
-		operation.symbol !== '=' ? (selectedOperation = operation) : false;
+		operation.symbol !== '=' ? (selectedOperation.set(operation)) : false;
 		dispatch('operationSelect', operation);
-        console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 38 ~ operationSelect ~ operation`, operation)
+		console.log(
+			`🚀 ~ file: OperationsMenu.svelte ~ line 38 ~ operationSelect ~ operation`,
+			operation
+		);
 	}
 </script>
+
 <div id="operations-menu" class="flex flex-row text-4xl mb-4 text-amber-500 justify-around">
-{#each operations as operation}
-	<!-- <div class="btn" on:click={() => operationSelect(operation)} /> -->
-	<!-- <i class="fas" :class="operation.iconname" v-model="selectedOperation"></i> -->
-	<div
-		class="p-2 mx-2 w-16 h-16 flex items-center justify-center bg-winterblues-800 rounded-full {selectedOperation.name ===
-		operation.name
-			? 'bg-red-500'
-			: ''} transition-all"
-		on:click={() => operationSelect(operation)}
-	>
-		<Icon icon={operation.iconname} />
-	</div>
-{/each}
+	{#each operations as operation}
+		<!-- <div class="btn" on:click={() => operationSelect(operation)} /> -->
+		<!-- <i class="fas" :class="operation.iconname" v-model="selectedOperation"></i> -->
+		<div
+			class="p-2 mx-2 w-16 h-16 flex items-center justify-center bg-winterblues-800 rounded-full {selectedOperation.name ===
+			operation.name
+				? 'bg-red-500'
+				: ''} transition-all"
+			on:click={() => operationSelect(operation)}
+		>
+			<Icon icon={operation.iconname} />
+		</div>
+	{/each}
 </div>
