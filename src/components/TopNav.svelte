@@ -5,7 +5,17 @@
 		'equalizer-1': 'ph:equalizer-bold',
 		'equalizer-2': 'mdi:equalizer',
 		'equalizer-3': 'icon-park-outline:equalizer',
-		'list-view': 'dashicons:list-view'
+		'list-view': 'dashicons:list-view',
+        'grid-view': 'dashicons:grid-view',
+        'grid-view-2': 'ic:baseline-view-comfy',
+        'carousel': 'ic:outline-view-carousel',
+        'calculator': 'ic:outline-calculator',
+        'calculator-2': 'ic:round-table-view',
+        'calculator-3': 'bi:calculator-fill',
+        'calculator-4': 'ant-design:calculator-filled',
+        'calculator-5': 'clarity:calculator-solid',
+        'quiz': 'ic:baseline-quiz',
+        'quiz-2': 'fluent:quiz-new-28-filled',
 	};
 </script>
 
@@ -20,4 +30,11 @@
     title="This doesn't do anything either">
         <Icon icon={icons['list-view']} />
     </div>
+    {#each Object.keys(icons) as icon}
+	<div class="tooltip flex items-center justify-center text-4xl mx-2 hover:text-winterblues-400 transition-all"
+    use:tooltip
+    title="This doesn't do anything either">
+        <Icon icon={icons[icon] }/>
+    </div>
+    {/each}
 </div>
