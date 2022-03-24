@@ -9,7 +9,6 @@
         'grid-view': 'dashicons:grid-view',
         'grid-view-2': 'ic:baseline-view-comfy',
         'carousel': 'ic:outline-view-carousel',
-        'calculator': 'ic:outline-calculator',
         'calculator-2': 'ic:round-table-view',
         'calculator-3': 'bi:calculator-fill',
         'calculator-4': 'ant-design:calculator-filled',
@@ -20,9 +19,9 @@
 	};
 </script>
 
-<div class="flex w-full items-center justify-center bg-winterblues-900">
+<div id="header" class="flex w-full items-center justify-center bg-winterblues-900">
     {#each Object.keys(icons) as icon}
-	<div class="tooltip flex items-center justify-center text-4xl mx-2 hover:text-winterblues-400 transition-all"
+	<div class="tooltip flex items-center justify-center text-4xl mx-2 hover:text-winterblues-400 hover:cursor-pointer transition-all"
     use:tooltip
     title="{icons[icon]}">
         <Icon icon={icons[icon] }/>

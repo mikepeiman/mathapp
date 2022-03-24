@@ -1,64 +1,30 @@
 <script>
-	let numSketches = 10;
-	let sketches = [];
-	for (let i = 1; i < numSketches + 1; i++) {
-        let url, name
-        i < 10 ? name = `Sketch 0${i}` : name = `Sketch ${i}`
-        i < 10 ? url = `/creative/sketch0${i}` : url = `/creative/sketch${i}`
-		let sketch = {
-			name: name,
-			url: url,
-		};
-		sketches.push(sketch);
-	}
+	import Icon from '@iconify/svelte';
+    import tooltip from '$utils/tooltip';
+	const icons = {
+		'equalizer-1': 'ph:equalizer-bold',
+		'equalizer-2': 'mdi:equalizer',
+		'equalizer-3': 'icon-park-outline:equalizer',
+		'list-view': 'dashicons:list-view',
+        'grid-view': 'dashicons:grid-view',
+        'grid-view-2': 'ic:baseline-view-comfy',
+        'carousel': 'ic:outline-view-carousel',
+        'calculator-2': 'ic:round-table-view',
+        'calculator-3': 'bi:calculator-fill',
+        'calculator-4': 'ant-design:calculator-filled',
+        'calculator-5': 'clarity:calculator-solid',
+        'quiz': 'ic:baseline-quiz',
+        'quiz-2': 'fluent:quiz-new-28-filled',
+        'user-profile': 'bxs:user-circle',
+	};
 </script>
 
-<div class="sidebar bg-gray-700 pt-5" id="sideNav">
-	<nav>
-		{#each sketches as sketch, i}
-			<a href={sketch.url} class="bg-indigo-600 hover:bg-indigo-500">{sketch.name}</a>
-		{/each}
-	</nav>
+<div id="sidenav" class="flex flex-col w-full items-center justify-start bg-winterblues-900">
+    {#each Object.keys(icons) as icon}
+	<div class="tooltip flex items-center justify-center text-4xl my-2 hover:text-winterblues-400 hover:cursor-pointer transition-all"
+    use:tooltip
+    title="{icons[icon]}">
+        <Icon icon={icons[icon] }/>
+    </div>
+    {/each}
 </div>
-
-<style lang="scss">
-	:global(.sidebar) {
-		grid-area: sidebar;
-		width: 10rem;
-	}
-	#sideNav {
-		display: flex;
-		flex-direction: column;
-		justify-content: start;
-		align-items: flex-start;
-		font-family: 'Montserrat', sans-serif;
-		a {
-			margin: 1em;
-			text-decoration: none;
-			font-weight: 500;
-		}
-
-		nav {
-			display: flex;
-			flex-direction: column;
-			a {
-				@apply rounded-lg p-4;
-			}
-		}
-	}
-
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		background: -webkit-linear-gradient(
-			0deg,
-			rgba(72, 0, 36, 1) 0%,
-			rgba(9, 121, 121, 1) 25%,
-			rgba(121, 121, 155, 1) 50%,
-			rgba(121, 9, 121, 1) 75%,
-			rgba(2, 0, 76, 1) 100%
-		);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-</style>

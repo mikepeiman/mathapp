@@ -3,6 +3,7 @@
 	import Footer from '$components/Footer.svelte';
 	import { onMount } from 'svelte';
 	import TopNav from '$components/TopNav.svelte';
+	import SideNav from '$components/SideNav.svelte';
 	let mounted = false;
 	onMount(() => {
 		mounted = true;
@@ -15,6 +16,7 @@
 		class="grid w-full min-h-screen  bg-black absolute top-0 left-0 z-90 transition"
 	>
 		<TopNav />
+		<SideNav />
 		<div class="layout-main  flex flex-col  items-center jutify-center bg-black/40">
 			<slot />
 		</div>
@@ -37,11 +39,23 @@
 		// width: 100%;
 		// width: 100vw;
 		grid-template-rows: 80px auto 80px;
-		grid-template-columns: auto;
+		grid-template-columns: 80px auto;
 		grid-template-areas:
-			'header'
-			' layout-main '
-			' footer ';
+			'header header'
+			'sidenav  layout-main '
+			'footer footer';
+	}
+
+	#header {
+		grid-area: header;
+	}
+
+	#sidenav {
+		grid-area: sidenav;
+	}
+
+	#footer {
+		grid-area: footer;
 	}
 
 	.layout-main {
@@ -67,7 +81,7 @@
 		height: 90%;
 	}
 	.tippy-box {
-		background-color: var(--color-winterblues-500);;
+		background-color: var(--color-winterblues-500);
 	}
 	.tooltip.tooltip-open:after {
 		display: none;
