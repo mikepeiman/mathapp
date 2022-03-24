@@ -66,13 +66,18 @@ $: result
 		// get the result
 		result = eval(`${valueA} ${selectedOperation.symbol} ${valueB}`);
 		// selectedOperation.name === "Divide" ? result = result.toFixed(3) : result = result.toFixed(0);
-		selectedOperation.name === 'Divide' ? setDivisionPrecision(result) : result;
+		selectedOperation.name === 'Divide' ? result = setDivisionPrecision(result) : result;
 		// return the result
 		return result;
 	}
 
 	function setDivisionPrecision(result) {
-		return valueA % valueB === 0 ? result : (result = result.toFixed(3));
+        console.log(`🚀 ~ file: index.svelte ~ line 75 ~ setDivisionPrecision ~ result`, result)
+        console.log(`🚀 ~ file: index.svelte ~ line 77 ~ setDivisionPrecision ~ valueA % valueB === 0 `, valueA % valueB === 0 )
+		result.toFixed(3)
+        console.log(`🚀 ~ file: index.svelte ~ line 78 ~ setDivisionPrecision ~ result.toFixed(3)`, result.toFixed(3))
+		valueA % valueB === 0 ? result : result = result.toFixed(3)
+		return result
 	}
 
 	function newRandomValues() {
