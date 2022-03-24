@@ -1,40 +1,47 @@
 <script>
-    // export let digitsA, digitsB
-    import {newRandomValues } from '$utils/math_operations.js'
-    import {selectedOperation, digitsA, digitsB, valueA, valueB} from '$stores/math.js'
+	// export let digitsA, digitsB
+	import { newRandomValues } from '$utils/math_operations.js';
+	import { selectedOperation, digitsA, digitsB, valueA, valueB } from '$stores/math.js';
 
-// $selectedOperation
-console.log(`🚀 ~ file: DigitsSettings.svelte ~ line 7 ~ $selectedOperation`, $selectedOperation)
+	// $selectedOperation
+	console.log(`🚀 ~ file: DigitsSettings.svelte ~ line 7 ~ $selectedOperation`, $selectedOperation);
 </script>
 
-<div id="settings" class="flex flex-col items-center justify-start pt-10 bg-winterblues-500 bg-opacity-20">
-    <!-- <h1>Selected Operation: {$selectedOperation.name}</h1> -->
-    <div class="grid digits-grid gap-2">
-        <label for="digitsA" class="p-2">Digits for first input</label>
-        <input
-            type="number"
-            name="digitsA"
-            bind:value={$digitsA}
-            class="basic-underline-number-input text-lg m-2"
-        />
-        <label for="digitsA" class="p-2">Digits for second input</label>
-        <input
-            type="number"
-            name="digitsB"
-            bind:value={$digitsB}
-            class="basic-underline-number-input m-2"
-        />
-    </div>
-    <button on:click={newRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
-        >Generate random values</button
-    >
+<div
+	id="settings"
+	class="flex flex-col items-center justify-start pt-10 bg-winterblues-500 bg-opacity-20"
+>
+	<!-- <h1>Selected Operation: {$selectedOperation.name}</h1> -->
+	<div class="grid digits-grid gap-2 align-baseline w-full p-6">
+		<div class="relative flex">
+			<label for="digitsA" class="absolute bottom-0 p-2 inline-flex">Digits for first input</label>
+		</div>
+		<input
+			type="number"
+			name="digitsA"
+			bind:value={$digitsA}
+			class="basic-underline-number-input text-lg inline-block"
+		/>
+		<div class="relative flex">
+			<label for="digitsA" class="p-2 absolute bottom-0">Digits for second input</label>
+		</div>
+		<input
+			type="number"
+			name="digitsB"
+			bind:value={$digitsB}
+			class="basic-underline-number-input"
+		/>
+	</div>
+	<button on:click={newRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+		>Generate random values</button
+	>
 </div>
 
 <style lang="scss">
-.digits-grid {
-    grid-template-columns: 1fr 2rem;
-}
-input[type='text'] {
+	.digits-grid {
+		grid-template-columns: 1fr 2rem;
+	}
+	input[type='text'] {
 		outline: 2px;
 		width: 8ch;
 		font-size: 2.5rem;
