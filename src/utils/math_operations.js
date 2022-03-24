@@ -29,11 +29,11 @@ export function setDivisionPrecision(res) {
 
 export function newRandomValues() {
     // valueA = Math.ceil(Math.random() * Math.pow(10, digitsA));
-    vA = (Math.ceil(Math.random() * Math.pow(10, dA)))
-    vB = Math.ceil(Math.random() * Math.pow(10, dB));
     dA = get(digitsA)
     dB = get(digitsB)
-    console.log(`🚀 ~ file: math_operations.js ~ line 25 ~ newRandomValues ~ vA, vB `, vA, vB)
+    vA = (Math.ceil(Math.random() * Math.pow(10, dA)))
+    vB = Math.ceil(Math.random() * Math.pow(10, dB));
+    console.log(`🚀 ~ file: math_operations.js ~ line 25 ~ newRandomValues ~ vA ${vA}, vB ${vB}, dA ${dA}, dB ${dB} `)
     valueA.set(vA);
     valueB.set(vB);
     console.log(`🚀 ~ file: math_operations.js ~ line 27 ~ newRandomValues ~ sO`, sO)
