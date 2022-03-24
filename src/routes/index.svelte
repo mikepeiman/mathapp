@@ -105,7 +105,7 @@ $: result
 		<div class="flex flex-row text-4xl mb-4 text-amber-500 justify-around">
 			<OperationsMenu on:operationSelect={handleOperationSelect} />
 		</div>
-		<div class="flex flex-row items-center justify-center bg-deepreds-700 bg-opacity-10">
+		<div class="flex flex-row my-10 items-center justify-center bg-winterblues-500 bg-opacity-0">
 			<label for="digitsA" class="p-2">Digits for value A </label>
 			<input
 				type="number"
@@ -120,7 +120,7 @@ $: result
 				bind:value={digitsB}
 				class="basic-underline-number-input"
 			/>
-			<button on:click={newRandomValues} class="p-4 bg-winterblues-800"
+			<button on:click={newRandomValues} class="p-4 ml-4 bg-winterblues-500 bg-opacity-50"
 				>Generate random values</button
 			>
 		</div>
@@ -144,7 +144,7 @@ $: result
 					class="text-center outline-none ring-none border-l-0 border-t-0 border-r-0 p-3 m-2 border-b-2 border-b-lime-500 bg-none bg-transparent focus:ring-0 focus:outline-none"
 					placeholder="value B"
 				/>
-				<div class="flex items-center justify-center">
+				<div on:click={processCalculation} class="flex items-center justify-center">
 					<!-- <Icon icon={icons.equal} class="text-4xl text-lime-500" /> -->
 					<Icon icon={icons.equals} class="text-3xl text-lime-500" />
 				</div>
@@ -167,6 +167,14 @@ $: result
 		:focus {
 			outline: none;
 			border: none;
+		}
+		:active {
+			background-color: none;
+			background: none;
+		}
+		::selection {
+			background-color: red;
+			background: none;
 		}
 	}
 	input[type='number'] {
