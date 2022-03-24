@@ -16,24 +16,15 @@
         'calculator-5': 'clarity:calculator-solid',
         'quiz': 'ic:baseline-quiz',
         'quiz-2': 'fluent:quiz-new-28-filled',
+        'user-profile': 'bxs:user-circle',
 	};
 </script>
 
 <div class="flex w-full items-center justify-center bg-winterblues-900">
-	<div class="tooltip flex items-center justify-center text-4xl mx-2 hover:text-winterblues-400 transition-all"
-    use:tooltip
-    title="This doesn't do anything yet">
-        <Icon icon={icons['equalizer-1']} />
-    </div>
-	<div class="tooltip flex items-center justify-center text-4xl mx-2 hover:text-winterblues-400 transition-all"
-    use:tooltip
-    title="This doesn't do anything either">
-        <Icon icon={icons['list-view']} />
-    </div>
     {#each Object.keys(icons) as icon}
 	<div class="tooltip flex items-center justify-center text-4xl mx-2 hover:text-winterblues-400 transition-all"
     use:tooltip
-    title="This doesn't do anything either">
+    title="{icons[icon]}">
         <Icon icon={icons[icon] }/>
     </div>
     {/each}
