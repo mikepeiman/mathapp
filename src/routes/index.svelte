@@ -38,7 +38,8 @@
 		minus: 'fa-solid:minus',
 		plus: 'fa-solid:plus',
 		divide: 'fa-solid:divide',
-		equals: 'fa-solid:equals'
+		equals: 'fa-solid:equals',
+		'list-view': 'dashicons:list-view',
 	};
 
 	$: selectedOperation = operations[0];

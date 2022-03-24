@@ -3,7 +3,7 @@
 	import random from 'canvas-sketch-util/random.js';
 	export let mounted
 	const data = {
-		TITLE: 'Sketch05',
+		TITLE: 'MetabrainLandingPageBG',
 		fps: 60,
 		minDist: 20,
 		maxDistFactor: 6,

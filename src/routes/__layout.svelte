@@ -2,6 +2,7 @@
 	import '../app.scss';
 	import Footer from '$components/Footer.svelte';
 	import {onMount} from 'svelte';
+import TopNav from '$components/TopNav.svelte';
 	let mounted = false
 	onMount(() => {
 		mounted = true
@@ -9,6 +10,7 @@
 </script>
 {#if mounted}
 <div id="app-layout" class="grid w-full min-h-screen  bg-black absolute top-0 left-0 z-90 transition">
+<TopNav />
 	<div class="layout-main  flex flex-col  items-center jutify-center bg-black/40">
 		<slot />
 	</div>
@@ -30,9 +32,10 @@
 		// height: 100%;
 		// width: 100%;
 		// width: 100vw;
-		grid-template-rows: auto 80px;
+		grid-template-rows: 80px auto 80px;
 		grid-template-columns: auto;
 		grid-template-areas:
+		'header'
 			' layout-main '
 			' footer ';
 	}
