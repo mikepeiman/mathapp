@@ -10,6 +10,8 @@ let res = get(result)
 
 
 export function processCalculation() {
+    vA = get(valueA)
+    vB = get(valueB)
     sO = get(selectedOperation)
     console.log(`🚀 ~ file: math_operations.js ~ line 12 ~ processCalculation ~ sO`, sO)
     res = eval(`${vA} ${sO.symbol} ${vB}`);
