@@ -1,33 +1,37 @@
 <script>
 	import '../app.scss';
 	import Footer from '$components/Footer.svelte';
-	import {onMount} from 'svelte';
-import TopNav from '$components/TopNav.svelte';
-	let mounted = false
+	import { onMount } from 'svelte';
+	import TopNav from '$components/TopNav.svelte';
+	let mounted = false;
 	onMount(() => {
-		mounted = true
+		mounted = true;
 	});
 </script>
+
 {#if mounted}
-<div id="app-layout" class="grid w-full min-h-screen  bg-black absolute top-0 left-0 z-90 transition">
-<TopNav />
-	<div class="layout-main  flex flex-col  items-center jutify-center bg-black/40">
-		<slot />
-	</div>
-	<!-- <div class="relative z-20"> -->
+	<div
+		id="app-layout"
+		class="grid w-full min-h-screen  bg-black absolute top-0 left-0 z-90 transition"
+	>
+		<TopNav />
+		<div class="layout-main  flex flex-col  items-center jutify-center bg-black/40">
+			<slot />
+		</div>
+		<!-- <div class="relative z-20"> -->
 		<Footer />
-	<!-- </div> -->
-</div>
+		<!-- </div> -->
+	</div>
 {/if}
 
 <style global lang="scss">
-	:global(#svelte) {
+	#svelte {
 		min-height: 100vh;
 		// height: 100%;
 		// background: var(--color-deepreds-600);
 		// height: calc(100% - 80px);
 	}
-	:global(#app-layout) {
+	#app-layout {
 		// height: calc(100vh - 160px);
 		// height: 100%;
 		// width: 100%;
@@ -35,12 +39,12 @@ import TopNav from '$components/TopNav.svelte';
 		grid-template-rows: 80px auto 80px;
 		grid-template-columns: auto;
 		grid-template-areas:
-		'header'
+			'header'
 			' layout-main '
 			' footer ';
 	}
 
-	:global(.layout-main) {
+	.layout-main {
 		grid-area: layout-main;
 		// max-width: 100vw;
 		// height: calc(100% - 80px);
@@ -61,5 +65,37 @@ import TopNav from '$components/TopNav.svelte';
 		margin: 0;
 		// background-color: darkturquoise;
 		height: 90%;
+	}
+	.tippy-box {
+		background-color: var(--color-winterblues-500);;
+	}
+	.tooltip.tooltip-open:after {
+		display: none;
+		opacity: 0;
+	}
+	.tippy-backdrop {
+		background-color: rgba(0, 0, 0, 0);
+		opacity: 0;
+		z-index: -1;
+		&:after {
+			opacity: 0;
+		}
+		&:before {
+			opacity: 0;
+		}
+	}
+	// .tippy-box > .tippy-arrow:before {
+	// 	border-top-color: var(--color-winterblues-500);
+	// }
+	.tippy-arrow {
+		color: var(--color-winterblues-500);
+	}
+
+	.tooltip.tooltip-open:after,
+	.tooltip.tooltip-open:before,
+	.tooltip:hover:after,
+	.tooltip:hover:before {
+		opacity: 0;
+		transition-delay: 0;
 	}
 </style>

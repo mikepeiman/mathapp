@@ -100,6 +100,7 @@ $: result
 </script>
 
 <div class="flex w-full h-full items-center justify-center">
+	
 	<div
 		class="flex flex-col p-4 bg-winterblues-900 w-[50%] h-[50%] items-center justify-start border-2 border-lime-500 border-opacity-50"
 	>
