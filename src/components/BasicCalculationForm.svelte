@@ -12,7 +12,7 @@
 	};
     </script>
 
-<div class="flex flex-col justify-center">
+<div class="flex flex-col justify-center items-center">
     <div class="flex">
         <input
             type="text"
@@ -22,7 +22,7 @@
             placeholder="value A"
         />
         <div class="flex flex-col items-center justify-center text-lime-500">
-            <Icon icon={selectedOperation.iconname || icons.times} class="text-3xl" />
+            <Icon icon={$selectedOperation.iconname || icons.times} class="text-3xl" />
         </div>
         <input
             type="text"

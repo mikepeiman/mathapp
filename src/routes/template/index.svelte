@@ -3,11 +3,12 @@ import BasicCalculationForm from "$components/BasicCalculationForm.svelte";
 import DigitsSettings from "$components/DigitsSettings.svelte";
 import OperationsMenu from "$components/OperationsMenu.svelte";
 import {selectedOperation } from '$stores/math'
-import { processCalculation } from '$utils/math_operations'
+import { processCalculation, newRandomValues } from '$utils/math_operations'
 import { onMount } from "svelte";
 
 onMount(() => {
-    processCalculation();
+    newRandomValues()
+    // processCalculation();
 })
 
 function handleOperationSelect(msg) {
@@ -17,6 +18,34 @@ function handleOperationSelect(msg) {
 	}
 </script>
 
-<OperationsMenu on:operationSelect={handleOperationSelect}  />
-<DigitsSettings />
-<BasicCalculationForm />
+<div id="default-layout" class="layout-main w-full h-full">
+    <OperationsMenu on:operationSelect={handleOperationSelect}  />
+    <DigitsSettings />
+    <BasicCalculationForm />
+</div>
+
+<style lang="scss" global>
+#default-layout {
+    display: grid;
+    grid-area: layout-main;
+    grid-template-columns: 1fr 18rem;
+    grid-template-rows: 20% 20% 1fr;
+    grid-template-areas:
+        "operations-menu settings"
+        "basic-calculation-form settings"
+        "empty settings";
+}
+
+#settings {
+    grid-area: settings;
+}
+
+#basic-calculation-form {
+    grid-area: basic-calculation-form;
+}
+
+#operations-menu {
+    grid-area: operations-menu;
+    margin-top: 2rem;
+}
+</style>

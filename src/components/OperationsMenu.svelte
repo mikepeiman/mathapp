@@ -47,12 +47,12 @@ onMount(() => {
 	}
 </script>
 
-<div id="operations-menu" class="flex flex-row text-4xl mb-4 text-amber-500 justify-around">
+<div id="operations-menu" class="flex flex-row w-full text-4xl mb-4 text-amber-500 items-center justify-center">
 	{#each operations as operation}
 		<!-- <div class="btn" on:click={() => operationSelect(operation)} /> -->
 		<!-- <i class="fas" :class="operation.iconname" v-model="selectedOperation"></i> -->
 		<div
-			class="p-2 mx-2 w-16 h-16 flex items-center justify-center bg-winterblues-800 rounded-full {selectedOperation.name ===
+			class="p-2 mx-4 w-16 h-16 flex items-center justify-center bg-winterblues-800 rounded-full {selectedOperation.name ===
 			operation.name
 				? 'bg-red-500'
 				: ''} transition-all"

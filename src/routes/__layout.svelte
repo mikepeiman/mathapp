@@ -17,7 +17,7 @@
 	>
 		<TopNav />
 		<SideNav />
-		<div class="layout-main  flex flex-col  items-center jutify-center bg-black/40">
+		<div class="layout-main flex flex-col items-center jutify-center bg-black/40">
 			<slot />
 		</div>
 		<!-- <div class="relative z-20"> -->
@@ -58,7 +58,7 @@
 		grid-area: footer;
 	}
 
-	.layout-main {
+	#default-layout {
 		grid-area: layout-main;
 		// max-width: 100vw;
 		// height: calc(100% - 80px);
