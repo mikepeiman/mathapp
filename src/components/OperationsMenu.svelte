@@ -1,9 +1,13 @@
 <script>
 	import Icon from '@iconify/svelte';
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { selectedOperation } from '$stores/math.js';
 	const dispatch = createEventDispatcher();
 	// $: selectedOperation = '';
+
+onMount(() => {
+	dispatch('operationSelect', operations[0]);
+});
 
 	let operations = [
 		{

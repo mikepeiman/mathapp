@@ -4,7 +4,11 @@ import DigitsSettings from "$components/DigitsSettings.svelte";
 import OperationsMenu from "$components/OperationsMenu.svelte";
 import {selectedOperation } from '$stores/math'
 import { processCalculation } from '$utils/math_operations'
+import { onMount } from "svelte";
 
+onMount(() => {
+    processCalculation();
+})
 
 function handleOperationSelect(msg) {
         console.log(`🚀 ~ file: index.svelte ~ line 10 ~ handleOperationSelect ~ msg`, msg.detail)

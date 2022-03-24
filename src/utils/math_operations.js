@@ -7,8 +7,11 @@ let vA = get(valueA)
 let vB = get(valueB)
 let sO = get(selectedOperation)
 let res = get(result)
+
+
 export function processCalculation() {
     sO = get(selectedOperation)
+    console.log(`🚀 ~ file: math_operations.js ~ line 12 ~ processCalculation ~ sO`, sO)
     res = eval(`${vA} ${sO.symbol} ${vB}`);
     console.log(`🚀 ~ file: math_operations.js ~ line 12 ~ processCalculation ~ ${vA} ${sO.symbol} ${vB}`)
     sO.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
@@ -19,6 +22,8 @@ export function processCalculation() {
 export function setDivisionPrecision(res) {
     res.toFixed(3);
     vA % vB === 0 ? res : (res = res.toFixed(3));
+    console.log(`🚀 ~ file: math_operations.js ~ line 25 ~ setDivisionPrecision ~ res`, res)
+    // result.set(res)
     return res;
 }
 
@@ -30,9 +35,9 @@ export function newRandomValues() {
     valueA.set(vA);
     valueB.set(vB);
     console.log(`🚀 ~ file: math_operations.js ~ line 27 ~ newRandomValues ~ sO`, sO)
-    console.log(`🚀 ~ file: math_operations.js ~ line 17 ~ newRandomValues ~ result`, res)
     res = eval(`${vA} ${sO.symbol} ${vB}`);
-    selectedOperation.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
+    console.log(`🚀 ~ file: math_operations.js ~ line 39 ~ newRandomValues ~ res`, res)
+    sO.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
     result.set(res);
     console.log(`🚀 ~ file: math_operations.js ~ line 30 ~ newRandomValues ~ res`, res)
 }
