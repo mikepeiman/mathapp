@@ -12,7 +12,7 @@
 		'equalizer-3': 'icon-park-outline:equalizer',
 		'list-view': 'dashicons:list-view',
 		'grid-view': 'dashicons:grid-view',
-		'worksheet': 'ic:baseline-view-comfy',
+		'worksheets': 'ic:baseline-view-comfy',
 		'carousel': 'ic:outline-view-carousel',
 		'calculator-2': 'ic:round-table-view',
 		'calculator-3': 'bi:calculator-fill',
@@ -33,15 +33,16 @@
 <div id="header" class="flex w-full items-center justify-center bg-winterblues-900">
     {current}
     {#each Object.keys(icons) as icon}
-		<div
+		<a
 			class="tooltip flex items-center justify-center text-4xl mx-2 hover:text-winterblues-400 hover:cursor-pointer transition-all
             {current === icon ? 'text-winterblues-600' : ''}
-            {icon == "worksheet" ? 'rotate-90' : ''}"
+            {icon == "worksheets" ? 'rotate-90' : ''}"
 			on:click={() => navigate(icon)}
+            href={icon}
 			use:tooltip
 			title={icons[icon]}
 		>
 			<Icon icon={icons[icon]} />
-		</div>
+</a>
 	{/each}
 </div>
