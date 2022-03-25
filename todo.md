@@ -10,3 +10,5 @@
   * focus on mastery of ten times tables - the foundation of all decimal-based integer math, essential for all people
     * also drill on the decimal system itself, another fundamental essential
   * consider using some kid-friendly imagery, like Pokemon, to add interest to the math. Possibly give them an option, using for example Starwars API (SWAPI) and then some kind of nature imagery API
+  * add precision for division setting 
+  * make a component for stacked division notation

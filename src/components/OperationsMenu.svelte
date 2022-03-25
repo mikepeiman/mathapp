@@ -4,6 +4,7 @@
 	import { selectedOperation } from '$stores/math.js';
 	const dispatch = createEventDispatcher();
 	// $: selectedOperation = '';
+	$: current = operations[0]
 
 onMount(() => {
 	dispatch('operationSelect', operations[0]);
@@ -39,6 +40,7 @@ onMount(() => {
 
 	function operationSelect(operation) {
 		operation.symbol !== '=' ? (selectedOperation.set(operation)) : false;
+		operation.symbol !== '=' ? current = operation : false;
 		dispatch('operationSelect', operation);
 		console.log(
 			`🚀 ~ file: OperationsMenu.svelte ~ line 38 ~ operationSelect ~ operation`,
@@ -52,7 +54,7 @@ onMount(() => {
 		<!-- <div class="btn" on:click={() => operationSelect(operation)} /> -->
 		<!-- <i class="fas" :class="operation.iconname" v-model="selectedOperation"></i> -->
 		<div
-			class="p-2 mx-4 w-16 h-16 flex items-center justify-center bg-winterblues-800 rounded-full {selectedOperation.name ===
+			class="p-2 mx-4 w-16 h-16 flex items-center justify-center bg-winterblues-800 rounded-full {current.name ===
 			operation.name
 				? 'bg-red-500'
 				: ''} transition-all"

@@ -2,11 +2,13 @@
 import BasicCalculationForm from "$components/BasicCalculationForm.svelte";
 import DigitsSettings from "$components/DigitsSettings.svelte";
 import OperationsMenu from "$components/OperationsMenu.svelte";
-import {selectedOperation } from '$stores/math'
+import {selectedOperation, result } from '$stores/math'
 import { processCalculation, newRandomValues } from '$utils/math_operations'
 import { onMount } from "svelte";
 
 onMount(() => {
+    // $result
+    console.log(`🚀 ~ file: index.svelte ~ line 14 ~ onMount ~ $result`, $result)
     newRandomValues()
     // processCalculation();
 })
