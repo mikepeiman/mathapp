@@ -14,35 +14,8 @@
 	let valueA, valueB, result;
 
 	onMount(() => {
-		generateNewWorksheetProblems()
+		// generateNewWorksheetProblems()
 	});
-
-	// function generateNewWorksheetProblems() {
-	// 	let problems = document.getElementsByClassName('math-problem');
-	// 	Object.keys(problems).forEach((i) => {
-	// 		let problem = problems[i];
-	// 		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 26 ~ Object.keys ~ problem`, problem);
-	// 		let inputs = problem.children;
-	// 		inputs = Array.from(inputs);
-	// 		inputs = inputs.filter((input) => input.tagName === 'INPUT');
-	// 		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 28 ~ Object.keys ~ inputs`, inputs);
-	// 		let values = newRandomValues();
-	// 		// let inputs = problem.getElementsByClassName('basic-underline-text-input');
-
-	// 		// Object.keys(inputs).forEach((i) => {
-	// 		Array.from(inputs).forEach((input, i) => {
-	// 			// console.log(`🚀 ~ file: MathProblem.svelte ~ line 35 ~ Array.from ~ input`, input)
-	// 			// inputs.forEach((i) => {
-	// 			// console.log(`🚀 ~ file: MathProblem.svelte ~ line 20 ~ onMount ~ problem`, problems[i].value);
-	// 			// console.log(`🚀 ~ file: MathProblem.svelte ~ line 39 ~ inputs.forEach ~ i`, i);
-	// 			input.value = values[i];
-	// 			// console.log(`🚀 ~ file: MathProblem.svelte ~ line 32 ~ Object.keys ~ values[i]`, values[i]);
-	// 			inputs[i].addEventListener('change', resizeInput);
-	// 			inputs[i].addEventListener('input', resizeInput);
-	// 			resizeInput.call(inputs[i]);
-	// 		});
-	// 	});
-	// }
 
 	function calculate() {
 		// console.log(`🚀 ~ file: BasicCalculationForm.svelte ~ line 18 ~ calculate ~ valueA`, $valueA);

@@ -33,8 +33,10 @@ export function newRandomValues() {
     // valueA = Math.ceil(Math.random() * Math.pow(10, digitsA));
     dA = get(digitsA)
     dB = get(digitsB)
-    vA = (Math.ceil(Math.random() * Math.pow(10, dA)))
-    vB = Math.ceil(Math.random() * Math.pow(10, dB));
+    // vA = (Math.ceil(Math.random() * Math.pow(10, dA)))
+    vA = randomIntegerRange(Math.pow(10, dA - 1), Math.pow(10, dA))
+    vB = randomIntegerRange(Math.pow(10, dB - 1), Math.pow(10, dB))
+    // vB = Math.ceil(Math.random() * Math.pow(10, dB));
     vA.length > dA ? vA-- : vA;
     vB.length > dB ? vB-- : vB;
     // console.log(`🚀 ~ file: math_operations.js ~ line 25 ~ newRandomValues ~ vA ${vA}, vB ${vB}, dA ${dA}, dB ${dB} `)
@@ -47,6 +49,10 @@ export function newRandomValues() {
     result.set(res);
     // console.log(`🚀 ~ file: math_operations.js ~ line 30 ~ newRandomValues ~ res`, res)
     return [vA, vB, res];
+}
+
+function randomIntegerRange(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min - 1;
 }
 
 export function generateNewWorksheetProblems() {
