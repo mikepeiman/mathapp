@@ -1,6 +1,10 @@
 <script>
 	// export let digitsA, digitsB
-	import { newRandomValues, generateNewWorksheetProblems, resizeAllInputs} from '$utils/math_operations.js';
+	import {
+		newRandomValues,
+		generateNewWorksheetProblems,
+		resizeAllInputs
+	} from '$utils/math_operations.js';
 	import {
 		selectedOperation,
 		digitsA,
@@ -13,10 +17,20 @@
 	} from '$stores/math.js';
 	import { page } from '$app/stores';
 	import Checkbox from './Checkbox.svelte';
-function refreshWorksheet() {
-	generateNewWorksheetProblems()
-	resizeAllInputs()
-}
+	function refreshWorksheet() {
+		generateNewWorksheetProblems();
+		resizeAllInputs();
+	}
+	function revealAnswers() {
+        console.log(`🚀 ~ file: MathSettings.svelte ~ line 25 ~ revealAnswers ~ revealAnswers`, $showAnswers)
+		resizeAllInputs();
+	}
+
+	// $: $showAnswers ? revealAnswers : false
+    // $: console.log(`🚀 ~ file: MathSettings.svelte ~ line 30 ~ $showAnswers `, $showAnswers )
+	$: {
+		$showAnswers ? revealAnswers() : revealAnswers() 
+	}
 </script>
 
 <div
@@ -70,7 +84,8 @@ function refreshWorksheet() {
 	<button on:click={refreshWorksheet} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Generate new worksheet</button
 	>
-	<label for="showAnswers" class="flex items-center">Show Answers
+	<label for="showAnswers" class="flex items-center"
+		>Show Answers
 		<Checkbox
 			name="showAnswers"
 			bind:checked={$showAnswers}
