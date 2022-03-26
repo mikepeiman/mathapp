@@ -16,7 +16,7 @@
 	onMount(() => {
 		let problems = document.getElementsByClassName('math-problem');
 
-		console.log(`🚀 ~ file: MathProblem.svelte ~ line 17 ~ onMount ~ problems`, typeof problems);
+		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 17 ~ onMount ~ problems`, typeof problems);
 		// problems.forEach(problem => {
 
 		// 	console.log(`🚀 ~ file: MathProblem.svelte ~ line 20 ~ onMount ~ problem`, problem)
@@ -24,22 +24,22 @@
 
 		Object.keys(problems).forEach((i) => {
 			let problem = problems[i];
-			console.log(`🚀 ~ file: MathProblem.svelte ~ line 26 ~ Object.keys ~ problem`, problem);
+			// console.log(`🚀 ~ file: MathProblem.svelte ~ line 26 ~ Object.keys ~ problem`, problem);
 			let inputs = problem.children;
 			inputs = Array.from(inputs)
 			inputs = inputs.filter(input => input.tagName === 'INPUT');
-			console.log(`🚀 ~ file: MathProblem.svelte ~ line 28 ~ Object.keys ~ inputs`, inputs);
+			// console.log(`🚀 ~ file: MathProblem.svelte ~ line 28 ~ Object.keys ~ inputs`, inputs);
 			let values = newRandomValues();
 			// let inputs = problem.getElementsByClassName('basic-underline-text-input');
 
 			// Object.keys(inputs).forEach((i) => {
 			Array.from(inputs).forEach((input, i) => {
-                console.log(`🚀 ~ file: MathProblem.svelte ~ line 35 ~ Array.from ~ input`, input)
+                // console.log(`🚀 ~ file: MathProblem.svelte ~ line 35 ~ Array.from ~ input`, input)
 				// inputs.forEach((i) => {
 				// console.log(`🚀 ~ file: MathProblem.svelte ~ line 20 ~ onMount ~ problem`, problems[i].value);
-				console.log(`🚀 ~ file: MathProblem.svelte ~ line 39 ~ inputs.forEach ~ i`, i);
+				// console.log(`🚀 ~ file: MathProblem.svelte ~ line 39 ~ inputs.forEach ~ i`, i);
 				input.value = values[i];
-				console.log(`🚀 ~ file: MathProblem.svelte ~ line 32 ~ Object.keys ~ values[i]`, values[i]);
+				// console.log(`🚀 ~ file: MathProblem.svelte ~ line 32 ~ Object.keys ~ values[i]`, values[i]);
 				inputs[i].addEventListener('change', resizeInput);
 				inputs[i].addEventListener('input', resizeInput);
 				resizeInput.call(inputs[i]);
@@ -54,12 +54,12 @@
 
 	function resizeInput() {
 	    this.value ? this.style.width = this.value.length + 2 + 'ch' : this.style.width = '1ch';
-		console.log(`🚀 ~ file: MathProblem.svelte ~ line 38 ~ resizeInput ~ this.value`, this.value);
-		console.log(`🚀 ~ file: MathProblem.svelte ~ line 38 ~ resizeInput ~ this.style`, this.style);
+		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 38 ~ resizeInput ~ this.value`, this.value);
+		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 38 ~ resizeInput ~ this.style`, this.style);
 	}
 </script>
 
-<div class="flex flex-col justify-center items-center text-4xl">
+<div class="flex flex-col justify-center items-start text-4xl">
 	<div class="math-problem  flex">
 		<input
 			type="text"

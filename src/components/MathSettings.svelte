@@ -1,6 +1,6 @@
 <script>
 	// export let digitsA, digitsB
-	import { newRandomValues } from '$utils/math_operations.js';
+	import { newRandomValues, generateNewWorksheetProblems } from '$utils/math_operations.js';
 	import { selectedOperation, digitsA, digitsB, valueA, valueB, problemsPerPage, pageColumns } from '$stores/math.js';
 	import { page } from '$app/stores';
 	console.log(`🚀 ~ file: MathSettings.svelte ~ line 6 ~ page`, $page);
@@ -55,6 +55,9 @@
 	</div>
 	<button on:click={newRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Generate random values</button
+	>
+	<button on:click={generateNewWorksheetProblems} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+		>Generate new worksheet</button
 	>
 </div>
 
