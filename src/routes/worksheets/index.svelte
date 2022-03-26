@@ -30,7 +30,7 @@
 	}
 </script>
 
-<div id="default-layout" class="layout-main w-full h-full">
+<div id="worksheet-layout" class="layout-main w-full h-full">
 	<OperationsMenu on:operationSelect={handleOperationSelect} />
 	<MathSettings />
 	<div id="worksheet" class="flex mx-2 px-4 items-start justify-around h-full">
@@ -45,7 +45,7 @@
 </div>
 
 <style lang="scss" global>
-	#default-layout {
+	#worksheet-layout {
 		display: grid;
 		grid-area: layout-main;
 		grid-template-columns: 1fr 18rem;
