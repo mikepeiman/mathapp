@@ -18,7 +18,6 @@
 		const emptyArray = new Array($pageColumns);
 		console.log(`🚀 ~ file: index.svelte ~ line 23 ~ onMount ~ emptyArray`, emptyArray);
 		$pageColumns;
-		newRandomValues();
 		// processCalculation();
 	});
 

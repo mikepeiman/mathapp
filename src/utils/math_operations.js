@@ -35,13 +35,14 @@ export function newRandomValues() {
     dB = get(digitsB)
     vA = (Math.ceil(Math.random() * Math.pow(10, dA)))
     vB = Math.ceil(Math.random() * Math.pow(10, dB));
-    console.log(`🚀 ~ file: math_operations.js ~ line 25 ~ newRandomValues ~ vA ${vA}, vB ${vB}, dA ${dA}, dB ${dB} `)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 25 ~ newRandomValues ~ vA ${vA}, vB ${vB}, dA ${dA}, dB ${dB} `)
     valueA.set(vA);
     valueB.set(vB);
-    console.log(`🚀 ~ file: math_operations.js ~ line 27 ~ newRandomValues ~ sO`, sO)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 27 ~ newRandomValues ~ sO`, sO)
     res = eval(`${vA} ${sO.symbol} ${vB}`);
-    console.log(`🚀 ~ file: math_operations.js ~ line 39 ~ newRandomValues ~ res`, res)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 39 ~ newRandomValues ~ res`, res)
     sO.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
     result.set(res);
-    console.log(`🚀 ~ file: math_operations.js ~ line 30 ~ newRandomValues ~ res`, res)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 30 ~ newRandomValues ~ res`, res)
+    return [vA, vB, res];
 }
