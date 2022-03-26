@@ -2,20 +2,20 @@
 	import Icon from '@iconify/svelte';
     import tooltip from '$utils/tooltip';
 	const icons = {
-		'equalizer-1': 'ph:equalizer-bold',
-		'equalizer-2': 'mdi:equalizer',
-		'equalizer-3': 'icon-park-outline:equalizer',
-		'list-view': 'dashicons:list-view',
-        'grid-view': 'dashicons:grid-view',
-        'grid-view-2': 'ic:baseline-view-comfy',
-        'carousel': 'ic:outline-view-carousel',
-        'calculator-2': 'ic:round-table-view',
-        'calculator-3': 'bi:calculator-fill',
-        'calculator-4': 'ant-design:calculator-filled',
-        'calculator-5': 'clarity:calculator-solid',
-        'quiz': 'ic:baseline-quiz',
-        'quiz-2': 'fluent:quiz-new-28-filled',
-        'user-profile': 'bxs:user-circle',
+		// 'equalizer-1': 'ph:equalizer-bold',
+		// 'equalizer-2': 'mdi:equalizer',
+		// 'equalizer-3': 'icon-park-outline:equalizer',
+		// 'list-view': 'dashicons:list-view',
+		// 'grid-view': 'dashicons:grid-view',
+		'calculator': 'ant-design:calculator-filled',
+		'worksheets': 'ic:baseline-view-comfy',
+		// 'carousel': 'ic:outline-view-carousel',
+		// 'calculator-2': 'ic:round-table-view',
+		// 'calculator-3': 'bi:calculator-fill',
+		// 'calculator-5': 'clarity:calculator-solid',
+		// 'quiz': 'ic:baseline-quiz',
+		// 'quiz-2': 'fluent:quiz-new-28-filled',
+		// 'user-profile': 'bxs:user-circle'
 	};
 </script>
 
