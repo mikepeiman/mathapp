@@ -7,7 +7,7 @@ let vA = get(valueA)
 let vB = get(valueB)
 let sO = get(selectedOperation)
 let res = get(result)
-
+let longest = 0
 
 export function processCalculation() {
     vA = get(valueA)
@@ -105,10 +105,10 @@ export function resizeAllInputs() {
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
         Array.from(inputs).forEach((input, i) => {
-            input.value ? (input.style.width = input.value.length + 2 + 'ch') : (input.style.width = '1ch');
-            if(input.name === "result"){
-                show ? input.value = input.getAttribute('data-value') : input.value = '';
-            }
+            // input.value ? (input.style.width = input.value.length + 2 + 'ch') : (input.style.width = '1ch');
+            // if(input.name === "result"){
+            //     show ? input.value = input.getAttribute('data-value') : input.value = '';
+            // }
             input.addEventListener('change', resizeInput);
             input.addEventListener('input', resizeInput);
             resizeInput.call(input);
@@ -117,5 +117,15 @@ export function resizeAllInputs() {
 }
 
 function resizeInput() {
-    this.value ? (this.style.width = this.value.length + 2 + 'ch') : (this.style.width = '1ch');
+    dA = get(digitsA)
+    dB = get(digitsB)
+    let show = get(showAnswers);
+    this.getAttribute('data-value') ? (this.style.width = this.getAttribute('data-value').length + 2 + 'ch') : (this.style.width = dA + dB + 1 + 'ch');
+    // (this.style.width = dA + dB + 1 + 'ch')
+    let thisLength = this.value.length;
+    thisLength > longest ? longest = thisLength : longest;
+    console.log(`🚀 ~ file: math_operations.js ~ line 127 ~ resizeInput ~ longest`, longest)
+    if(this.name === "result"){
+        show ? this.value = this.getAttribute('data-value') : this.value = ' ';
+    } 
 }
