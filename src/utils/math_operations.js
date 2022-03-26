@@ -1,4 +1,4 @@
-import { digitsA, digitsB, result, selectedOperation, valueA, valueB } from '$stores/math.js'
+import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers } from '$stores/math.js'
 import { get } from 'svelte/store'
 
 let dA = get(digitsA)
@@ -65,11 +65,19 @@ export function generateNewWorksheetProblems() {
             // inputs.forEach((i) => {
             // console.log(`🚀 ~ file: MathProblem.svelte ~ line 20 ~ onMount ~ problem`, problems[i].value);
             // console.log(`🚀 ~ file: MathProblem.svelte ~ line 39 ~ inputs.forEach ~ i`, i);
-            input.value = values[i];
-            // console.log(`🚀 ~ file: MathProblem.svelte ~ line 32 ~ Object.keys ~ values[i]`, values[i]);
-            inputs[i].addEventListener('change', resizeInput);
-            inputs[i].addEventListener('input', resizeInput);
-            resizeInput.call(inputs[i]);
+
+            if (input.name !== "result") {
+                input.value = values[i]
+            } else if (get(showAnswers)) {
+                input.value = values[i]
+            } else {
+                input.value = ''
+            }
+
+
+            input.addEventListener('change', resizeInput);
+            input.addEventListener('input', resizeInput);
+            resizeInput.call(input);
         });
     });
 }

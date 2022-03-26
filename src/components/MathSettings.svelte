@@ -1,11 +1,21 @@
 <script>
 	// export let digitsA, digitsB
 	import { newRandomValues, generateNewWorksheetProblems } from '$utils/math_operations.js';
-	import { selectedOperation, digitsA, digitsB, valueA, valueB, problemsPerPage, pageColumns } from '$stores/math.js';
+	import {
+		selectedOperation,
+		digitsA,
+		digitsB,
+		valueA,
+		valueB,
+		problemsPerPage,
+		pageColumns,
+		showAnswers
+	} from '$stores/math.js';
 	import { page } from '$app/stores';
-	console.log(`🚀 ~ file: MathSettings.svelte ~ line 6 ~ page`, $page);
+	import Checkbox from './Checkbox.svelte';
+	// console.log(`🚀 ~ file: MathSettings.svelte ~ line 6 ~ page`, $page);
 	// $selectedOperation
-	console.log(`🚀 ~ file: DigitsSettings.svelte ~ line 7 ~ $selectedOperation`, $selectedOperation);
+	// console.log(`🚀 ~ file: DigitsSettings.svelte ~ line 7 ~ $selectedOperation`, $selectedOperation);
 </script>
 
 <div
@@ -59,6 +69,13 @@
 	<button on:click={generateNewWorksheetProblems} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Generate new worksheet</button
 	>
+	<label for="showAnswers" class="flex items-center">Show Answers
+		<Checkbox
+			name="showAnswers"
+			bind:checked={$showAnswers}
+			class=" m-4 bg-winterblues-500 bg-opacity-50"
+		/>{$showAnswers}
+	</label>
 </div>
 
 <style lang="scss">
