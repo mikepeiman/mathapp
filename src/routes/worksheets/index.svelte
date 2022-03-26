@@ -26,7 +26,6 @@
 	function handleOperationSelect(msg) {
 		console.log(`🚀 ~ file: index.svelte ~ line 10 ~ handleOperationSelect ~ msg`, msg.detail);
 		msg.detail.symbol !== '=' ? selectedOperation.set(msg.detail) : false;
-		processCalculation();
         recalculateProblems();
         resizeAllInputs()
 	}
