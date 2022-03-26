@@ -1,6 +1,6 @@
 <script>
 	// export let digitsA, digitsB
-	import { newRandomValues, generateNewWorksheetProblems } from '$utils/math_operations.js';
+	import { newRandomValues, generateNewWorksheetProblems, resizeAllInputs} from '$utils/math_operations.js';
 	import {
 		selectedOperation,
 		digitsA,
@@ -13,9 +13,10 @@
 	} from '$stores/math.js';
 	import { page } from '$app/stores';
 	import Checkbox from './Checkbox.svelte';
-	// console.log(`🚀 ~ file: MathSettings.svelte ~ line 6 ~ page`, $page);
-	// $selectedOperation
-	// console.log(`🚀 ~ file: DigitsSettings.svelte ~ line 7 ~ $selectedOperation`, $selectedOperation);
+function refreshWorksheet() {
+	generateNewWorksheetProblems()
+	resizeAllInputs()
+}
 </script>
 
 <div
@@ -66,7 +67,7 @@
 	<button on:click={newRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Generate random values</button
 	>
-	<button on:click={generateNewWorksheetProblems} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+	<button on:click={refreshWorksheet} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Generate new worksheet</button
 	>
 	<label for="showAnswers" class="flex items-center">Show Answers

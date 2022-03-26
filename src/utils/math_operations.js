@@ -35,6 +35,8 @@ export function newRandomValues() {
     dB = get(digitsB)
     vA = (Math.ceil(Math.random() * Math.pow(10, dA)))
     vB = Math.ceil(Math.random() * Math.pow(10, dB));
+    vA.length > dA ? vA-- : vA;
+    vB.length > dB ? vB-- : vB;
     // console.log(`🚀 ~ file: math_operations.js ~ line 25 ~ newRandomValues ~ vA ${vA}, vB ${vB}, dA ${dA}, dB ${dB} `)
     valueA.set(vA);
     valueB.set(vB);
@@ -51,21 +53,11 @@ export function generateNewWorksheetProblems() {
     let problems = document.getElementsByClassName('math-problem');
     Object.keys(problems).forEach((i) => {
         let problem = problems[i];
-        // console.log(`🚀 ~ file: MathProblem.svelte ~ line 26 ~ Object.keys ~ problem`, problem);
         let inputs = problem.children;
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
-        // console.log(`🚀 ~ file: MathProblem.svelte ~ line 28 ~ Object.keys ~ inputs`, inputs);
         let values = newRandomValues();
-        // let inputs = problem.getElementsByClassName('basic-underline-text-input');
-
-        // Object.keys(inputs).forEach((i) => {
         Array.from(inputs).forEach((input, i) => {
-            // console.log(`🚀 ~ file: MathProblem.svelte ~ line 35 ~ Array.from ~ input`, input)
-            // inputs.forEach((i) => {
-            // console.log(`🚀 ~ file: MathProblem.svelte ~ line 20 ~ onMount ~ problem`, problems[i].value);
-            // console.log(`🚀 ~ file: MathProblem.svelte ~ line 39 ~ inputs.forEach ~ i`, i);
-
             if (input.name !== "result") {
                 input.value = values[i]
             } else if (get(showAnswers)) {
@@ -74,10 +66,22 @@ export function generateNewWorksheetProblems() {
                 input.value = ''
             }
 
+            // resizeInput.call(input);
+        });
+    });
+}
 
+export function resizeAllInputs() {
+    let problems = document.getElementsByClassName('math-problem');
+    Object.keys(problems).forEach((i) => {
+        let problem = problems[i];
+        let inputs = problem.children;
+        inputs = Array.from(inputs);
+        inputs = inputs.filter((input) => input.tagName === 'INPUT');
+        Array.from(inputs).forEach((input, i) => {
+            input.value ? (input.style.width = input.value.length + 2 + 'ch') : (input.style.width = '1ch');
             input.addEventListener('change', resizeInput);
             input.addEventListener('input', resizeInput);
-            resizeInput.call(input);
         });
     });
 }

@@ -12,6 +12,8 @@
   * consider using some kid-friendly imagery, like Pokemon, to add interest to the math. Possibly give them an option, using for example Starwars API (SWAPI) and then some kind of nature imagery API
   * add precision for division setting 
   * make a component for stacked division notation
+  * add option to allow range of digits for each value, or strictly one magnitude of digits
 
 ## UI
 * use range sliders for number of digits and precision inputs
+* user will be able to set number of problems they want, each one is a draggable target, they can drag and drop into, and rearrange within each math problem. Each problem is saved, and can be edited without access control, EXCEPT it will have a lock icon button that will lock it from being edited

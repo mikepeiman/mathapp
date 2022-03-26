@@ -7,7 +7,7 @@
 	import MathSettings from '$components/MathSettings.svelte';
 	import OperationsMenu from '$components/OperationsMenu.svelte';
 	import { selectedOperation, result, problemsPerPage, pageColumns } from '$stores/math';
-	import { processCalculation, newRandomValues } from '$utils/math_operations';
+	import { processCalculation, generateNewWorksheetProblems, resizeAllInputs } from '$utils/math_operations';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -18,6 +18,8 @@
 		const emptyArray = new Array($pageColumns);
 		console.log(`🚀 ~ file: index.svelte ~ line 23 ~ onMount ~ emptyArray`, emptyArray);
 		$pageColumns;
+        generateNewWorksheetProblems()
+        resizeAllInputs()
 		// processCalculation();
 	});
 
