@@ -3,6 +3,7 @@
 
 	import BasicCalculationForm from '$components/BasicCalculationForm.svelte';
 	import DigitsSettings from '$components/DigitsSettings.svelte';
+	import MathProblem from '$components/MathProblem.svelte';
 	import MathSettings from '$components/MathSettings.svelte';
 	import OperationsMenu from '$components/OperationsMenu.svelte';
 	import { selectedOperation, result, problemsPerPage, pageColumns } from '$stores/math';
@@ -31,15 +32,15 @@
 <div id="default-layout" class="layout-main w-full h-full">
 	<OperationsMenu on:operationSelect={handleOperationSelect} />
 	<MathSettings />
-	<div id="worksheet" class="flex mx-2 items-start justify-around">
-        {#each Array($pageColumns) as column, i}
-            <div  class="flex flex-col">
-                {#each Array($problemsPerPage) as problem, j}
-                    <BasicCalculationForm />
-                {/each}
-            </div>
-        {/each}
-    </div>
+	<div id="worksheet" class="flex mx-2 px-4 items-start justify-around h-full">
+		{#each Array($pageColumns) as column, i}
+			<div class="flex flex-col justify-between h-full">
+				{#each Array(Math.ceil($problemsPerPage / $pageColumns)) as problem, j}
+					<MathProblem />
+				{/each}
+			</div>
+		{/each}
+	</div>
 </div>
 
 <style lang="scss" global>
