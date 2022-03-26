@@ -8,5 +8,5 @@ export const result = writable(0);
 export const digitsA = writable(2);
 export const digitsB = writable(2);
 export const problemsPerPage = writable(20);
-export const pageColumns = writable(2);
+export const pageColumns = writable(1);
 export const showAnswers = writable(false);

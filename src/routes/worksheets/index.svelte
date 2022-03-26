@@ -7,7 +7,7 @@
 	import MathSettings from '$components/MathSettings.svelte';
 	import OperationsMenu from '$components/OperationsMenu.svelte';
 	import { selectedOperation, result, problemsPerPage, pageColumns } from '$stores/math';
-	import { processCalculation, generateNewWorksheetProblems, resizeAllInputs } from '$utils/math_operations';
+	import { processCalculation, generateNewWorksheetProblems, resizeAllInputs, recalculateProblems } from '$utils/math_operations';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -27,6 +27,8 @@
 		console.log(`🚀 ~ file: index.svelte ~ line 10 ~ handleOperationSelect ~ msg`, msg.detail);
 		msg.detail.symbol !== '=' ? selectedOperation.set(msg.detail) : false;
 		processCalculation();
+        recalculateProblems();
+        resizeAllInputs()
 	}
 </script>
 

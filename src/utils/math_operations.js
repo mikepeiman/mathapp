@@ -18,6 +18,36 @@ export function processCalculation() {
     result.set(res);
     return res;
 }
+export function processCalculation2(inputs) {
+    vA = inputs[0].getAttribute('data-value')
+    vB = inputs[1].getAttribute('data-value')
+    sO = get(selectedOperation)
+    res = eval(`${vA} ${sO.symbol} ${vB}`);
+    sO.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
+    result.set(res);
+    return res;
+}
+
+export function recalculateProblems() {
+    let problems = document.getElementsByClassName('math-problem');
+    let show = get(showAnswers);
+    Object.keys(problems).forEach((i) => {
+        let problem = problems[i];
+        let inputs = problem.children;
+        inputs = Array.from(inputs);
+        inputs = inputs.filter((input) => input.tagName === 'INPUT');
+        let inputsArray = Array.from(inputs)
+        let res = processCalculation2(inputsArray);
+        inputsArray.forEach((input, i) => {
+            input.value ? (input.style.width = input.value.length + 2 + 'ch') : (input.style.width = '1ch');
+            if(input.name === "result"){
+                input.setAttribute('data-value', res);
+                show ? input.value = res : input.value = '';
+            }
+            resizeInput.call(input);
+        });
+    });
+}
 
 export function setDivisionPrecision(res) {
     res.toFixed(3);
