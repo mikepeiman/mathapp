@@ -12,3 +12,6 @@
   * consider using some kid-friendly imagery, like Pokemon, to add interest to the math. Possibly give them an option, using for example Starwars API (SWAPI) and then some kind of nature imagery API
   * add precision for division setting 
   * make a component for stacked division notation
+
+## UI
+* use range sliders for number of digits and precision inputs

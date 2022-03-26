@@ -44,7 +44,7 @@
         @apply text-center outline-none border-l-0 border-t-0 border-r-0 border-b-2 border-b-lime-500 bg-none bg-transparent focus:ring-0 focus:outline-none w-[10ch] text-3xl
     }
     .basic-underline-number-input {
-        @apply text-center outline-none w-12 border-2 border-gray-500 bg-none bg-transparent focus:ring-0 focus:outline-none
+        @apply text-center  outline-none w-12 border-b-2 border-t-0 border-r-0 border-l-0 border-sky-500 bg-none bg-transparent focus:ring-0 focus:outline-none
     }
 }
 
