@@ -46,6 +46,7 @@ onMount(() => {
 			`🚀 ~ file: OperationsMenu.svelte ~ line 38 ~ operationSelect ~ operation`,
 			operation
 		);
+		selectedOperation.set(operation);
 	}
 </script>
 

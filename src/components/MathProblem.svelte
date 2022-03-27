@@ -1,6 +1,6 @@
 <script>
 	import Icon from '@iconify/svelte';
-	import { processCalculation, newRandomValues, setWorksheetValuesToDOM } from '$utils/math_operations';
+	import { processCalculation } from '$utils/math_operations';
 	import { selectedOperation } from '$stores/math';
 	import { onMount } from 'svelte';
 	const icons = {

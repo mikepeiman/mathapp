@@ -2,10 +2,10 @@
 	// export let digitsA, digitsB
 	import {
 		newRandomValues,
-		setWorksheetValuesToDOM,
 		resizeAllInputs,
-generateNewWorksheet
+		generateNewWorksheet
 	} from '$utils/math_operations.js';
+	import { getWorksheetValuesFromDOM, setWorksheetValuesToDOM } from '$utils/dom_operations.js';
 	import {
 		selectedOperation,
 		digitsA,
@@ -16,11 +16,12 @@ generateNewWorksheet
 		pageColumns,
 		showAnswers,
 		worksheet,
-		addWorksheet,
-		checkForWorksheet
+		saveWorksheet,
+		checkForWorksheet,
+		getAllWorksheets
 	} from '$stores/math.js';
 	import { page } from '$app/stores';
-	import {get} from 'svelte/store';
+	import { get } from 'svelte/store';
 	import Checkbox from './Checkbox.svelte';
 	import { onMount } from 'svelte';
 	$: sheet = {};
@@ -46,15 +47,15 @@ generateNewWorksheet
 		$showAnswers ? revealAnswers() : revealAnswers();
 		console.log(`🚀 ~ file: MathSettings.svelte ~ line 33 ~ $showAnswers`, $showAnswers);
 	}
-	function saveWorksheet() {
+	function save() {
 		sheet = get(worksheet);
-		addWorksheet.set(sheet);
+		saveWorksheet(sheet);
 		console.log(`🚀 ~ file: MathSettings.svelte ~ line 47 ~ saveWorksheet ~ sheet`, sheet);
 		// ...
 	}
 	function checkWorksheetValues() {
-		sheet = get(worksheet)
-        console.log(`🚀 ~ file: MathSettings.svelte ~ line 56 ~ checkWorksheetValues ~ sheet`, sheet)
+		sheet = get(worksheet);
+		console.log(`🚀 ~ file: MathSettings.svelte ~ line 56 ~ checkWorksheetValues ~ sheet`, sheet);
 	}
 
 	function setDOMValues() {
@@ -114,7 +115,7 @@ generateNewWorksheet
 	<button on:click={refreshWorksheet} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Generate new worksheet</button
 	>
-	<button on:click={saveWorksheet} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+	<button on:click={save} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Save worksheet</button
 	>
 	<button on:click={resizeAllInputs} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
@@ -123,8 +124,14 @@ generateNewWorksheet
 	<button on:click={checkWorksheetValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Check worksheet values</button
 	>
+	<button on:click={getAllWorksheets} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+		>Get all worksheets</button
+	>
 	<button on:click={setDOMValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Set values to DOM</button
+	>
+	<button on:click={getWorksheetValuesFromDOM} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+		>Get current worksheet</button
 	>
 	<label for="showAnswers" class="flex items-center"
 		>Show Answers

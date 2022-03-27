@@ -75,29 +75,6 @@ function randomIntegerRange(min, max, digits) {
     return num.toString().length > digits ? --num : num;
 }
 
-export function setWorksheetValuesToDOM(sheet) {
-    console.log(`🚀 ~ file: math_operations.js ~ line 79 ~ setWorksheetValuesToDOM ~ sheet`, sheet)
-    let problemsElements = document.getElementsByClassName('math-problem');
-    Object.keys(problemsElements).forEach((i) => {
-        let problemEl = problemsElements[i];
-        // console.log(`🚀 ~ file: math_operations.js ~ line 83 ~ Object.keys ~ problemEl`, problemEl)
-        let inputs = problemEl.children;
-        inputs = Array.from(inputs);
-        inputs = inputs.filter((input) => input.tagName === 'INPUT');
-        let problem = sheet.problems[i];
-        let values = []
-        Object.values(problem).forEach((value, i) => {
-            // console.log(`🚀 ~ file: math_operations.js ~ line 89 ~ Object.problems ~ value, i`, value, i)
-            values.push(value);
-        })
-        Array.from(inputs).forEach((input, j) => {
-            // console.log(`🚀 ~ file: math_operations.js ~ line 88 ~ Array.from ~ input #${j}`, input)
-            input.value = values[j]
-            input.setAttribute("data-value", values[j])
-        });
-    });
-    // return worksheet
-}
 export function generateNewWorksheet() {
     let problem = {}, problems = [], sheet = {}, numProblems = get(problemsPerPage)
     console.log(`🚀 ~ file: math_operations.js ~ line 114 ~ generateNewWorksheet ~ numProblems`, numProblems)
@@ -111,6 +88,7 @@ export function generateNewWorksheet() {
         problems.push(problem);
     }
     let columns = get(pageColumns)
+    sheet['operation'] = get(selectedOperation)
     sheet['id'] = uuidv4();
     sheet['problems'] = problems;
     sheet['columns'] = columns;

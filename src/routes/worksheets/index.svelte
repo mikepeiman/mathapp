@@ -7,8 +7,10 @@ import MathProblem from '$components/MathProblem.svelte';
 	import OperationsMenu from '$components/OperationsMenu.svelte';
 import Worksheet from '$components/Worksheet.svelte';
     import { supabase } from '$lib/supabaseClient';
-	import { selectedOperation, result, problemsPerPage, pageColumns, worksheet, addWorksheet, checkForWorksheet } from '$stores/math';
-	import { processCalculation, setWorksheetValuesToDOM, resizeAllInputs, recalculateProblems } from '$utils/math_operations';
+	import { selectedOperation, result, problemsPerPage, pageColumns, worksheet, saveWorksheet, checkForWorksheet } from '$stores/math';
+	import { processCalculation, resizeAllInputs, recalculateProblems } from '$utils/math_operations';
+	// import { getWorksheetValuesFromDOM, setWorksheetValuesToDOM } from '$utils/dom_operations.js';
+
 	import { onMount } from 'svelte';
     import { get } from 'svelte/store';
     $: sheet = []

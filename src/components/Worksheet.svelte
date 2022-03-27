@@ -7,17 +7,18 @@
 		problemsPerPage,
 		pageColumns,
 		worksheet,
-		addWorksheet,
+		saveWorksheet,
 		getWorksheet,
 		checkForWorksheet
 	} from '$stores/math';
 	import {
 		processCalculation,
 		generateNewWorksheet,
-        setWorksheetValuesToDOM,
 		resizeAllInputs,
 		recalculateProblems
 	} from '$utils/math_operations';
+	import { getWorksheetValuesFromDOM, setWorksheetValuesToDOM } from '$utils/dom_operations.js';
+
 
 	import { afterUpdate, onMount } from 'svelte';
 	import MathProblem from './MathProblem.svelte';

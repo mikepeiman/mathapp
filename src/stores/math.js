@@ -1,8 +1,11 @@
-// import writable from svelte
 import { writable, get } from "svelte/store";
 import { supabase } from "$lib/supabaseClient.js";
+import { v4 as uuidv4 } from 'uuid';
+import { getWorksheetValuesFromDOM } from '$utils/dom_operations'
 
+export const currentWorksheetID = writable(null);
 export const worksheet = writable({});
+export const worksheets = writable([]);
 export const selectedOperation = writable({});
 export const valueA = writable(0);
 export const valueB = writable(0);
@@ -13,12 +16,21 @@ export const problemsPerPage = writable(20);
 export const pageColumns = writable(2);
 export const showAnswers = writable(true);
 
-export const addWorksheet = {
-    subscribe: worksheet.subscribe,
-    set: val => {
-        worksheet.set(val);
-        localStorage.setItem("worksheet", JSON.stringify(val));
-    },
+selectedOperation.subscribe(operation => {
+    console.log(`🚀 ~ file: math.js ~ line 19 ~ operation`, operation)
+})
+
+export const saveWorksheet = (sheet) => {
+    // let worksheet = get(worksheet);
+    let operation = get(selectedOperation);
+    sheet.operation = operation;
+    console.log(`🚀 ~ file: math.js ~ line 21 ~ saveWorksheet ~ operation`, operation)
+    let values = getWorksheetValuesFromDOM()
+    sheet.problems = values.problems
+    console.log(`🚀 ~ file: math.js ~ line 29 ~ saveWorksheet ~ values`, values)
+    worksheet.set(sheet);
+    localStorage.setItem("worksheet", JSON.stringify(sheet));
+
     // supabase.set(`worksheets/${worksheet.id}`, worksheet)
 }
 
@@ -35,6 +47,25 @@ export const checkForWorksheet = () => {
     }
     return false
 }
+export const getAllWorksheets = () => {
+    // supabase.get(`worksheets`).then(res => {
+    //     console.log(`🚀 ~ file: stores.js ~ line 67 ~ getAllWorksheets ~ res`, res)
+    // })
+    let sheets = get(worksheets)
+    if (sheets.length) {
+        console.log(`🚀 ~ file: stores.js ~ line 53 ~ getAllWorksheets ~ sheet`, sheets)
+        return sheets
+    } else if (localStorage && localStorage.getItem("worksheets")) {
+        sheets = JSON.parse(localStorage.getItem("worksheets"))
+        console.log(`🚀 ~ file: math.js ~ line 31 ~ getAllWorksheets ~ sheets`, sheets)
+        worksheets.set(sheets)
+        return sheets
+    } else {
+        console.log(`no worksheets found getAllWorksheets`)
+    }
+
+    return false
+}
 
 export const getWorksheet = () => {
     let sheet = get(worksheet)
@@ -48,4 +79,8 @@ export const getWorksheet = () => {
         return sheet
     }
     return false
+}
+
+export const getCurrentWorksheetValues = () => {
+    // 
 }
