@@ -1,14 +1,19 @@
 <script>
 	import Icon from '@iconify/svelte';
-	import { createEventDispatcher, onMount } from 'svelte';
-	import { selectedOperation } from '$stores/math.js';
+	import { createEventDispatcher, onMount, afterUpdate } from 'svelte';
+	import { get } from 'svelte/store';
+	import { selectedOperation, worksheet, getWorksheet } from '$stores/math.js';
 	const dispatch = createEventDispatcher();
 	// $: selectedOperation = '';
-	$: current = operations[0]
+	let sheet = {}
+	$: current = sheet['operation'] ? sheet['operation']  : operations[0];
 
-onMount(() => {
-	dispatch('operationSelect', operations[0]);
-});
+	onMount(() => {
+		sheet = getWorksheet()
+		console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 12 ~ onMount `);
+	});
+
+
 
 	let operations = [
 		{
@@ -39,18 +44,17 @@ onMount(() => {
 	];
 
 	function operationSelect(operation) {
-		operation.symbol !== '=' ? (selectedOperation.set(operation)) : false;
-		operation.symbol !== '=' ? current = operation : false;
+		operation.symbol !== '=' ? selectedOperation.set(operation) : false;
+		operation.symbol !== '=' ? (current = operation) : false;
 		dispatch('operationSelect', operation);
-		console.log(
-			`🚀 ~ file: OperationsMenu.svelte ~ line 38 ~ operationSelect ~ operation`,
-			operation
-		);
 		selectedOperation.set(operation);
 	}
 </script>
 
-<div id="operations-menu" class="flex flex-row w-full text-4xl mb-4 text-amber-500 items-center justify-center">
+<div
+	id="operations-menu"
+	class="flex flex-row w-full text-4xl mb-4 text-amber-500 items-center justify-center"
+>
 	{#each operations as operation}
 		<!-- <div class="btn" on:click={() => operationSelect(operation)} /> -->
 		<!-- <i class="fas" :class="operation.iconname" v-model="selectedOperation"></i> -->

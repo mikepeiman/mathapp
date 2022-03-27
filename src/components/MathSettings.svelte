@@ -16,7 +16,7 @@
 		pageColumns,
 		showAnswers,
 		worksheet,
-		saveWorksheet,
+		saveWorksheetLS,
 		checkForWorksheet,
 		getAllWorksheets
 	} from '$stores/math.js';
@@ -48,9 +48,8 @@
 		console.log(`🚀 ~ file: MathSettings.svelte ~ line 33 ~ $showAnswers`, $showAnswers);
 	}
 	function save() {
-		sheet = get(worksheet);
-		saveWorksheet(sheet);
-		console.log(`🚀 ~ file: MathSettings.svelte ~ line 47 ~ saveWorksheet ~ sheet`, sheet);
+		saveWorksheetLS();
+		console.log(`🚀 ~ file: MathSettings.svelte ~ line 47 ~ saveWorksheetLS ~ sheet`, sheet);
 		// ...
 	}
 	function checkWorksheetValues() {

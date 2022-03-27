@@ -7,7 +7,7 @@
 		problemsPerPage,
 		pageColumns,
 		worksheet,
-		saveWorksheet,
+		saveWorksheetLS,
 		getWorksheet,
 		checkForWorksheet
 	} from '$stores/math';
@@ -30,7 +30,8 @@
 		checkForWorksheet() ? (sheet = await getWorksheet()) : (sheet = await generateNewWorksheet());
 		// sheet = await generateNewWorksheet();
         loaded = true
-        console.log(`🚀 ~ file: Worksheet.svelte ~ line 28 ~ onMount ~ sheet`, sheet.problems)
+        console.log(`🚀 ~ file: Worksheet.svelte ~ line 28 ~ onMount ~ sheet`, sheet)
+        selectedOperation.set(sheet.operation);
 		worksheet.set(sheet);
         await setWorksheetValuesToDOM(sheet);
         // setTimeout(() => {

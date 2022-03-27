@@ -20,18 +20,24 @@ selectedOperation.subscribe(operation => {
     console.log(`🚀 ~ file: math.js ~ line 19 ~ operation`, operation)
 })
 
-export const saveWorksheet = (sheet) => {
-    // let worksheet = get(worksheet);
+export const saveWorksheetLS = async () => {
+    let sheet = await updateWorksheet()
+    localStorage.setItem("worksheet", JSON.stringify(sheet));
+}
+
+async function updateWorksheet() {
+    let sheet = get(worksheet);
     let operation = get(selectedOperation);
     sheet.operation = operation;
-    console.log(`🚀 ~ file: math.js ~ line 21 ~ saveWorksheet ~ operation`, operation)
-    let values = getWorksheetValuesFromDOM()
+    let values = await getWorksheetValuesFromDOM()
+    console.log(`🚀 ~ file: math.js ~ line 34 ~ updateWorksheet ~ values`, values)
     sheet.problems = values.problems
-    console.log(`🚀 ~ file: math.js ~ line 29 ~ saveWorksheet ~ values`, values)
     worksheet.set(sheet);
-    localStorage.setItem("worksheet", JSON.stringify(sheet));
+    return sheet
+}
 
-    // supabase.set(`worksheets/${worksheet.id}`, worksheet)
+export const saveWorksheetSupabase = async () => {
+    let sheet = await updateWorksheet()
 }
 
 export const checkForWorksheet = () => {

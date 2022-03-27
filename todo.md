@@ -23,3 +23,6 @@
 
 ## Production
 * will need to look at printing and saving to .pdf. Will need to work on styling for standard A4 paper size
+
+## bugfix
+* 2022-03-27 lost ability to manually calculate problems. Can change inputs and save, but not results. Need to tie the calculation to current input value, not data-value attribute

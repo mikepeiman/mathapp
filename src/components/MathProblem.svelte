@@ -15,7 +15,6 @@
 	export let problem = {}
 	onMount(() => {
 		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ problem`, problem)
-		// setWorksheetValuesToDOM()
 	});
 
 	function calculate() {
