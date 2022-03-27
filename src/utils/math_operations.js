@@ -1,4 +1,4 @@
-import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns } from '$stores/math.js'
+import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns, problemsPerPage } from '$stores/math.js'
 import { get } from 'svelte/store'
 
 let dA = get(digitsA)
@@ -58,10 +58,12 @@ export function setDivisionPrecision(res) {
 export function newRandomValues() {
     dA = get(digitsA)
     dB = get(digitsB)
+    sO = get(selectedOperation)
     vA = randomIntegerRange(Math.pow(10, dA - 1), Math.pow(10, dA), dA)
     vB = randomIntegerRange(Math.pow(10, dB - 1), Math.pow(10, dB), dB)
     valueA.set(vA);
     valueB.set(vB);
+    console.log(`🚀 ~ file: math_operations.js ~ line 66 ~ newRandomValues ~ ${vA} ${sO.symbol} ${vB}`)
     res = eval(`${vA} ${sO.symbol} ${vB}`);
     sO.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
     result.set(res);
@@ -105,6 +107,25 @@ export function generateNewWorksheetProblems() {
     let columns = get(pageColumns)
     worksheet['problems'] = problems;
     worksheet['columns'] = columns;
+    console.log(`🚀 ~ file: math_operations.js ~ line 108 ~ generateNewWorksheetProblems ~ worksheet`, worksheet)
+    return worksheet
+}
+export function generateNewWorksheetProblems2() {
+    let problem = {}, problems = [], worksheet = {}, numProblems = get(problemsPerPage)
+    console.log(`🚀 ~ file: math_operations.js ~ line 114 ~ generateNewWorksheetProblems2 ~ numProblems`, numProblems)
+    for(let i = 0; i < numProblems; i++){
+        let values = newRandomValues();
+                problem = {
+            valueA: values[0],
+            valueB: values[1],
+            result: values[2],
+        }
+        problems.push(problem);
+    }
+    let columns = get(pageColumns)
+    worksheet['problems'] = problems;
+    worksheet['columns'] = columns;
+    console.log(`🚀 ~ file: math_operations.js ~ line 128 ~ newworksheet generateNewWorksheetProblems ~ worksheet`, worksheet)
     return worksheet
 }
 

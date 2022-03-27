@@ -22,7 +22,7 @@ import Worksheet from '$components/Worksheet.svelte';
 		const emptyArray = new Array($pageColumns);
 		console.log(`🚀 ~ file: index.svelte ~ line 23 ~ onMount ~ emptyArray`, emptyArray);
 		$pageColumns;
-        checkForWorksheet() ? sheet = get(worksheet) : sheet = generateNewWorksheetProblems()
+        // checkForWorksheet() ? sheet = get(worksheet) : sheet = generateNewWorksheetProblems()
         resizeAllInputs()
 		// processCalculation();
 	});

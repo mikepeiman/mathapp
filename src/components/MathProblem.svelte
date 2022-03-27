@@ -12,8 +12,9 @@
 		'list-view': 'dashicons:list-view'
 	};
 	let valueA, valueB, result;
-
+	export let problem = {}
 	onMount(() => {
+		console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ problem`, problem)
 		// generateNewWorksheetProblems()
 	});
 
@@ -32,7 +33,7 @@
 		<input
 			type="text"
 			name="valueA"
-			bind:value={valueA}
+			bind:value={problem.valueA}
 			on:blur={calculate}
 			class="basic-underline-text-input"
 			placeholder="value A"
@@ -43,7 +44,7 @@
 		<input
 			type="text"
 			name="valueB"
-			bind:value={valueB}
+			bind:value={problem.valueB}
 			on:blur={calculate}
 			class="basic-underline-text-input"
 			placeholder="value B"
@@ -55,7 +56,7 @@
 		<input
 			type="text"
 			name="result"
-			bind:value={result}
+			bind:value={problem.result}
 			class="basic-underline-text-input"
 			placeholder="value C"
 		/>

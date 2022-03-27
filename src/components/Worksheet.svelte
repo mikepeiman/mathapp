@@ -1,5 +1,6 @@
 <script>
 	export let sheet;
+	import { page } from '$app/stores';
 	import {
 		selectedOperation,
 		result,
@@ -10,25 +11,37 @@
 		getWorksheet,
 		checkForWorksheet
 	} from '$stores/math';
-	import { processCalculation, generateNewWorksheetProblems, resizeAllInputs, recalculateProblems } from '$utils/math_operations';
+	import {
+		processCalculation,
+		generateNewWorksheetProblems2,
+		resizeAllInputs,
+		recalculateProblems
+	} from '$utils/math_operations';
 
 	import { onMount } from 'svelte';
 	import MathProblem from './MathProblem.svelte';
-	$: sheet = [];
+    let loaded = false
+	$: sheet = {}
 	$: exists = false;
 	$: console.log(`🚀 ~ file: Worksheet.svelte ~ line 15 ~ sheet`, sheet);
-	onMount(() => {
-		checkForWorksheet() ? (sheet = getWorksheet()) : (sheet = generateNewWorksheetProblems());
-        worksheet.set(sheet);
+	onMount(async () => {
+		checkForWorksheet() ? (sheet = await getWorksheet()) : (sheet = await generateNewWorksheetProblems2());
+		// sheet = await generateNewWorksheetProblems2();
+        loaded = true
+        console.log(`🚀 ~ file: Worksheet.svelte ~ line 28 ~ onMount ~ sheet`, sheet.problems)
+		worksheet.set(sheet);
 	});
 </script>
 
 <div id="worksheet" class="flex mx-2 px-4 items-start justify-around h-full">
+    {#if loaded}
 	{#each Array($pageColumns) as column, i}
 		<div class="flex flex-col justify-between h-full">
 			{#each Array(Math.ceil($problemsPerPage / $pageColumns)) as problem, j}
-				<MathProblem />
+				<!-- {Math.ceil($problemsPerPage / $pageColumns) * i + j + 1} -->
+				<MathProblem problem={sheet.problems[Math.ceil($problemsPerPage / $pageColumns) * i + j ]} />
 			{/each}
 		</div>
 	{/each}
+    {/if}
 </div>

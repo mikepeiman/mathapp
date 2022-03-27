@@ -42,9 +42,9 @@ export const getWorksheet = () => {
         console.log(`🚀 ~ file: stores.js ~ line 53 ~ getWorksheet ~ sheet`, sheet)
         return sheet
     } else if (localStorage && localStorage.getItem("worksheet")) {
-        sheet = localStorage.getItem("worksheet")
+        sheet = JSON.parse(localStorage.getItem("worksheet"))
         console.log(`🚀 ~ file: math.js ~ line 31 ~ getWorksheet ~ sheet`, sheet)
-        worksheet.set(JSON.parse(localStorage.getItem("worksheet")))
+        worksheet.set(sheet)
         return sheet
     }
     return false
