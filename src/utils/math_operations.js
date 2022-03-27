@@ -32,8 +32,8 @@ export function recalculateProblems() {
     let problems = document.getElementsByClassName('math-problem');
     let show = get(showAnswers);
     Object.keys(problems).forEach((i) => {
-        let problem = problems[i];
-        let inputs = problem.children;
+        let problemEl = problems[i];
+        let inputs = problemEl.children;
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
         let inputsArray = Array.from(inputs)
@@ -75,12 +75,20 @@ function randomIntegerRange(min, max, digits) {
 
 export function generateNewWorksheetProblems() {
     let problems = document.getElementsByClassName('math-problem');
+    let problem = {}
+    let worksheet = []
     Object.keys(problems).forEach((i) => {
-        let problem = problems[i];
-        let inputs = problem.children;
+        let problemEl = problems[i];
+        let inputs = problemEl.children;
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
         let values = newRandomValues();
+        problem = {
+            valueA: values[0],
+            valueB: values[1],
+            result: values[2],
+        }
+        worksheet.push(problem);
         Array.from(inputs).forEach((input, i) => {
             input.value = values[i] 
             input.setAttribute("data-value", values[i])
@@ -94,14 +102,15 @@ export function generateNewWorksheetProblems() {
             // }
         });
     });
+    return worksheet
 }
 
 export function resizeAllInputs() {
     let problems = document.getElementsByClassName('math-problem');
     let show = get(showAnswers);
     Object.keys(problems).forEach((i) => {
-        let problem = problems[i];
-        let inputs = problem.children;
+        let problemEl = problems[i];
+        let inputs = problemEl.children;
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
         Array.from(inputs).forEach((input, i) => {
@@ -124,7 +133,7 @@ function resizeInput() {
     // (this.style.width = dA + dB + 1 + 'ch')
     let thisLength = this.value.length;
     thisLength > longest ? longest = thisLength : longest;
-    console.log(`🚀 ~ file: math_operations.js ~ line 127 ~ resizeInput ~ longest`, longest)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 127 ~ resizeInput ~ longest`, longest)
     if(this.name === "result"){
         show ? this.value = this.getAttribute('data-value') : this.value = ' ';
     } 

@@ -13,23 +13,35 @@
 		valueB,
 		problemsPerPage,
 		pageColumns,
-		showAnswers
+		showAnswers,
+		addWorksheet,
+		checkForWorksheet
 	} from '$stores/math.js';
 	import { page } from '$app/stores';
 	import Checkbox from './Checkbox.svelte';
+import { onMount } from 'svelte';
+	$: worksheet = []
+    $: console.log(`🚀 ~ file: MathSettings.svelte ~ line 22 ~ worksheet`, worksheet)
+
+	onMount(() => {
+		console.log(`🚀 ~ file: MathSettings.svelte ~ line 42 ~ saveWorksheet ~ ONMOUNT worksheet`, worksheet)
+		// checkForWorksheet()
+	})
 	function refreshWorksheet() {
-		generateNewWorksheetProblems();
+		worksheet = generateNewWorksheetProblems();
 		resizeAllInputs();
 	}
 	function revealAnswers() {
         console.log(`🚀 ~ file: MathSettings.svelte ~ line 25 ~ revealAnswers ~ revealAnswers`, $showAnswers)
 		resizeAllInputs();
 	}
-
-	// $: $showAnswers ? revealAnswers : false
-    // $: console.log(`🚀 ~ file: MathSettings.svelte ~ line 30 ~ $showAnswers `, $showAnswers )
 	$: {
 		$showAnswers ? revealAnswers() : revealAnswers() 
+        console.log(`🚀 ~ file: MathSettings.svelte ~ line 33 ~ $showAnswers`, $showAnswers)
+	}
+	function saveWorksheet() {
+		addWorksheet.set(worksheet);
+		// ...
 	}
 </script>
 
@@ -83,6 +95,9 @@
 	>
 	<button on:click={refreshWorksheet} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Generate new worksheet</button
+	>
+	<button on:click={saveWorksheet} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+		>Save worksheet</button
 	>
 	<label for="showAnswers" class="flex items-center"
 		>Show Answers
