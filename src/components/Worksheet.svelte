@@ -19,7 +19,7 @@
 		recalculateProblems
 	} from '$utils/math_operations';
 
-	import { onMount } from 'svelte';
+	import { afterUpdate, onMount } from 'svelte';
 	import MathProblem from './MathProblem.svelte';
     let loaded = false
 	$: sheet = {}
@@ -36,6 +36,13 @@
             // resizeAllInputs()
         // }, 300);
 	});
+
+    afterUpdate(() => {
+        if (loaded) {
+            setWorksheetValuesToDOM(sheet);
+            resizeAllInputs()
+        }
+    })
 </script>
 
 <div id="worksheet" class="flex mx-2 px-4 items-start justify-around h-full">

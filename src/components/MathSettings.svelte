@@ -56,6 +56,11 @@ generateNewWorksheetValues
 		sheet = get(worksheet)
         console.log(`🚀 ~ file: MathSettings.svelte ~ line 56 ~ checkWorksheetValues ~ sheet`, sheet)
 	}
+
+	function setDOMValues() {
+		sheet = get(worksheet);
+		setWorksheetValuesToDOM(sheet);
+	}
 </script>
 
 <div
@@ -118,7 +123,7 @@ generateNewWorksheetValues
 	<button on:click={checkWorksheetValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Check worksheet values</button
 	>
-	<button on:click={setWorksheetValuesToDOM(sheet)} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+	<button on:click={setDOMValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Set values to DOM</button
 	>
 	<label for="showAnswers" class="flex items-center"
