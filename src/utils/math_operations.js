@@ -1,6 +1,6 @@
 import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns, problemsPerPage, worksheet } from '$stores/math.js'
 import { get } from 'svelte/store'
-
+import { v4 as uuidv4 } from 'uuid';
 let dA = get(digitsA)
 let dB = get(digitsB)
 let vA = get(valueA)
@@ -80,7 +80,7 @@ export function setWorksheetValuesToDOM(sheet) {
     let problemsElements = document.getElementsByClassName('math-problem');
     Object.keys(problemsElements).forEach((i) => {
         let problemEl = problemsElements[i];
-        console.log(`🚀 ~ file: math_operations.js ~ line 83 ~ Object.keys ~ problemEl`, problemEl)
+        // console.log(`🚀 ~ file: math_operations.js ~ line 83 ~ Object.keys ~ problemEl`, problemEl)
         let inputs = problemEl.children;
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
@@ -98,9 +98,9 @@ export function setWorksheetValuesToDOM(sheet) {
     });
     // return worksheet
 }
-export function generateNewWorksheetValues() {
+export function generateNewWorksheet() {
     let problem = {}, problems = [], sheet = {}, numProblems = get(problemsPerPage)
-    console.log(`🚀 ~ file: math_operations.js ~ line 114 ~ generateNewWorksheetValues ~ numProblems`, numProblems)
+    console.log(`🚀 ~ file: math_operations.js ~ line 114 ~ generateNewWorksheet ~ numProblems`, numProblems)
     for (let i = 0; i < numProblems; i++) {
         let values = newRandomValues();
         problem = {
@@ -111,6 +111,7 @@ export function generateNewWorksheetValues() {
         problems.push(problem);
     }
     let columns = get(pageColumns)
+    sheet['id'] = uuidv4();
     sheet['problems'] = problems;
     sheet['columns'] = columns;
     worksheet.set(sheet);

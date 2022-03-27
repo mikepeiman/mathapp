@@ -13,6 +13,8 @@
   * add precision for division setting 
   * make a component for stacked division notation
   * add option to allow range of digits for each value, or strictly one magnitude of digits
+  * User can select between new BLANK worksheet and new FILLED worksheet
+    * will need a separate "Save Worksheet" function in that case which reads DOM input values and operators (as I enable more complex/varied operations)
 
 ## UI
 * use range sliders for number of digits and precision inputs

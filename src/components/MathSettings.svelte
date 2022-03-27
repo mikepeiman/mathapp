@@ -4,7 +4,7 @@
 		newRandomValues,
 		setWorksheetValuesToDOM,
 		resizeAllInputs,
-generateNewWorksheetValues
+generateNewWorksheet
 	} from '$utils/math_operations.js';
 	import {
 		selectedOperation,
@@ -31,7 +31,7 @@ generateNewWorksheetValues
 	});
 	onMount(() => {});
 	function refreshWorksheet() {
-		sheet = generateNewWorksheetValues();
+		sheet = generateNewWorksheet();
 		worksheet.set(sheet);
 		resizeAllInputs();
 	}
