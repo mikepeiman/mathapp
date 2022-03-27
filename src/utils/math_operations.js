@@ -1,4 +1,4 @@
-import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers } from '$stores/math.js'
+import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns } from '$stores/math.js'
 import { get } from 'svelte/store'
 
 let dA = get(digitsA)
@@ -29,10 +29,10 @@ export function processCalculation2(inputs) {
 }
 
 export function recalculateProblems() {
-    let problems = document.getElementsByClassName('math-problem');
+    let problemsElements = document.getElementsByClassName('math-problem');
     let show = get(showAnswers);
-    Object.keys(problems).forEach((i) => {
-        let problemEl = problems[i];
+    Object.keys(problemsElements).forEach((i) => {
+        let problemEl = problemsElements[i];
         let inputs = problemEl.children;
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
@@ -74,11 +74,11 @@ function randomIntegerRange(min, max, digits) {
 }
 
 export function generateNewWorksheetProblems() {
-    let problems = document.getElementsByClassName('math-problem');
-    let problem = {}
-    let worksheet = []
-    Object.keys(problems).forEach((i) => {
-        let problemEl = problems[i];
+    let problemsElements = document.getElementsByClassName('math-problem');
+    let problem = {}, problems = []
+    let worksheet = {}
+    Object.keys(problemsElements).forEach((i) => {
+        let problemEl = problemsElements[i];
         let inputs = problemEl.children;
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
@@ -88,7 +88,7 @@ export function generateNewWorksheetProblems() {
             valueB: values[1],
             result: values[2],
         }
-        worksheet.push(problem);
+        problems.push(problem);
         Array.from(inputs).forEach((input, i) => {
             input.value = values[i] 
             input.setAttribute("data-value", values[i])
@@ -102,14 +102,17 @@ export function generateNewWorksheetProblems() {
             // }
         });
     });
+    let columns = get(pageColumns)
+    worksheet['problems'] = problems;
+    worksheet['columns'] = columns;
     return worksheet
 }
 
 export function resizeAllInputs() {
-    let problems = document.getElementsByClassName('math-problem');
+    let problemsElements = document.getElementsByClassName('math-problem');
     let show = get(showAnswers);
-    Object.keys(problems).forEach((i) => {
-        let problemEl = problems[i];
+    Object.keys(problemsElements).forEach((i) => {
+        let problemEl = problemsElements[i];
         let inputs = problemEl.children;
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');

@@ -14,33 +14,39 @@
 		problemsPerPage,
 		pageColumns,
 		showAnswers,
+		worksheet,
 		addWorksheet,
 		checkForWorksheet
 	} from '$stores/math.js';
 	import { page } from '$app/stores';
 	import Checkbox from './Checkbox.svelte';
-import { onMount } from 'svelte';
-	$: worksheet = []
-    $: console.log(`🚀 ~ file: MathSettings.svelte ~ line 22 ~ worksheet`, worksheet)
+	import { onMount } from 'svelte';
+	$: sheet = {};
+	$: console.log(`🚀 ~ file: MathSettings.svelte ~ line 22 ~ sheet`, sheet);
 
-	onMount(() => {
-		console.log(`🚀 ~ file: MathSettings.svelte ~ line 42 ~ saveWorksheet ~ ONMOUNT worksheet`, worksheet)
-		// checkForWorksheet()
-	})
+	worksheet.subscribe((val) => {
+		console.log(`🚀 ~ file: MathSettings.svelte ~ line 28 ~ val`, val);
+	});
+	onMount(() => {});
 	function refreshWorksheet() {
-		worksheet = generateNewWorksheetProblems();
+		sheet = generateNewWorksheetProblems();
+		worksheet.set(sheet);
 		resizeAllInputs();
 	}
 	function revealAnswers() {
-        console.log(`🚀 ~ file: MathSettings.svelte ~ line 25 ~ revealAnswers ~ revealAnswers`, $showAnswers)
+		console.log(
+			`🚀 ~ file: MathSettings.svelte ~ line 25 ~ revealAnswers ~ revealAnswers`,
+			$showAnswers
+		);
 		resizeAllInputs();
 	}
 	$: {
-		$showAnswers ? revealAnswers() : revealAnswers() 
-        console.log(`🚀 ~ file: MathSettings.svelte ~ line 33 ~ $showAnswers`, $showAnswers)
+		$showAnswers ? revealAnswers() : revealAnswers();
+		console.log(`🚀 ~ file: MathSettings.svelte ~ line 33 ~ $showAnswers`, $showAnswers);
 	}
 	function saveWorksheet() {
-		addWorksheet.set(worksheet);
+		addWorksheet.set(sheet);
+		console.log(`🚀 ~ file: MathSettings.svelte ~ line 47 ~ saveWorksheet ~ sheet`, sheet);
 		// ...
 	}
 </script>

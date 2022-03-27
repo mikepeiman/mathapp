@@ -17,3 +17,4 @@
 ## UI
 * use range sliders for number of digits and precision inputs
 * user will be able to set number of problems they want, each one is a draggable target, they can drag and drop into, and rearrange within each math problem. Each problem is saved, and can be edited without access control, EXCEPT it will have a lock icon button that will lock it from being edited
+* num of problems is a property of generating new sheet, as are digits for each value fiekd; these should be set and confirmed. num of columns is a view property and can be changed on the fly, regardless of how many problems are in current worksheet

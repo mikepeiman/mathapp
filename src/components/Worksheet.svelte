@@ -19,6 +19,7 @@
 	$: console.log(`🚀 ~ file: Worksheet.svelte ~ line 15 ~ sheet`, sheet);
 	onMount(() => {
 		checkForWorksheet() ? (sheet = getWorksheet()) : (sheet = generateNewWorksheetProblems());
+        worksheet.set(sheet);
 	});
 </script>
 
