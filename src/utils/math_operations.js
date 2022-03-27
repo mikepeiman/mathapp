@@ -1,4 +1,4 @@
-import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns, problemsPerPage } from '$stores/math.js'
+import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns, problemsPerPage, worksheet } from '$stores/math.js'
 import { get } from 'svelte/store'
 
 let dA = get(digitsA)
@@ -63,7 +63,7 @@ export function newRandomValues() {
     vB = randomIntegerRange(Math.pow(10, dB - 1), Math.pow(10, dB), dB)
     valueA.set(vA);
     valueB.set(vB);
-    console.log(`🚀 ~ file: math_operations.js ~ line 66 ~ newRandomValues ~ ${vA} ${sO.symbol} ${vB}`)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 66 ~ newRandomValues ~ ${vA} ${sO.symbol} ${vB}`)
     res = eval(`${vA} ${sO.symbol} ${vB}`);
     sO.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
     result.set(res);
@@ -75,44 +75,32 @@ function randomIntegerRange(min, max, digits) {
     return num.toString().length > digits ? --num : num;
 }
 
-export function generateNewWorksheetProblems() {
+export function setWorksheetValuesToDOM(sheet) {
+    console.log(`🚀 ~ file: math_operations.js ~ line 79 ~ setWorksheetValuesToDOM ~ sheet`, sheet)
     let problemsElements = document.getElementsByClassName('math-problem');
-    let problem = {}, problems = []
-    let worksheet = {}
     Object.keys(problemsElements).forEach((i) => {
         let problemEl = problemsElements[i];
+        console.log(`🚀 ~ file: math_operations.js ~ line 83 ~ Object.keys ~ problemEl`, problemEl)
         let inputs = problemEl.children;
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
-        let values = newRandomValues();
-        problem = {
-            valueA: values[0],
-            valueB: values[1],
-            result: values[2],
-        }
-        problems.push(problem);
-        Array.from(inputs).forEach((input, i) => {
-            input.value = values[i] 
-            input.setAttribute("data-value", values[i])
-            // the following conditionally fills results or not depending on toggle; moving this logic to resize function
-            // if (input.name !== "result") {
-            //     input.value = values[i]
-            // } else if (get(showAnswers)) {
-            //     input.value = values[i]
-            // } else {
-            //     input.value = ''
-            // }
+        let problem = sheet.problems[i];
+        let values = []
+        Object.values(problem).forEach((value, i) => {
+        console.log(`🚀 ~ file: math_operations.js ~ line 89 ~ Object.problems ~ problem, i`, problem, i)
+        values.push(value);
+        })
+        Array.from(inputs).forEach((input, j) => {
+            console.log(`🚀 ~ file: math_operations.js ~ line 88 ~ Array.from ~ input #${j}`, input)
+            input.value = values[j] 
+            input.setAttribute("data-value", values[j])
         });
     });
-    let columns = get(pageColumns)
-    worksheet['problems'] = problems;
-    worksheet['columns'] = columns;
-    console.log(`🚀 ~ file: math_operations.js ~ line 108 ~ generateNewWorksheetProblems ~ worksheet`, worksheet)
-    return worksheet
+    // return worksheet
 }
-export function generateNewWorksheetProblems2() {
-    let problem = {}, problems = [], worksheet = {}, numProblems = get(problemsPerPage)
-    console.log(`🚀 ~ file: math_operations.js ~ line 114 ~ generateNewWorksheetProblems2 ~ numProblems`, numProblems)
+export function generateNewWorksheetValues() {
+    let problem = {}, problems = [], sheet = {}, numProblems = get(problemsPerPage)
+    console.log(`🚀 ~ file: math_operations.js ~ line 114 ~ generateNewWorksheetValues ~ numProblems`, numProblems)
     for(let i = 0; i < numProblems; i++){
         let values = newRandomValues();
                 problem = {
@@ -123,10 +111,12 @@ export function generateNewWorksheetProblems2() {
         problems.push(problem);
     }
     let columns = get(pageColumns)
-    worksheet['problems'] = problems;
-    worksheet['columns'] = columns;
-    console.log(`🚀 ~ file: math_operations.js ~ line 128 ~ newworksheet generateNewWorksheetProblems ~ worksheet`, worksheet)
-    return worksheet
+    sheet['problems'] = problems;
+    sheet['columns'] = columns;
+    worksheet.set(sheet);
+    console.log(`🚀 ~ file: math_operations.js ~ line 128 ~ newworksheet setWorksheetValuesToDOM ~ worksheet`, sheet)
+    setWorksheetValuesToDOM(sheet);
+    return sheet
 }
 
 export function resizeAllInputs() {

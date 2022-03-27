@@ -2,8 +2,9 @@
 	// export let digitsA, digitsB
 	import {
 		newRandomValues,
-		generateNewWorksheetProblems,
-		resizeAllInputs
+		setWorksheetValuesToDOM,
+		resizeAllInputs,
+generateNewWorksheetValues
 	} from '$utils/math_operations.js';
 	import {
 		selectedOperation,
@@ -19,6 +20,7 @@
 		checkForWorksheet
 	} from '$stores/math.js';
 	import { page } from '$app/stores';
+	import {get} from 'svelte/store';
 	import Checkbox from './Checkbox.svelte';
 	import { onMount } from 'svelte';
 	$: sheet = {};
@@ -29,7 +31,7 @@
 	});
 	onMount(() => {});
 	function refreshWorksheet() {
-		sheet = generateNewWorksheetProblems();
+		sheet = generateNewWorksheetValues();
 		worksheet.set(sheet);
 		resizeAllInputs();
 	}
@@ -45,9 +47,14 @@
 		console.log(`🚀 ~ file: MathSettings.svelte ~ line 33 ~ $showAnswers`, $showAnswers);
 	}
 	function saveWorksheet() {
+		sheet = get(worksheet);
 		addWorksheet.set(sheet);
 		console.log(`🚀 ~ file: MathSettings.svelte ~ line 47 ~ saveWorksheet ~ sheet`, sheet);
 		// ...
+	}
+	function checkWorksheetValues() {
+		sheet = get(worksheet)
+        console.log(`🚀 ~ file: MathSettings.svelte ~ line 56 ~ checkWorksheetValues ~ sheet`, sheet)
 	}
 </script>
 
@@ -104,6 +111,15 @@
 	>
 	<button on:click={saveWorksheet} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Save worksheet</button
+	>
+	<button on:click={resizeAllInputs} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+		>Resize inputs</button
+	>
+	<button on:click={checkWorksheetValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+		>Check worksheet values</button
+	>
+	<button on:click={setWorksheetValuesToDOM(sheet)} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+		>Set values to DOM</button
 	>
 	<label for="showAnswers" class="flex items-center"
 		>Show Answers

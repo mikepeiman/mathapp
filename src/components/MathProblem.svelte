@@ -1,6 +1,6 @@
 <script>
 	import Icon from '@iconify/svelte';
-	import { processCalculation, newRandomValues, generateNewWorksheetProblems } from '$utils/math_operations';
+	import { processCalculation, newRandomValues, setWorksheetValuesToDOM } from '$utils/math_operations';
 	import { selectedOperation } from '$stores/math';
 	import { onMount } from 'svelte';
 	const icons = {
@@ -14,8 +14,8 @@
 	let valueA, valueB, result;
 	export let problem = {}
 	onMount(() => {
-		console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ problem`, problem)
-		// generateNewWorksheetProblems()
+		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ problem`, problem)
+		// setWorksheetValuesToDOM()
 	});
 
 	function calculate() {

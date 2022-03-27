@@ -13,7 +13,8 @@
 	} from '$stores/math';
 	import {
 		processCalculation,
-		generateNewWorksheetProblems2,
+		generateNewWorksheetValues,
+        setWorksheetValuesToDOM,
 		resizeAllInputs,
 		recalculateProblems
 	} from '$utils/math_operations';
@@ -23,13 +24,17 @@
     let loaded = false
 	$: sheet = {}
 	$: exists = false;
-	$: console.log(`🚀 ~ file: Worksheet.svelte ~ line 15 ~ sheet`, sheet);
+	$: console.log(`🚀 ~ file: Worksheet.svelte ~ line 15 ~ $: sheet`, sheet);
 	onMount(async () => {
-		checkForWorksheet() ? (sheet = await getWorksheet()) : (sheet = await generateNewWorksheetProblems2());
-		// sheet = await generateNewWorksheetProblems2();
+		checkForWorksheet() ? (sheet = await getWorksheet()) : (sheet = await generateNewWorksheetValues());
+		// sheet = await generateNewWorksheetValues();
         loaded = true
         console.log(`🚀 ~ file: Worksheet.svelte ~ line 28 ~ onMount ~ sheet`, sheet.problems)
 		worksheet.set(sheet);
+        await setWorksheetValuesToDOM(sheet);
+        // setTimeout(() => {
+            // resizeAllInputs()
+        // }, 300);
 	});
 </script>
 

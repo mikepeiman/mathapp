@@ -8,23 +8,14 @@ import MathProblem from '$components/MathProblem.svelte';
 import Worksheet from '$components/Worksheet.svelte';
     import { supabase } from '$lib/supabaseClient';
 	import { selectedOperation, result, problemsPerPage, pageColumns, worksheet, addWorksheet, checkForWorksheet } from '$stores/math';
-	import { processCalculation, generateNewWorksheetProblems, resizeAllInputs, recalculateProblems } from '$utils/math_operations';
+	import { processCalculation, setWorksheetValuesToDOM, resizeAllInputs, recalculateProblems } from '$utils/math_operations';
 	import { onMount } from 'svelte';
     import { get } from 'svelte/store';
     $: sheet = []
     $: console.log(`🚀 ~ file: index.svelte ~ line 13 ~ sheet`, sheet)
 	onMount(() => {
-        // $result
-        // console.log(`🚀 ~ file: index.svelte ~ line 4 ~ supabase`, supabase)
-		console.log(`🚀 ~ file: index.svelte ~ line 14 ~ onMount ~ $result`, $result);
-		console.log(`🚀 ~ file: index.svelte ~ line 19 ~ onMount ~ $pageColumns`, $pageColumns);
-		// create empty array of length for value of integer $pageColumns
-		const emptyArray = new Array($pageColumns);
-		console.log(`🚀 ~ file: index.svelte ~ line 23 ~ onMount ~ emptyArray`, emptyArray);
-		$pageColumns;
-        // checkForWorksheet() ? sheet = get(worksheet) : sheet = generateNewWorksheetProblems()
+        console.log(`🚀 ~ file: index.svelte ~ line 17 ~ onMount ~ onMount - sheet`, sheet)
         resizeAllInputs()
-		// processCalculation();
 	});
 
 	function handleOperationSelect(msg) {
