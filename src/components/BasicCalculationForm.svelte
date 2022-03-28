@@ -8,7 +8,6 @@
 		plus: 'fa-solid:plus',
 		divide: 'fa-solid:divide',
 		equals: 'fa-solid:equals',
-		'list-view': 'dashicons:list-view'
 	};
 
 	function calculate() {

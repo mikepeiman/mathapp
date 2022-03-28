@@ -47,7 +47,6 @@
 		operation.symbol !== '=' ? selectedOperation.set(operation) : false;
 		operation.symbol !== '=' ? (current = operation) : false;
 		dispatch('operationSelect', operation);
-		selectedOperation.set(operation);
 	}
 </script>
 
