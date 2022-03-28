@@ -32,9 +32,9 @@
 			class="basic-underline-number-input"
 		/>
 	</div>
-	<button on:click={newRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+	<!-- <button on:click={newRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Generate random values</button
-	>
+	> -->
 </div>
 
 <style lang="scss">
