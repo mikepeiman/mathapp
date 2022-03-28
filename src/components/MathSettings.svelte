@@ -5,7 +5,7 @@
 		resizeAllInputs,
 		generateNewWorksheet
 	} from '$utils/math_operations.js';
-	import { getWorksheetValuesFromDOM, setWorksheetValuesToDOM } from '$utils/dom_operations.js';
+	import { LSgetWorksheetValuesFromDOM, setWorksheetValuesToDOM } from '$utils/dom_operations.js';
 	import {
 		selectedOperation,
 		digitsA,
@@ -17,7 +17,7 @@
 		showAnswers,
 		worksheet,
 		saveWorksheetLS,
-		checkForWorksheet,
+		LScheckForWorksheet,
 		getAllWorksheets,
 saveWorksheetSupabase
 	} from '$stores/math.js';
@@ -139,7 +139,7 @@ saveWorksheetSupabase
 		<button on:click={setDOMValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 			>Set values to DOM</button
 		>
-		<button on:click={getWorksheetValuesFromDOM} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+		<button on:click={LSgetWorksheetValuesFromDOM} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 			>Get current worksheet</button
 		>
 	</div>

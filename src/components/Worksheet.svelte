@@ -8,8 +8,8 @@
 		pageColumns,
 		worksheet,
 		saveWorksheetLS,
-		getWorksheet,
-		checkForWorksheet
+		LSgetWorksheet,
+		LScheckForWorksheet
 	} from '$stores/math';
 	import {
 		processCalculation,
@@ -17,7 +17,7 @@
 		resizeAllInputs,
 		recalculateProblems
 	} from '$utils/math_operations';
-	import { getWorksheetValuesFromDOM, setWorksheetValuesToDOM } from '$utils/dom_operations.js';
+	import { LSgetWorksheetValuesFromDOM, setWorksheetValuesToDOM } from '$utils/dom_operations.js';
 
 
 	import { afterUpdate, onMount } from 'svelte';
@@ -27,7 +27,7 @@
 	$: exists = false;
 	$: console.log(`🚀 ~ file: Worksheet.svelte ~ line 15 ~ $: sheet`, sheet);
 	onMount(async () => {
-		checkForWorksheet() ? (sheet = await getWorksheet()) : (sheet = await generateNewWorksheet());
+		LScheckForWorksheet() ? (sheet = await LSgetWorksheet()) : (sheet = await generateNewWorksheet());
 		// sheet = await generateNewWorksheet();
         loaded = true
         console.log(`🚀 ~ file: Worksheet.svelte ~ line 28 ~ onMount ~ sheet`, sheet)

@@ -1,4 +1,5 @@
 import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns, problemsPerPage, worksheet } from '$stores/math.js'
+import { setWorksheetValuesToDOM } from './dom_operations';
 import { get } from 'svelte/store'
 import { v4 as uuidv4 } from 'uuid';
 let dA = get(digitsA)
@@ -89,12 +90,12 @@ export function generateNewWorksheet() {
     }
     let columns = get(pageColumns)
     sheet['operation'] = get(selectedOperation)
-    sheet['id'] = uuidv4();
+    sheet['xid'] = uuidv4();
     sheet['problems'] = problems;
     sheet['columns'] = columns;
     worksheet.set(sheet);
     console.log(`🚀 ~ file: math_operations.js ~ line 128 ~ newworksheet setWorksheetValuesToDOM ~ worksheet`, sheet)
-    // setWorksheetValuesToDOM(sheet);
+    setWorksheetValuesToDOM(sheet);
     return sheet
 }
 

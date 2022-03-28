@@ -27,10 +27,10 @@ export function setWorksheetValuesToDOM(sheet) {
     // return worksheet
 }
 
-export function getWorksheetValuesFromDOM() {
+export function LSgetWorksheetValuesFromDOM() {
     let newSheet = {}
     let id = get(currentWorksheetID) ? get(currentWorksheetID) : uuidv4();
-    console.log(`🚀 ~ file: dom_operations.js ~ line 30 ~ getWorksheetValuesFromDOM ~ id`, id)
+    console.log(`🚀 ~ file: dom_operations.js ~ line 30 ~ LSgetWorksheetValuesFromDOM ~ id`, id)
     newSheet['problems'] = []
     let problemsElements = document.getElementsByClassName('math-problem');
     Object.keys(problemsElements).forEach((i) => {

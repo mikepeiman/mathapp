@@ -2,14 +2,14 @@
 	import Icon from '@iconify/svelte';
 	import { createEventDispatcher, onMount, afterUpdate } from 'svelte';
 	import { get } from 'svelte/store';
-	import { selectedOperation, worksheet, getWorksheet } from '$stores/math.js';
+	import { selectedOperation, worksheet, LSgetWorksheet } from '$stores/math.js';
 	const dispatch = createEventDispatcher();
 	// $: selectedOperation = '';
 	let sheet = {}
 	$: current = sheet['operation'] ? sheet['operation']  : operations[0];
 
 	onMount(() => {
-		sheet = getWorksheet()
+		sheet = LSgetWorksheet("current")
 		console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 12 ~ onMount `);
 	});
 
