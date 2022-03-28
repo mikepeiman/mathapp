@@ -38,6 +38,15 @@ async function updateWorksheet() {
 
 export const saveWorksheetSupabase = async () => {
     let sheet = await updateWorksheet()
+    console.log(`🚀 ~ file: math.js ~ line 41 ~ saveWorksheetSupabase ~ sheet`, sheet)
+    console.log(`🚀 ~ file: math.js ~ line 43 ~ saveWorksheetSupabase ~ supabase`, supabase)
+    console.log(`🚀 ~ file: math.js ~ line 45 ~ saveWorksheetSupabase ~ {id: sheet.id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation}`, {id: sheet.id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation})
+    
+    const { data, error } = await supabase.from('worksheets').insert([{id: sheet.id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation}]);
+    if (error) {
+        return console.error(error)
+    }
+    console.log(`🚀 ~ file: math.js ~ line 47 ~ saveWorksheetSupabase ~ data`, data)
 }
 
 export const checkForWorksheet = () => {

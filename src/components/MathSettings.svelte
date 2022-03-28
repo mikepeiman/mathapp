@@ -18,7 +18,8 @@
 		worksheet,
 		saveWorksheetLS,
 		checkForWorksheet,
-		getAllWorksheets
+		getAllWorksheets,
+saveWorksheetSupabase
 	} from '$stores/math.js';
 	import { page } from '$app/stores';
 	import { get } from 'svelte/store';
@@ -49,6 +50,11 @@
 	}
 	function save() {
 		saveWorksheetLS();
+		console.log(`🚀 ~ file: MathSettings.svelte ~ line 47 ~ saveWorksheetLS ~ sheet`, sheet);
+		// ...
+	}
+	function saveDB() {
+		saveWorksheetSupabase()
 		console.log(`🚀 ~ file: MathSettings.svelte ~ line 47 ~ saveWorksheetLS ~ sheet`, sheet);
 		// ...
 	}
@@ -108,30 +114,35 @@
 			class="basic-underline-number-input"
 		/>
 	</div>
-	<button on:click={newRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
-		>Generate random values</button
-	>
-	<button on:click={refreshWorksheet} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
-		>Generate new worksheet</button
-	>
-	<button on:click={save} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
-		>Save worksheet</button
-	>
-	<button on:click={resizeAllInputs} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
-		>Resize inputs</button
-	>
-	<button on:click={checkWorksheetValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
-		>Check worksheet values</button
-	>
-	<button on:click={getAllWorksheets} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
-		>Get all worksheets</button
-	>
-	<button on:click={setDOMValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
-		>Set values to DOM</button
-	>
-	<button on:click={getWorksheetValuesFromDOM} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
-		>Get current worksheet</button
-	>
+	<div class="flex flex-col items-stretch">
+		<button on:click={newRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+			>Generate random values</button
+		>
+		<button on:click={refreshWorksheet} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+			>Generate new worksheet</button
+		>
+		<button on:click={save} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+			>Save worksheet LS</button
+		>
+		<button on:click={saveDB} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+			>Save worksheet DB</button
+		>
+		<button on:click={resizeAllInputs} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+			>Resize inputs</button
+		>
+		<button on:click={checkWorksheetValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+			>Check worksheet values</button
+		>
+		<button on:click={getAllWorksheets} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+			>Get all worksheets</button
+		>
+		<button on:click={setDOMValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+			>Set values to DOM</button
+		>
+		<button on:click={getWorksheetValuesFromDOM} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+			>Get current worksheet</button
+		>
+	</div>
 	<label for="showAnswers" class="flex items-center"
 		>Show Answers
 		<Checkbox
