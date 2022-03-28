@@ -1,6 +1,26 @@
+<script context="module">
+    import { getWorksheetsFromSupabase } from '$stores/math';
+    export async function load() {
+        // let res = await fetch('$api/worksheets.get.json');
+        let data = await getWorksheetsFromSupabase();
+        console.log(`🚀 ~ file: SideNav.svelte ~ line 4 ~ load ~ data`, data)
+        return { stuff: { data }, params: { data }, props: {data } }
+    }
+</script>
 <script>
 	import Icon from '@iconify/svelte';
     import tooltip from '$utils/tooltip';
+    // import { getWorksheetsFromSupabase } from '$stores/math';
+    import { page } from '$app/stores'
+    import { onMount } from 'svelte';
+import { worksheets } from '$stores/math';
+    $: sheets = []
+    onMount(async () => {
+        console.log(`🚀 ~ file: SideNav.svelte ~ line 14 ~ page`, $page)
+sheets = $page.stuff.data
+        // worksheets = await getWorksheetsFromSupabase();
+        // console.log(`🚀 ~ file: SideNav.svelte ~ line 9 ~ onMount ~ worksheets`, worksheets)
+    });
 	const icons = {
 		// 'equalizer-1': 'ph:equalizer-bold',
 		// 'equalizer-2': 'mdi:equalizer',
@@ -20,6 +40,9 @@
 </script>
 
 <div id="sidenav" class="flex flex-col w-full items-center justify-start bg-winterblues-900">
+    {#each sheets as worksheet}
+    {worksheet.xid}
+    {/each}
     {#each Object.keys(icons) as icon}
 	<div class="tooltip flex items-center justify-center text-4xl my-2 hover:text-winterblues-400 hover:cursor-pointer transition-all"
     use:tooltip

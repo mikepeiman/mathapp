@@ -29,9 +29,6 @@ getWorksheetsFromSupabase
 	$: sheet = {};
 	$: console.log(`🚀 ~ file: MathSettings.svelte ~ line 22 ~ sheet`, sheet);
 
-	worksheet.subscribe((val) => {
-		console.log(`🚀 ~ file: MathSettings.svelte ~ line 28 ~ val`, val);
-	});
 	onMount(() => {});
 	function refreshWorksheet() {
 		sheet = generateNewWorksheet();
@@ -39,15 +36,10 @@ getWorksheetsFromSupabase
 		resizeAllInputs();
 	}
 	function revealAnswers() {
-		console.log(
-			`🚀 ~ file: MathSettings.svelte ~ line 25 ~ revealAnswers ~ revealAnswers`,
-			$showAnswers
-		);
 		resizeAllInputs();
 	}
 	$: {
 		$showAnswers ? revealAnswers() : revealAnswers();
-		console.log(`🚀 ~ file: MathSettings.svelte ~ line 33 ~ $showAnswers`, $showAnswers);
 	}
 	function save() {
 		saveWorksheetLS();
@@ -116,9 +108,6 @@ getWorksheetsFromSupabase
 		/>
 	</div>
 	<div class="flex flex-col items-stretch">
-		<button on:click={newRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
-			>Generate random values</button
-		>
 		<button on:click={refreshWorksheet} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 			>Generate new worksheet</button
 		>

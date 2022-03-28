@@ -1,17 +1,14 @@
 <script>
-	// export let digitsA, digitsB
 	import { newRandomValues } from '$utils/math_operations.js';
-	import { selectedOperation, digitsA, digitsB, valueA, valueB } from '$stores/math.js';
-
-	// $selectedOperation
-	console.log(`🚀 ~ file: DigitsSettings.svelte ~ line 7 ~ $selectedOperation`, $selectedOperation);
+	import { digitsA, digitsB } from '$stores/math.js';
+    import { page } from '$app/stores'
+    let path = $page.url.pathname
 </script>
 
 <div
 	id="settings"
 	class="flex flex-col items-center justify-start pt-10 bg-winterblues-500 bg-opacity-20"
 >
-	<!-- <h1>Selected Operation: {$selectedOperation.name}</h1> -->
 	<div class="grid digits-grid gap-2 align-baseline w-full p-6">
 		<div class="relative flex">
 			<label for="digitsA" class="absolute bottom-0 p-2 inline-flex">Digits for first input</label>
@@ -32,9 +29,11 @@
 			class="basic-underline-number-input"
 		/>
 	</div>
-	<!-- <button on:click={newRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+    {#if path === '/'}
+	<button on:click={newRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Generate random values</button
-	> -->
+	>
+    {/if}
 </div>
 
 <style lang="scss">

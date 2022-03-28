@@ -14,6 +14,8 @@
 			"$api/*": ["src/routes/api/*"],
 			"$static": ["static"],
 			"$static/*": ["static/*"],
+			"$routes": ["src/routes"],
+			"$routes/*": ["src/routes/*"],
 		}
 	},
 	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte", "static/upload index.json copy.js", "static/index.json from dgraph code.js", "src/lib/zim.nft.min.js"]

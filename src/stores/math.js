@@ -35,6 +35,7 @@ export const getWorksheetsFromSupabase = async () => {
     } else {
         worksheets.set(data)
         console.log(`🚀 ~ file: math.js ~ line 37 ~ getWorksheetsFromSupabase ~ data`, data)
+        return data
     }
 }
 
@@ -66,11 +67,11 @@ export const saveWorksheetSupabase = async () => {
 export const LScheckForWorksheet = () => {
     let sheet = get(worksheet)
     if (sheet.length) {
-        console.log(`🚀 ~ file: stores.js ~ line 53 ~ LScheckForWorksheet ~ sheet`, sheet)
+        // console.log(`🚀 ~ file: stores.js ~ line 53 ~ LScheckForWorksheet ~ sheet`, sheet)
         return true
     } else if (localStorage && localStorage.getItem("worksheet")) {
         sheet = localStorage.getItem("worksheet")
-        console.log(`🚀 ~ file: math.js ~ line 31 ~ LScheckForWorksheet ~ sheet`, sheet)
+        // console.log(`🚀 ~ file: math.js ~ line 31 ~ LScheckForWorksheet ~ sheet`, sheet)
         worksheet.set(JSON.parse(localStorage.getItem("worksheet")))
         return true
     }

@@ -1,3 +1,12 @@
+<script context="module">
+    import { getWorksheetsFromSupabase } from '$stores/math';
+    export async function load() {
+        // let res = await fetch('$api/worksheets.get.json');
+        let data = await getWorksheetsFromSupabase();
+        console.log(`🚀 ~ file: SideNav.svelte ~ line 4 ~ load ~ data`, data)
+        return { stuff: { data }, params: { data }, props: {data } }
+    }
+</script>
 <script>
 	import { page } from '$app/stores';
 	import BasicCalculationForm from '$components/BasicCalculationForm.svelte';
@@ -9,21 +18,15 @@
 	import { supabase } from '$lib/supabaseClient';
 	import {
 		selectedOperation,
-		result,
-		problemsPerPage,
-		pageColumns,
-		worksheet,
-		saveWorksheetLS,
-		LScheckForWorksheet
 	} from '$stores/math';
-	import { processCalculation, resizeAllInputs, recalculateProblems } from '$utils/math_operations';
-	// import { LSgetWorksheetValuesFromDOM, setWorksheetValuesToDOM } from '$utils/dom_operations.js';
+	import {  resizeAllInputs, recalculateProblems } from '$utils/math_operations';
 
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	$: sheet = [];
 	$: console.log(`🚀 ~ file: index.svelte ~ line 13 ~ sheet`, sheet);
 	onMount(() => {
+        console.log(`🚀 ~ file: index.svelte ~ line 39 ~ onMount ~ $page`, $page)
 		console.log(`🚀 ~ file: index.svelte ~ line 17 ~ onMount ~ onMount - sheet`, sheet);
 		resizeAllInputs();
 	});

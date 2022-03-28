@@ -37,6 +37,7 @@ const config = {
 					'$stores': path.resolve('./src/stores'),
 					'$api': path.resolve('./src/routes/api'),
 					'$static': path.resolve('./static'),
+					'$routes': path.resolve('./src/routes'),
 				}
 			},
 			optimizeDeps: {
