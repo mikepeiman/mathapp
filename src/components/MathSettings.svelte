@@ -19,7 +19,8 @@
 		saveWorksheetLS,
 		LScheckForWorksheet,
 		getAllWorksheets,
-saveWorksheetSupabase
+saveWorksheetSupabase,
+getWorksheetsFromSupabase
 	} from '$stores/math.js';
 	import { page } from '$app/stores';
 	import { get } from 'svelte/store';
@@ -130,8 +131,8 @@ saveWorksheetSupabase
 		<button on:click={resizeAllInputs} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 			>Resize inputs</button
 		>
-		<button on:click={checkWorksheetValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
-			>Check worksheet values</button
+		<button on:click={getWorksheetsFromSupabase} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+			>Get worksheets from DB</button
 		>
 		<button on:click={getAllWorksheets} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 			>Get all worksheets</button

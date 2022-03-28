@@ -28,6 +28,17 @@ export const saveWorksheetLS = async () => {
     localStorage.setItem("worksheets", JSON.stringify(sheets));
 }
 
+export const getWorksheetsFromSupabase = async () => {
+    const { data, error } = await supabase.from('worksheets').select()
+    if (error) {
+        console.error(error)
+    } else {
+        worksheets.set(data)
+        console.log(`🚀 ~ file: math.js ~ line 37 ~ getWorksheetsFromSupabase ~ data`, data)
+    }
+}
+
+
 async function updateWorksheet() {
     let sheet = get(worksheet);
     let operation = get(selectedOperation);
