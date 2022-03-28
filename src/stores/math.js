@@ -42,7 +42,7 @@ export const saveWorksheetSupabase = async () => {
     console.log(`🚀 ~ file: math.js ~ line 43 ~ saveWorksheetSupabase ~ supabase`, supabase)
     console.log(`🚀 ~ file: math.js ~ line 45 ~ saveWorksheetSupabase ~ {id: sheet.id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation}`, {id: sheet.id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation})
     
-    const { data, error } = await supabase.from('worksheets').insert([{id: sheet.id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation}]);
+    const { data, error } = await supabase.from('worksheets').insert([{xid: sheet.id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation}]);
     if (error) {
         return console.error(error)
     }
