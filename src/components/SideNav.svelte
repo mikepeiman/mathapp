@@ -59,7 +59,7 @@
 			</div>
 		{/each}
 	{/if}
-	{#each Object.keys(icons) as icon}
+	<!-- {#each Object.keys(icons) as icon}
 		<div
 			class="tooltip flex items-center justify-center text-4xl my-2 hover:text-winterblues-400 hover:cursor-pointer transition-all"
 			use:tooltip
@@ -67,5 +67,5 @@
 		>
 			<Icon icon={icons[icon]} />
 		</div>
-	{/each}
+	{/each} -->
 </div>
