@@ -1,1 +1,0 @@
-<input type="text" placeholder="🧠 search" class="w-[60ch] bg-gray-300" />

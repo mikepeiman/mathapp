@@ -7,8 +7,6 @@ import { processCalculation, newRandomValues } from '$utils/math_operations'
 import { onMount } from "svelte";
 
 onMount(() => {
-    // $result
-    console.log(`🚀 ~ file: index.svelte ~ line 14 ~ onMount ~ $result`, $result)
     newRandomValues()
     // processCalculation();
 })
@@ -16,7 +14,7 @@ onMount(() => {
 function handleOperationSelect(msg) {
         console.log(`🚀 ~ file: index.svelte ~ line 10 ~ handleOperationSelect ~ msg`, msg.detail)
 		msg.detail.symbol !== '=' ? (selectedOperation.set(msg.detail)) : false;
-		processCalculation();
+		// processCalculation();
 	}
 </script>
 

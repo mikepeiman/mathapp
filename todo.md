@@ -15,6 +15,7 @@
   * add option to allow range of digits for each value, or strictly one magnitude of digits
   * User can select between new BLANK worksheet and new FILLED worksheet
     * will need a separate "Save Worksheet" function in that case which reads DOM input values and operators (as I enable more complex/varied operations)
+  * for state management, probably best UX if every change to worksheet is saved immediately to LS, which save/load from DB are user actions
 
 ## UI
 * use range sliders for number of digits and precision inputs

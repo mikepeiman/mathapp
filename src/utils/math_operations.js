@@ -1,5 +1,5 @@
 import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns, problemsPerPage, worksheet } from '$stores/math.js'
-import { setWorksheetValuesToDOM } from './dom_operations';
+import { setWorksheetValuesToDOM, resizeAllInputs, resizeInput } from './dom_operations';
 import { get } from 'svelte/store'
 import { v4 as uuidv4 } from 'uuid';
 let dA = get(digitsA)
@@ -25,6 +25,15 @@ export function processCalculationFromAttributes(inputs) {
     result.set(res);
     return res;
 }
+export function processCalculationFromValues(inputs) {
+    vA = inputs[0].value
+    vB = inputs[1].value
+    sO = get(selectedOperation)
+    res = eval(`${vA} ${sO.symbol} ${vB}`);
+    sO.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
+    result.set(res);
+    return res;
+}
 
 export function recalculateProblems() {
     let problemsElements = document.getElementsByClassName('math-problem');
@@ -35,7 +44,8 @@ export function recalculateProblems() {
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
         let inputsArray = Array.from(inputs)
-        let res = processCalculationFromAttributes(inputsArray);
+        // let res = processCalculationFromAttributes(inputsArray);
+        let res = processCalculationFromValues(inputsArray);
         inputsArray.forEach((input, i) => {
             input.value ? (input.style.width = input.value.length + 2 + 'ch') : (input.style.width = '1ch');
             if (input.name === "result") {

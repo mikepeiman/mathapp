@@ -1,6 +1,7 @@
 <script>
 	import Icon from '@iconify/svelte';
 	import { processCalculation } from '$utils/math_operations';
+	import { resizeAllInputs } from '$utils/dom_operations';
 	import { selectedOperation } from '$stores/math';
 	import { onMount } from 'svelte';
 	const icons = {
@@ -22,24 +23,25 @@
 		let b = problem.valueB;
 		let operation = $selectedOperation;
 		problem.result = processCalculation(a, b, operation);
+		resizeAllInputs()
+		this
+        console.log(`🚀 ~ file: MathProblem.svelte ~ line 28 ~ calculate ~ this`, this)
 	}
 
 	function updateDataAttributes() {
 		
 	}
-	function inputOnChange() {
-		this.value
-        console.log(`🚀 ~ file: MathProblem.svelte ~ line 32 ~ inputOnChange ~ this.value`, this.value)
-		resizeInput()
-	}
+
 
 	function resizeInput() {
 		this.value ? (this.style.width = this.value.length + 2 + 'ch') : (this.style.width = '1ch');
 	}
+
+
 </script>
 
 <div class="flex flex-col justify-center items-start text-4xl">
-	<div class="math-problem flex">
+	<div class="math-problem flex" on:change={calculate}>
 		<input
 			type="text"
 			name="valueA"
@@ -67,7 +69,7 @@
 			type="text"
 			name="result"
 			bind:value={problem.result}
-			on:change={inputOnChange}
+			on:change={() => inputOnChange(this)}
 			class="basic-underline-text-input"
 			placeholder="value C"
 		/>

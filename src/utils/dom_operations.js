@@ -72,7 +72,7 @@ export function resizeAllInputs() {
     });
 }
 
-function resizeInput() {
+export function resizeInput() {
     let dA = get(digitsA)
     let dB = get(digitsB)
     let show = get(showAnswers);
