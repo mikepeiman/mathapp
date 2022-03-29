@@ -14,10 +14,10 @@
 	import {
 		processCalculation,
 		generateNewWorksheet,
-		resizeAllInputs,
+
 		recalculateProblems
 	} from '$utils/math_operations';
-	import { LSgetWorksheetValuesFromDOM, setWorksheetValuesToDOM } from '$utils/dom_operations.js';
+	import { LSgetWorksheetValuesFromDOM, setWorksheetValuesToDOM, 		resizeAllInputs,} from '$utils/dom_operations.js';
 
 
 	import { afterUpdate, onMount } from 'svelte';

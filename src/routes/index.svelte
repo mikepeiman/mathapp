@@ -19,7 +19,8 @@
 	import {
 		selectedOperation,
 	} from '$stores/math';
-	import {  resizeAllInputs, recalculateProblems } from '$utils/math_operations';
+	import {   recalculateProblems } from '$utils/math_operations';
+	import { resizeAllInputs } from '$utils/dom_operations'
 
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';

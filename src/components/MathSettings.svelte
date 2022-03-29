@@ -2,10 +2,10 @@
 	// export let digitsA, digitsB
 	import {
 		newRandomValues,
-		resizeAllInputs,
+
 		generateNewWorksheet
 	} from '$utils/math_operations.js';
-	import { LSgetWorksheetValuesFromDOM, setWorksheetValuesToDOM } from '$utils/dom_operations.js';
+	import { LSgetWorksheetValuesFromDOM, setWorksheetValuesToDOM, 		resizeAllInputs,} from '$utils/dom_operations.js';
 	import {
 		selectedOperation,
 		digitsA,

@@ -10,16 +10,13 @@ let sO = get(selectedOperation)
 let res = get(result)
 let longest = 0
 
-export function processCalculation() {
-    vA = get(valueA)
-    vB = get(valueB)
-    sO = get(selectedOperation)
-    res = eval(`${vA} ${sO.symbol} ${vB}`);
-    sO.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
+export function processCalculation(a, b, operation) {
+    res = eval(`${a} ${operation.symbol} ${b}`);
+    operation.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
     result.set(res);
     return res;
 }
-export function processCalculation2(inputs) {
+export function processCalculationFromAttributes(inputs) {
     vA = inputs[0].getAttribute('data-value')
     vB = inputs[1].getAttribute('data-value')
     sO = get(selectedOperation)
@@ -38,7 +35,7 @@ export function recalculateProblems() {
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
         let inputsArray = Array.from(inputs)
-        let res = processCalculation2(inputsArray);
+        let res = processCalculationFromAttributes(inputsArray);
         inputsArray.forEach((input, i) => {
             input.value ? (input.style.width = input.value.length + 2 + 'ch') : (input.style.width = '1ch');
             if (input.name === "result") {
@@ -99,38 +96,4 @@ export function generateNewWorksheet() {
     console.log(`🚀 ~ file: math_operations.js ~ line 128 ~ newworksheet setWorksheetValuesToDOM ~ worksheet`, sheet)
     setWorksheetValuesToDOM(sheet);
     return sheet
-}
-
-export function resizeAllInputs() {
-    let problemsElements = document.getElementsByClassName('math-problem');
-    let show = get(showAnswers);
-    Object.keys(problemsElements).forEach((i) => {
-        let problemEl = problemsElements[i];
-        let inputs = problemEl.children;
-        inputs = Array.from(inputs);
-        inputs = inputs.filter((input) => input.tagName === 'INPUT');
-        Array.from(inputs).forEach((input, i) => {
-            // input.value ? (input.style.width = input.value.length + 2 + 'ch') : (input.style.width = '1ch');
-            // if(input.name === "result"){
-            //     show ? input.value = input.getAttribute('data-value') : input.value = '';
-            // }
-            input.addEventListener('change', resizeInput);
-            input.addEventListener('input', resizeInput);
-            resizeInput.call(input);
-        });
-    });
-}
-
-function resizeInput() {
-    dA = get(digitsA)
-    dB = get(digitsB)
-    let show = get(showAnswers);
-    this.getAttribute('data-value') ? (this.style.width = this.getAttribute('data-value').length + 2 + 'ch') : (this.style.width = dA + dB + 1 + 'ch');
-    // (this.style.width = dA + dB + 1 + 'ch')
-    let thisLength = this.value.length;
-    thisLength > longest ? longest = thisLength : longest;
-    // console.log(`🚀 ~ file: math_operations.js ~ line 127 ~ resizeInput ~ longest`, longest)
-    if (this.name === "result") {
-        show ? this.value = this.getAttribute('data-value') : this.value = ' ';
-    }
 }
