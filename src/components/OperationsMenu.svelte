@@ -10,6 +10,7 @@
 
 	onMount(() => {
 		sheet = LSgetWorksheet("current")
+		dispatch('operationSelect', sheet.operation);
 		console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 12 ~ onMount `);
 	});
 
