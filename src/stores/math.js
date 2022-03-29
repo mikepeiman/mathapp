@@ -19,10 +19,11 @@ export const randomizeOperations = writable(false);
 export const worksheetSaved = writable(false);
 
 export const saveWorksheetLS = async () => {
-    let sheet = await updateWorksheet()
+    // let sheet = await updateWorksheet()
+    let sheet = get(worksheet);
     sheet.saved = true
     worksheetSaved.set(true)
-    worksheet.set(sheet)
+    // worksheet.set(sheet)
     localStorage.setItem("worksheet", JSON.stringify(sheet));
     let sheets = get(worksheets);
     sheets.push(sheet)

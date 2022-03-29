@@ -1,4 +1,4 @@
-import { currentWorksheetID, showAnswers, digitsA, digitsB } from '$stores/math'
+import { currentWorksheetID, showAnswers, digitsA, digitsB, saveWorksheetLS } from '$stores/math'
 import { get } from 'svelte/store'
 import { v4 as uuidv4 } from 'uuid';
 let longest = 0
@@ -24,6 +24,7 @@ export function setWorksheetValuesToDOM(sheet) {
             input.setAttribute("data-value", values[j])
         });
     });
+    // saveWorksheetLS()
     // return worksheet
 }
 
@@ -36,14 +37,17 @@ export function LSgetWorksheetValuesFromDOM() {
     Object.keys(problemsElements).forEach((i) => {
         let problemEl = problemsElements[i];
         // console.log(`🚀 ~ file: math_operations.js ~ line 83 ~ Object.keys ~ problemEl`, problemEl)
-        let inputs = problemEl.children;
-        inputs = Array.from(inputs);
-        inputs = inputs.filter((input) => input.tagName === 'INPUT');
+        let children = problemEl.children;
+        children = Array.from(children);
+       let  inputs = children.filter((input) => input.tagName === 'INPUT');
+        let operationEl = children.filter((input) => input.name === 'operation-icon');
+        console.log(`🚀 ~ file: dom_operations.js ~ line 43 ~ Object.keys ~ operationEl`, operationEl)
         let problem = {}
 
         Array.from(inputs).forEach((input, j) => {
-           problem[input.name] = input.value
+            problem[input.name] = input.value
         });
+        problem['operation'] = operationEl[0].value
         newSheet['problems'].push(problem)
     });
     console.log(`🚀 ~ file: dom_operations.js ~ line 43 ~ Object.keys ~ newSheet`, newSheet)

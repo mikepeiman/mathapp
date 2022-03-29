@@ -61,6 +61,12 @@
 		sheet = get(worksheet);
 		setWorksheetValuesToDOM(sheet);
 	}
+
+	function getWorksheetValuesFromStore() {
+		sheet = get(worksheet);
+        console.log(`🚀 ~ file: MathSettings.svelte ~ line 67 ~ getWorksheetValuesFromStore ~ sheet`, sheet)
+		
+	}
 </script>
 
 <div
@@ -131,7 +137,10 @@
 			>Set values to DOM</button
 		>
 		<button on:click={LSgetWorksheetValuesFromDOM} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
-			>Get current worksheet</button
+			>Get current worksheet DOM</button
+		>
+		<button on:click={getWorksheetValuesFromStore} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+			>Get current worksheet store</button
 		>
 	</div>
 	<label for="showAnswers" class="flex items-center"

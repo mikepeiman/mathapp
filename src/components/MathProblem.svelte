@@ -45,7 +45,6 @@
 
 <div class="flex flex-col justify-center items-start text-4xl">
 	<div class="math-problem flex" on:change={calculate}>
-		{getIcon()}
 		<input
 			type="text"
 			name="valueA"
@@ -55,7 +54,7 @@
 			placeholder="value A"
 		/>
 		<div class="flex flex-col items-center justify-center text-lime-500 mx-2">
-			<Icon icon={getIcon()} class="text-2xl" />
+			<Icon icon={problem.op.iconname} name="operation-icon" class="text-2xl" />
 			<!-- <Icon icon={$selectedOperation.iconname || icons.times} class="text-2xl" /> -->
 		</div>
 		<input
