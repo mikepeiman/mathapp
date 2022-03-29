@@ -15,9 +15,13 @@ export const digitsB = writable(2);
 export const problemsPerPage = writable(20);
 export const pageColumns = writable(2);
 export const showAnswers = writable(true);
+export const worksheetSaved = writable(false);
 
 export const saveWorksheetLS = async () => {
     let sheet = await updateWorksheet()
+    sheet.saved = true
+    worksheetSaved.set(true)
+    worksheet.set(sheet)
     localStorage.setItem("worksheet", JSON.stringify(sheet));
     let sheets = get(worksheets);
     sheets.push(sheet)
@@ -48,15 +52,21 @@ async function updateWorksheet() {
 
 export const saveWorksheetSupabase = async () => {
     let sheet = await updateWorksheet()
+    sheet.saved = true
     console.log(`🚀 ~ file: math.js ~ line 41 ~ saveWorksheetSupabase ~ sheet`, sheet)
     console.log(`🚀 ~ file: math.js ~ line 43 ~ saveWorksheetSupabase ~ supabase`, supabase)
     console.log(`🚀 ~ file: math.js ~ line 45 ~ saveWorksheetSupabase ~ {id: sheet.id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation}`, { xid: sheet.xid, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation })
 
     const { data, error } = await supabase.from('worksheets').insert([{ xid: sheet.xid, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }]);
     if (error) {
+        sheet.saved = false
+        worksheetSaved.set(false)
         return console.error(error)
+    } else {
+        console.log(`🚀 ~ file: math.js ~ line 47 ~ saveWorksheetSupabase ~ data`, data)
+        
+        worksheetSaved.set(true)
     }
-    console.log(`🚀 ~ file: math.js ~ line 47 ~ saveWorksheetSupabase ~ data`, data)
 }
 
 export const LScheckForWorksheet = () => {

@@ -94,10 +94,10 @@ export function newRandomValues() {
     dA = get(digitsA)
     dB = get(digitsB)
     sO = get(selectedOperation)
-    console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ newRandomValues ~ sO`, sO)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ newRandomValues ~ sO`, sO)
     if(!sO.length){
         sO = operations[0];
-        console.log(`🚀 ~ file: math_operations.js ~ line 100 ~ newRandomValues ~ sO`, sO)
+        // console.log(`🚀 ~ file: math_operations.js ~ line 100 ~ newRandomValues ~ sO`, sO)
         selectedOperation.set(sO);
     }
     vA = randomIntegerRange(Math.pow(10, dA - 1), Math.pow(10, dA), dA)
@@ -105,7 +105,7 @@ export function newRandomValues() {
     valueA.set(vA);
     valueB.set(vB);
     // console.log(`🚀 ~ file: math_operations.js ~ line 66 ~ newRandomValues ~ ${vA} ${sO.symbol} ${vB}`)
-    console.log(`🚀 ~ file: math_operations.js ~ line 69 ~ newRandomValues ~ ${vA} ${sO['symbol']} ${vB}`,)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 69 ~ newRandomValues ~ ${vA} ${sO['symbol']} ${vB}`,)
     let answer = eval(`${vA} ${sO['symbol']} ${vB}`);
     sO.name === 'Divide' ? (answer = setDivisionPrecision(answer)) : answer;
     result.set(answer);

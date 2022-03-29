@@ -34,6 +34,7 @@
 
 ## bugfix
 * 2022-03-27 lost ability to manually calculate problems. Can change inputs and save, but not results. Need to tie the calculation to current input value, not data-value attribute
+* 'worksheets' in ls not saving correctly; getting partial overwrites of existing sheets
 * 2022-03-29 deployed app bug not producing worksheet - operations shown but no problems: VM455:1 Uncaught (in promise) SyntaxError: Unexpected identifier
     at newRandomValues (DigitsSettings.svelte_svelte_type_style_lang-1a05efec.js:1:1996)
     at generateNewWorksheet (DigitsSettings.svelte_svelte_type_style_lang-1a05efec.js:1:2428)
