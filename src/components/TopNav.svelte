@@ -8,12 +8,13 @@
 	$: current = get(currentView);
 
 	const icons = [
-		{ icon: 'ant-design:calculator-filled', url: '/', name: 'Calculator' },
-		{
+        {
 			icon: 'ic:baseline-view-comfy',
-			url: '/worksheets',
+			url: '/',
 			name: 'Worksheets'
-		}
+		},
+		{ icon: 'ant-design:calculator-filled', url: '/calc', name: 'Calculator' },
+
 	];
 
 	function navigate(icon) {
