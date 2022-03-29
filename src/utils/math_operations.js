@@ -58,6 +58,17 @@ export function processCalculationFromValues(inputs) {
 }
 
 export function recalculateProblems() {
+    let sheet = get(worksheet)
+    let problems = sheet.problems
+    let op = get(selectedOperation)
+    console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ recalculateProblems ~ problems`, problems)
+    problems.forEach(problem => {
+        console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ problem`, problem)
+        problem.op = op
+        problem.result = processCalculation(problem.valueA, problem.valueB, op)
+    })
+    sheet.problems = problems
+    worksheet.set(sheet)
     let problemsElements = document.getElementsByClassName('math-problem');
     let show = get(showAnswers);
     Object.keys(problemsElements).forEach((i) => {
@@ -94,7 +105,7 @@ export function newRandomValues() {
     let randomOperation = operations[Math.floor(Math.random() * operations.length)];
 
     // console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ newRandomValues ~ sO`, sO)
-    if(!sO.length){
+    if (!sO.length) {
         sO = operations[0];
         // console.log(`🚀 ~ file: math_operations.js ~ line 100 ~ newRandomValues ~ sO`, sO)
         selectedOperation.set(sO);
@@ -109,7 +120,7 @@ export function newRandomValues() {
     let answer = eval(`${vA} ${sO['symbol']} ${vB}`);
     sO.name === 'Divide' ? (answer = setDivisionPrecision(answer)) : answer;
     result.set(answer);
-    return [vA,  vB,  answer, sO];
+    return [vA, vB, answer, sO];
 }
 
 function randomIntegerRange(min, max, digits) {
