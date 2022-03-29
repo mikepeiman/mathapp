@@ -48,6 +48,7 @@
 		"canvas-sketch-util": "^1.10.0",
 		"cheerio": "^1.0.0-rc.10",
 		"chroma-js": "^1.3.7",
+		"date-fns": "^2.28.0",
 		"honeycomb-grid": "^3.1.8",
 		"ioredis": "^4.28.4",
 		"lorem-ipsum": "^2.0.4",

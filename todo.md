@@ -1,5 +1,6 @@
 # For Math App
 
+## General todo and ideas
 * provide a view-switching tab/iconset at top to switch between calculator, flashcard, and worksheet modes
   * provide a print option for worksheets
   * allow user to select number of problems per page (within a reasonable range) and problem scope (digits per value, construction of problems)

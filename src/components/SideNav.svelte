@@ -11,6 +11,8 @@
 <script>
 	import Icon from '@iconify/svelte';
 	import tooltip from '$utils/tooltip';
+	import { format, compareAsc } from 'date-fns';
+
 	// import { getWorksheetsFromSupabase } from '$stores/math';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
@@ -42,15 +44,24 @@
 	function worksheetNavigate(cur) {
 		console.log(`🚀 ~ file: SideNav.svelte ~ line 43 ~ worksheetNavigate ~ cur`, cur);
 	}
+
+	function formatDate(date) {
+	 return	format(new Date(date), 'MM/dd/yyyy');
+	}
+
+    function tooltipData(cur) {
+        return `${format(new Date(cur.created_at), 'MM/dd/yyyy h:MMaaa')}\n
+        ${JSON.parse(cur.problems).length} problems`;
+    }
 </script>
 
 <div id="sidenav" class="flex flex-col w-full items-center justify-start bg-winterblues-900">
 	{#if sheets && sheets.length}
 		{#each sheets as cur}
 			<div
-				class="tooltip flex items-center justify-center text-4xl my-2 hover:text-winterblues-400 hover:cursor-pointer transition-all"
+				class="tooltip flex items-center justify-center text-4xl my-2  hover:text-winterblues-400 hover:cursor-pointer transition-all"
 				use:tooltip
-				title={icons['grid-view']}
+				title={tooltipData(cur)}
 				on:click={() => {
 					worksheetNavigate(cur);
 				}}

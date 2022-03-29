@@ -14,7 +14,7 @@
 	let valueA, valueB, result;
 	export let problem = {};
 	onMount(() => {
-		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ problem`, problem)
+		console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ problem`, problem);
 	});
 
 	function calculate() {
@@ -23,21 +23,20 @@
 		let b = problem.valueB;
 		let operation = $selectedOperation;
 		problem.result = processCalculation(a, b, operation);
-		resizeAllInputs()
-		this
-        console.log(`🚀 ~ file: MathProblem.svelte ~ line 28 ~ calculate ~ this`, this)
+		resizeAllInputs();
+		this;
+		console.log(`🚀 ~ file: MathProblem.svelte ~ line 28 ~ calculate ~ this`, this);
 	}
 
-	function updateDataAttributes() {
-		
-	}
-
+	function updateDataAttributes() {}
 
 	function resizeInput() {
 		this.value ? (this.style.width = this.value.length + 2 + 'ch') : (this.style.width = '1ch');
 	}
 
-
+	function getIcon() {
+		return problem.op.iconname ? problem.op.iconname : $selectedOperation.iconname;
+	}
 </script>
 
 <div class="flex flex-col justify-center items-start text-4xl">
@@ -51,7 +50,8 @@
 			placeholder="value A"
 		/>
 		<div class="flex flex-col items-center justify-center text-lime-500 mx-2">
-			<Icon icon={$selectedOperation.iconname || icons.times} class="text-2xl" />
+			<Icon icon={getIcon()} class="text-2xl" />
+			<!-- <Icon icon={$selectedOperation.iconname || icons.times} class="text-2xl" /> -->
 		</div>
 		<input
 			type="text"
@@ -69,7 +69,6 @@
 			type="text"
 			name="result"
 			bind:value={problem.result}
-			on:change={() => inputOnChange(this)}
 			class="basic-underline-text-input"
 			placeholder="value C"
 		/>

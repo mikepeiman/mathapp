@@ -1,4 +1,4 @@
-import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns, problemsPerPage, worksheet } from '$stores/math.js'
+import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns, problemsPerPage, worksheet, randomizeOperations } from '$stores/math.js'
 import { setWorksheetValuesToDOM, resizeAllInputs, resizeInput } from './dom_operations';
 import { get } from 'svelte/store'
 import { v4 as uuidv4 } from 'uuid';
@@ -30,11 +30,6 @@ let operations = [
         symbol: '/',
         iconname: 'fa-solid:divide'
     },
-    {
-        name: 'Equals',
-        symbol: '=',
-        iconname: 'fa-solid:equals'
-    }
 ];
 
 export function processCalculation(a, b, operation) {
@@ -94,12 +89,17 @@ export function newRandomValues() {
     dA = get(digitsA)
     dB = get(digitsB)
     sO = get(selectedOperation)
+    let randomize = get(randomizeOperations)
+    // get random operation
+    let randomOperation = operations[Math.floor(Math.random() * operations.length)];
+
     // console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ newRandomValues ~ sO`, sO)
     if(!sO.length){
         sO = operations[0];
         // console.log(`🚀 ~ file: math_operations.js ~ line 100 ~ newRandomValues ~ sO`, sO)
         selectedOperation.set(sO);
     }
+    randomize ? sO = randomOperation : sO = sO;
     vA = randomIntegerRange(Math.pow(10, dA - 1), Math.pow(10, dA), dA)
     vB = randomIntegerRange(Math.pow(10, dB - 1), Math.pow(10, dB), dB)
     valueA.set(vA);
@@ -109,7 +109,7 @@ export function newRandomValues() {
     let answer = eval(`${vA} ${sO['symbol']} ${vB}`);
     sO.name === 'Divide' ? (answer = setDivisionPrecision(answer)) : answer;
     result.set(answer);
-    return [vA, vB, answer];
+    return [vA,  vB,  answer, sO];
 }
 
 function randomIntegerRange(min, max, digits) {
@@ -126,6 +126,7 @@ export function generateNewWorksheet() {
             valueA: values[0],
             valueB: values[1],
             result: values[2],
+            op: values[3],
         }
         problems.push(problem);
     }

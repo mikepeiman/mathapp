@@ -1,11 +1,11 @@
 <script>
 	// export let digitsA, digitsB
+	import { newRandomValues, generateNewWorksheet } from '$utils/math_operations.js';
 	import {
-		newRandomValues,
-
-		generateNewWorksheet
-	} from '$utils/math_operations.js';
-	import { LSgetWorksheetValuesFromDOM, setWorksheetValuesToDOM, 		resizeAllInputs,} from '$utils/dom_operations.js';
+		LSgetWorksheetValuesFromDOM,
+		setWorksheetValuesToDOM,
+		resizeAllInputs
+	} from '$utils/dom_operations.js';
 	import {
 		selectedOperation,
 		digitsA,
@@ -19,8 +19,9 @@
 		saveWorksheetLS,
 		LScheckForWorksheet,
 		getAllWorksheets,
-saveWorksheetSupabase,
-getWorksheetsFromSupabase
+		randomizeOperations,
+		saveWorksheetSupabase,
+		getWorksheetsFromSupabase
 	} from '$stores/math.js';
 	import { page } from '$app/stores';
 	import { get } from 'svelte/store';
@@ -47,7 +48,7 @@ getWorksheetsFromSupabase
 		// ...
 	}
 	function saveDB() {
-		saveWorksheetSupabase()
+		saveWorksheetSupabase();
 		console.log(`🚀 ~ file: MathSettings.svelte ~ line 47 ~ saveWorksheetLS ~ sheet`, sheet);
 		// ...
 	}
@@ -117,9 +118,9 @@ getWorksheetsFromSupabase
 		<button on:click={saveDB} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 			>Save worksheet DB</button
 		>
-		<button on:click={resizeAllInputs} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+		<!-- <button on:click={resizeAllInputs} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 			>Resize inputs</button
-		>
+		> -->
 		<button on:click={getWorksheetsFromSupabase} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 			>Get worksheets from DB</button
 		>
@@ -140,6 +141,14 @@ getWorksheetsFromSupabase
 			bind:checked={$showAnswers}
 			class=" m-4 bg-winterblues-500 bg-opacity-50"
 		/>{$showAnswers}
+	</label>
+	<label for="randomizeOperations" class="flex items-center"
+		>Randomize Operations
+		<Checkbox
+			name="randomizeOperations"
+			bind:checked={$randomizeOperations}
+			class=" m-4 bg-winterblues-500 bg-opacity-50"
+		/>{$randomizeOperations}
 	</label>
 </div>
 

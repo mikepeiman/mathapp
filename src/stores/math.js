@@ -15,6 +15,7 @@ export const digitsB = writable(2);
 export const problemsPerPage = writable(20);
 export const pageColumns = writable(2);
 export const showAnswers = writable(true);
+export const randomizeOperations = writable(false);
 export const worksheetSaved = writable(false);
 
 export const saveWorksheetLS = async () => {
