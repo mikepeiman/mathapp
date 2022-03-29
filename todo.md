@@ -39,3 +39,6 @@
 * 2022-03-29 deployed app bug not producing worksheet - operations shown but no problems: VM455:1 Uncaught (in promise) SyntaxError: Unexpected identifier
     at newRandomValues (DigitsSettings.svelte_svelte_type_style_lang-1a05efec.js:1:1996)
     at generateNewWorksheet (DigitsSettings.svelte_svelte_type_style_lang-1a05efec.js:1:2428)
+
+## logic
+* STORES should be single source of truth. DOM and LS should reflect stores immediately & reactively; calculations should occur entirely with store values; DB should be updated or called on user action only (or eventually, auto-save features possibly)
