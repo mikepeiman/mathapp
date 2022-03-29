@@ -33,6 +33,8 @@
 	$: console.log(`🚀 ~ file: Worksheet.svelte ~ line 15 ~ $: sheet`, sheet);
     $: console.log(`🚀 ~ file: Worksheet.svelte ~ line 33 ~ $: saved`, saved)
 	onMount(async () => {
+        console.log(`🚀 ~ file: Worksheet.svelte ~ line 38 ~ onMount ~ LScheckForWorksheet()`, LScheckForWorksheet())
+
 		LScheckForWorksheet()
 			? (sheet = await LSgetWorksheet())
 			: (sheet = await generateNewWorksheet());

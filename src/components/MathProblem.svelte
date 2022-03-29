@@ -2,7 +2,7 @@
 	import Icon from '@iconify/svelte';
 	import { processCalculation } from '$utils/math_operations';
 	import { resizeAllInputs } from '$utils/dom_operations';
-	import { selectedOperation } from '$stores/math';
+	import { selectedOperation, randomizeOperations, worksheet } from '$stores/math';
 	import { onMount } from 'svelte';
 	const icons = {
 		times: 'fa-solid:times',
@@ -12,20 +12,22 @@
 		equals: 'fa-solid:equals'
 	};
 	let valueA, valueB, result;
+	$: sheet = $worksheet
+
 	export let problem = {};
+    $: console.log(`🚀 ~ file: MathProblem.svelte ~ line 18 ~ $: problem.op - `, problem.op)
+
 	onMount(() => {
-		console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ problem`, problem);
+		console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ onMount problem.op `, problem.op);
 	});
 
 	function calculate() {
 		console.log(`🚀 ~ file: MathProblem.svelte ~ line 21 ~ calculate ~ problem`, problem);
 		let a = problem.valueA;
 		let b = problem.valueB;
-		let operation = $selectedOperation;
+		let operation = $randomizeOperations ? problem.op : $selectedOperation;
 		problem.result = processCalculation(a, b, operation);
 		resizeAllInputs();
-		this;
-		console.log(`🚀 ~ file: MathProblem.svelte ~ line 28 ~ calculate ~ this`, this);
 	}
 
 	function updateDataAttributes() {}
@@ -35,12 +37,15 @@
 	}
 
 	function getIcon() {
-		return problem.op.iconname ? problem.op.iconname : $selectedOperation.iconname;
+		// return $randomizeOperations ? problem.op.iconname : $selectedOperation.iconname;
+        // console.log(`🚀 ~ file: MathProblem.svelte ~ line 40 ~ getIcon ~ problem.op.iconname `, problem?.op?.iconname )
+		return problem.op.iconname 
 	}
 </script>
 
 <div class="flex flex-col justify-center items-start text-4xl">
 	<div class="math-problem flex" on:change={calculate}>
+		{getIcon()}
 		<input
 			type="text"
 			name="valueA"

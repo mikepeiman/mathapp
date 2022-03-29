@@ -61,10 +61,6 @@ export function resizeAllInputs() {
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
         Array.from(inputs).forEach((input, i) => {
-            // input.value ? (input.style.width = input.value.length + 2 + 'ch') : (input.style.width = '1ch');
-            // if(input.name === "result"){
-            //     show ? input.value = input.getAttribute('data-value') : input.value = '';
-            // }
             input.addEventListener('change', resizeInput);
             input.addEventListener('input', resizeInput);
             resizeInput.call(input);
