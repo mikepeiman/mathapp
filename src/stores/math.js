@@ -16,10 +16,6 @@ export const problemsPerPage = writable(20);
 export const pageColumns = writable(2);
 export const showAnswers = writable(true);
 
-selectedOperation.subscribe(operation => {
-    console.log(`🚀 ~ file: math.js ~ line 19 ~ operation`, operation)
-})
-
 export const saveWorksheetLS = async () => {
     let sheet = await updateWorksheet()
     localStorage.setItem("worksheet", JSON.stringify(sheet));
@@ -38,7 +34,6 @@ export const getWorksheetsFromSupabase = async () => {
         return data
     }
 }
-
 
 async function updateWorksheet() {
     let sheet = get(worksheet);

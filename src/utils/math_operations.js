@@ -9,6 +9,33 @@ let vB = get(valueB)
 let sO = get(selectedOperation)
 let res = get(result)
 let longest = 0
+let operations = [
+    {
+        name: 'Multiply',
+        symbol: '*',
+        iconname: 'fa-solid:times'
+    },
+    {
+        name: 'Subtract',
+        symbol: '-',
+        iconname: 'fa-solid:minus'
+    },
+    {
+        name: 'Add',
+        symbol: '+',
+        iconname: 'fa-solid:plus'
+    },
+    {
+        name: 'Divide',
+        symbol: '/',
+        iconname: 'fa-solid:divide'
+    },
+    {
+        name: 'Equals',
+        symbol: '=',
+        iconname: 'fa-solid:equals'
+    }
+];
 
 export function processCalculation(a, b, operation) {
     res = eval(`${a} ${operation.symbol} ${b}`);
@@ -68,6 +95,11 @@ export function newRandomValues() {
     dB = get(digitsB)
     sO = get(selectedOperation)
     console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ newRandomValues ~ sO`, sO)
+    if(!sO.length){
+        sO = operations[0];
+        console.log(`🚀 ~ file: math_operations.js ~ line 100 ~ newRandomValues ~ sO`, sO)
+        selectedOperation.set(sO);
+    }
     vA = randomIntegerRange(Math.pow(10, dA - 1), Math.pow(10, dA), dA)
     vB = randomIntegerRange(Math.pow(10, dB - 1), Math.pow(10, dB), dB)
     valueA.set(vA);

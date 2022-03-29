@@ -33,7 +33,7 @@
 	});
 
 	function handleOperationSelect(msg) {
-		console.log(`🚀 ~ file: index.svelte ~ line 10 ~ handleOperationSelect ~ msg`, msg.detail);
+		console.log(`🚀 ~ file: index.svelte ~ line 10 ~ handleOperationSelect ~ msg`, msg);
 		msg.detail.symbol !== '=' ? selectedOperation.set(msg.detail) : false;
 		recalculateProblems();
 		resizeAllInputs();
@@ -41,7 +41,7 @@
 </script>
 
 <div id="worksheet-layout" class="layout-main w-full h-full">
-	<OperationsMenu on:operationSelect={handleOperationSelect} />
+	<OperationsMenu on:operationSelect={(msg) => handleOperationSelect(msg)} />
 	<MathSettings />
 	<Worksheet {sheet} />
 </div>

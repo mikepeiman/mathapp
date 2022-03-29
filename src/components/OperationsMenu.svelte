@@ -10,13 +10,15 @@
 
 	onMount(() => {
 		sheet = LSgetWorksheet("current")
-		dispatch('operationSelect', sheet.operation);
+        console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 13 ~ onMount ~ sheet`, sheet)
+        console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 15 ~ onMount ~ current`, current)
+		dispatch('operationSelect', current);
 		console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 12 ~ onMount `);
 	});
 
 
 
-	let operations = [
+	export const operations = [
 		{
 			name: 'Multiply',
 			symbol: '*',
@@ -45,9 +47,10 @@
 	];
 
 	function operationSelect(operation) {
+        console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 48 ~ operationSelect ~ operation`, operation)
 		operation.symbol !== '=' ? selectedOperation.set(operation) : false;
 		operation.symbol !== '=' ? (current = operation) : false;
-		dispatch('operationSelect', operation);
+		operation ? dispatch('operationSelect', operation) : dispatch('operationSelect', current);
 	}
 </script>
 
