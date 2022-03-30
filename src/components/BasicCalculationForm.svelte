@@ -1,6 +1,6 @@
 <script>
 	import Icon from '@iconify/svelte';
-	import { processCalculation, newRandomValues } from '$utils/math_operations';
+	import { processCalculation, newProblemWithRandomValues } from '$utils/math_operations';
 	import { digitsA, digitsB, result, selectedOperation, valueA, valueB } from '$stores/math';
 	const icons = {
 		times: 'fa-solid:times',

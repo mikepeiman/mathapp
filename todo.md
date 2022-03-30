@@ -24,6 +24,7 @@
 * num of problems is a property of generating new sheet, as are digits for each value fiekd; these should be set and confirmed. num of columns is a view property and can be changed on the fly, regardless of how many problems are in current worksheet
 * make the sidenav wider to accomodate labels, and enable it to collapse to icons
 * add a question mark symbol to operations menu to denote mixed operations, and to trigger random operations on click
+* give user layout options - fit problems to page, or stack them with adjustable margins; allow problems to overflow to additional pages; column gap/margin
 
 ## Features
 * rather than "generate random values" make it a random problem, ie. randomize operation also
@@ -38,7 +39,7 @@
 * 2022-03-27 lost ability to manually calculate problems. Can change inputs and save, but not results. Need to tie the calculation to current input value, not data-value attribute
 * 'worksheets' in ls not saving correctly; getting partial overwrites of existing sheets
 * 2022-03-29 deployed app bug not producing worksheet - operations shown but no problems: VM455:1 Uncaught (in promise) SyntaxError: Unexpected identifier
-    at newRandomValues (DigitsSettings.svelte_svelte_type_style_lang-1a05efec.js:1:1996)
+    at newProblemWithRandomValues (DigitsSettings.svelte_svelte_type_style_lang-1a05efec.js:1:1996)
     at generateNewWorksheet (DigitsSettings.svelte_svelte_type_style_lang-1a05efec.js:1:2428)
 
 ## logic

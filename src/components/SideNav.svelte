@@ -50,8 +50,9 @@
 	}
 
     function tooltipData(cur) {
-        return `${format(new Date(cur.created_at), 'MM/dd/yyyy h:MMaaa')}\n
-        ${JSON.parse(cur.problems).length} problems`;
+        let date
+        cur.created_at ? date = formatDate(cur.created_at) : date = 'N/A'
+        return `${date} ${JSON.parse(cur.problems).length} problems`
     }
 </script>
 

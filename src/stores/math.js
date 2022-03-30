@@ -27,9 +27,9 @@ export const saveWorksheetLS = async () => {
     worksheetSaved.set(true)
     // worksheet.set(sheet)
     localStorage.setItem("worksheet", JSON.stringify(sheet));
-    let sheets = get(worksheets);
-    sheets.push(sheet)
-    localStorage.setItem("worksheets", JSON.stringify(sheets));
+    // let sheets = get(worksheets);
+    // sheets.push(sheet)
+    // localStorage.setItem("worksheets", JSON.stringify(sheets));
 }
 
 export const getWorksheetsFromSupabase = async () => {

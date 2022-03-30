@@ -107,31 +107,37 @@ export function setDivisionPrecision(res) {
     return res;
 }
 
-export function newRandomValues() {
+export function newProblemWithRandomValues() {
     dA = get(digitsA)
     dB = get(digitsB)
     sO = get(selectedOperation)
     let randomize = get(randomizeOperations)
     // get random operation
     let randomOperation = operations[Math.floor(Math.random() * operations.length)];
-
-    // console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ newRandomValues ~ sO`, sO)
-    if (!sO.length) {
-        sO = operations[0];
-        // console.log(`🚀 ~ file: math_operations.js ~ line 100 ~ newRandomValues ~ sO`, sO)
-        selectedOperation.set(sO);
+    let operation = sO
+    // console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ newProblemWithRandomValues ~ sO`, sO)
+    // if (!sO.length) {
+    //     sO = operations[1];
+    //     // console.log(`🚀 ~ file: math_operations.js ~ line 100 ~ newProblemWithRandomValues ~ sO`, sO)
+    //     selectedOperation.set(sO);
+    // } 
+     if (operation.symbol === '?') {
+       console.log(`🚀 ~ file: math_operations.js ~ line 124 ~ newProblemWithRandomValues ~ operation.symbol === '?'`, operation.symbol === '?')
+       operation = randomOperation
     }
-    randomize ? sO = randomOperation : sO = sO;
+    console.log(`🚀 ~ file: math_operations.js ~ line 125 ~ newProblemWithRandomValues ~ operation`, operation)
+    
+    randomize ? operation = randomOperation : false;
     vA = randomIntegerRange(Math.pow(10, dA - 1), Math.pow(10, dA), dA)
     vB = randomIntegerRange(Math.pow(10, dB - 1), Math.pow(10, dB), dB)
     valueA.set(vA);
     valueB.set(vB);
-    // console.log(`🚀 ~ file: math_operations.js ~ line 66 ~ newRandomValues ~ ${vA} ${sO.symbol} ${vB}`)
-    // console.log(`🚀 ~ file: math_operations.js ~ line 69 ~ newRandomValues ~ ${vA} ${sO['symbol']} ${vB}`,)
-    let answer = eval(`${vA} ${sO['symbol']} ${vB}`);
-    sO.name === 'Divide' ? (answer = setDivisionPrecision(answer)) : answer;
+    // console.log(`🚀 ~ file: math_operations.js ~ line 66 ~ newProblemWithRandomValues ~ ${vA} ${sO.symbol} ${vB}`)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 69 ~ newProblemWithRandomValues ~ ${vA} ${sO['symbol']} ${vB}`,)
+    let answer = eval(`${vA} ${operation['symbol']} ${vB}`);
+    operation.symbol === '/' ? (answer = setDivisionPrecision(answer)) : answer;
     result.set(answer);
-    return [vA, vB, answer, sO];
+    return [vA, vB, answer, operation];
 }
 
 function randomIntegerRange(min, max, digits) {
@@ -143,7 +149,7 @@ export function generateNewWorksheet() {
     let problem = {}, problems = [], sheet = {}, numProblems = get(problemsPerPage)
     console.log(`🚀 ~ file: math_operations.js ~ line 114 ~ generateNewWorksheet ~ numProblems`, numProblems)
     for (let i = 0; i < numProblems; i++) {
-        let values = newRandomValues();
+        let values = newProblemWithRandomValues();
         problem = {
             valueA: values[0],
             valueB: values[1],

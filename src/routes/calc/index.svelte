@@ -3,11 +3,11 @@ import BasicCalculationForm from "$components/BasicCalculationForm.svelte";
 import DigitsSettings from "$components/DigitsSettings.svelte";
 import OperationsMenu from "$components/OperationsMenu.svelte";
 import {selectedOperation, result } from '$stores/math'
-import { processCalculation, newRandomValues } from '$utils/math_operations'
+import { processCalculation, newProblemWithRandomValues } from '$utils/math_operations'
 import { onMount } from "svelte";
 
 onMount(() => {
-    newRandomValues()
+    newProblemWithRandomValues()
     // processCalculation();
 })
 

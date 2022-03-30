@@ -1,5 +1,5 @@
 <script>
-	import { newRandomValues } from '$utils/math_operations.js';
+	import { newProblemWithRandomValues } from '$utils/math_operations.js';
 	import { digitsA, digitsB } from '$stores/math.js';
     import { page } from '$app/stores'
     let path = $page.url.pathname
@@ -30,7 +30,7 @@
 		/>
 	</div>
     {#if path === '/'}
-	<button on:click={newRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+	<button on:click={newProblemWithRandomValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 		>Generate random values</button
 	>
     {/if}

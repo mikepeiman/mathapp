@@ -1,6 +1,6 @@
 <script>
 	// export let digitsA, digitsB
-	import { newRandomValues, generateNewWorksheet } from '$utils/math_operations.js';
+	import { newProblemWithRandomValues, generateNewWorksheet } from '$utils/math_operations.js';
 	import {
 		LSgetWorksheetValuesFromDOM,
 		setWorksheetValuesToDOM,
