@@ -21,6 +21,8 @@ export const worksheetSaved = writable(false);
 export const saveWorksheetLS = async () => {
     // let sheet = await updateWorksheet()
     let sheet = get(worksheet);
+    let operation = get(selectedOperation);
+    sheet.operation = operation;
     sheet.saved = true
     worksheetSaved.set(true)
     // worksheet.set(sheet)
@@ -53,7 +55,7 @@ async function updateWorksheet() {
 }
 
 export const saveWorksheetSupabase = async () => {
-    let sheet = await updateWorksheet()
+    // let sheet = await updateWorksheet()
     sheet.saved = true
     console.log(`🚀 ~ file: math.js ~ line 41 ~ saveWorksheetSupabase ~ sheet`, sheet)
     console.log(`🚀 ~ file: math.js ~ line 43 ~ saveWorksheetSupabase ~ supabase`, supabase)

@@ -23,6 +23,7 @@
 * user will be able to set number of problems they want, each one is a draggable target, they can drag and drop into, and rearrange within each math problem. Each problem is saved, and can be edited without access control, EXCEPT it will have a lock icon button that will lock it from being edited
 * num of problems is a property of generating new sheet, as are digits for each value fiekd; these should be set and confirmed. num of columns is a view property and can be changed on the fly, regardless of how many problems are in current worksheet
 * make the sidenav wider to accomodate labels, and enable it to collapse to icons
+* add a question mark symbol to operations menu to denote mixed operations, and to trigger random operations on click
 
 ## Features
 * rather than "generate random values" make it a random problem, ie. randomize operation also

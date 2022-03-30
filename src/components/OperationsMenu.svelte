@@ -6,7 +6,7 @@
 	const dispatch = createEventDispatcher();
 	// $: selectedOperation = '';
 	let sheet = {}
-	$: current = sheet['operation'] ? sheet['operation']  : operations[0];
+	$: current = sheet['operation'] ? sheet['operation']  : operations[3];
 
 	onMount(() => {
 		sheet = LSgetWorksheet("current")
@@ -20,22 +20,27 @@
 
 	export const operations = [
 		{
-			name: 'Multiply',
-			symbol: '*',
-			iconname: 'fa-solid:times'
+			name: 'mixed operations',
+			symbol: '?',
+			iconname: 'fa-solid:question'
 		},
 		{
-			name: 'Subtract',
-			symbol: '-',
-			iconname: 'fa-solid:minus'
-		},
-		{
-			name: 'Add',
+			name: 'addition',
 			symbol: '+',
 			iconname: 'fa-solid:plus'
 		},
 		{
-			name: 'Divide',
+			name: 'subtraction',
+			symbol: '-',
+			iconname: 'fa-solid:minus'
+		},
+		{
+			name: 'multiplication',
+			symbol: '*',
+			iconname: 'fa-solid:times'
+		},
+		{
+			name: 'division',
 			symbol: '/',
 			iconname: 'fa-solid:divide'
 		},
@@ -43,7 +48,33 @@
 			name: 'Equals',
 			symbol: '=',
 			iconname: 'fa-solid:equals'
-		}
+		},
+		// {
+		// 	name: 'Random',
+		// 	symbol: '?',
+		// 	iconname: 'ant-design:question-circle-outlined'
+		// },
+		// {
+		// 	name: 'Random',
+		// 	symbol: '?',
+		// 	iconname: 'bi:question-circle-fill'
+		// },
+		// {
+		// 	name: 'Random',
+		// 	symbol: '?',
+		// 	iconname: 'ep:question-filled'
+		// },
+		// {
+		// 	name: 'Random',
+		// 	symbol: '?',
+		// 	iconname: 'fa:question'
+		// },
+		// {
+		// 	name: 'Random',
+		// 	symbol: '?',
+		// 	iconname: 'emojione-monotone:question-mark'
+		// },
+
 	];
 
 	function operationSelect(operation) {
@@ -64,7 +95,7 @@
 		<div
 			class="p-2 mx-4 w-16 h-16 flex items-center justify-center bg-winterblues-800 rounded-full {current.name ===
 			operation.name
-				? 'bg-red-500'
+				? 'bg-fuchsia-800'
 				: ''} transition-all"
 			on:click={() => operationSelect(operation)}
 		>

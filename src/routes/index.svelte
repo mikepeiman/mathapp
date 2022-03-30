@@ -35,6 +35,7 @@
 	function handleOperationSelect(msg) {
 		console.log(`🚀 ~ file: index.svelte ~ line 10 ~ handleOperationSelect ~ msg`, msg);
 		msg.detail.symbol !== '=' ? selectedOperation.set(msg.detail) : false;
+		msg.detail.symbol !== '?' ? selectedOperation.set(msg.detail) : false;
 		recalculateProblems();
 		resizeAllInputs();
 	}

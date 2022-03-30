@@ -34,7 +34,7 @@ let operations = [
 
 export function processCalculation(a, b, operation) {
     res = eval(`${a} ${operation.symbol} ${b}`);
-    operation.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
+    operation.symbol === '/'  ? (res = setDivisionPrecision(res)) : res;
     result.set(res);
     return res;
 }
@@ -43,7 +43,7 @@ export function processCalculationFromAttributes(inputs) {
     vB = inputs[1].getAttribute('data-value')
     sO = get(selectedOperation)
     res = eval(`${vA} ${sO.symbol} ${vB}`);
-    sO.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
+    sO.symbol === '/'  ? (res = setDivisionPrecision(res)) : res;
     result.set(res);
     return res;
 }
@@ -52,7 +52,7 @@ export function processCalculationFromValues(inputs) {
     vB = inputs[1].value
     sO = get(selectedOperation)
     res = eval(`${vA} ${sO.symbol} ${vB}`);
-    sO.name === 'Divide' ? (res = setDivisionPrecision(res)) : res;
+    sO.symbol === '/' ? (res = setDivisionPrecision(res)) : res;
     result.set(res);
     return res;
 }
@@ -61,33 +61,42 @@ export function recalculateProblems() {
     let sheet = get(worksheet)
     let problems = sheet.problems
     let op = get(selectedOperation)
+    let thisop = op
+
+    console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ op.symbol === '?'`, op.symbol === '?')
+
     console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ recalculateProblems ~ problems`, problems)
-    problems.forEach(problem => {
+    problems?.forEach(problem => {
         console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ problem`, problem)
-        problem.op = op
-        problem.result = processCalculation(problem.valueA, problem.valueB, op)
+        if(op.symbol === '?'){
+            thisop = operations[Math.ceil(Math.random() * operations.length) - 1]
+            console.log(`🚀 ~ file: math_operations.js ~ line 67 ~ recalculateProblems ~ thisop`, thisop)
+            // selectedOperation.set(op)
+        }
+        problem.op = thisop
+        problem.result = processCalculation(problem.valueA, problem.valueB, thisop)
     })
     sheet.problems = problems
     worksheet.set(sheet)
     let problemsElements = document.getElementsByClassName('math-problem');
     let show = get(showAnswers);
-    Object.keys(problemsElements).forEach((i) => {
-        let problemEl = problemsElements[i];
-        let inputs = problemEl.children;
-        inputs = Array.from(inputs);
-        inputs = inputs.filter((input) => input.tagName === 'INPUT');
-        let inputsArray = Array.from(inputs)
-        // let res = processCalculationFromAttributes(inputsArray);
-        let res = processCalculationFromValues(inputsArray);
-        inputsArray.forEach((input, i) => {
-            input.value ? (input.style.width = input.value.length + 2 + 'ch') : (input.style.width = '1ch');
-            if (input.name === "result") {
-                input.setAttribute('data-value', res);
-                show ? input.value = res : input.value = '';
-            }
-            resizeInput.call(input);
-        });
-    });
+    // Object.keys(problemsElements).forEach((i) => {
+    //     let problemEl = problemsElements[i];
+    //     let inputs = problemEl.children;
+    //     inputs = Array.from(inputs);
+    //     inputs = inputs.filter((input) => input.tagName === 'INPUT');
+    //     let inputsArray = Array.from(inputs)
+    //     // let res = processCalculationFromAttributes(inputsArray);
+    //     let res = processCalculationFromValues(inputsArray);
+    //     inputsArray.forEach((input, i) => {
+    //         input.value ? (input.style.width = input.value.length + 2 + 'ch') : (input.style.width = '1ch');
+    //         if (input.name === "result") {
+    //             input.setAttribute('data-value', res);
+    //             show ? input.value = res : input.value = '';
+    //         }
+    //         resizeInput.call(input);
+    //     });
+    // });
 }
 
 export function setDivisionPrecision(res) {
