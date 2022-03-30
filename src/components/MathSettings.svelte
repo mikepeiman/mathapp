@@ -77,10 +77,13 @@
 	<!-- <h1>Selected Operation: {$selectedOperation.name}</h1> -->
 	<div class="grid digits-grid gap-2 align-baseline w-full p-6">
 		<div class="relative flex items-end">
-			<label for="problemsPerPage" class=" bottom-0 p-2 inline-flex">Number of problems</label>
+			<label for="problemsPerPage" class=" bottom-0 p-2 inline-flex" >Number of problems</label>
 		</div>
 		<input
 			type="number"
+			step="2"
+			min="2"
+			max="100"
 			name="problemsPerPage"
 			bind:value={$problemsPerPage}
 			class="basic-underline-number-input text-lg inline-block"

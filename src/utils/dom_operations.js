@@ -1,4 +1,4 @@
-import { currentWorksheetID, showAnswers, digitsA, digitsB, saveWorksheetLS } from '$stores/math'
+import { currentWorksheetID, showAnswers, digitsA, digitsB, saveWorksheetLS, worksheet } from '$stores/math'
 import { get } from 'svelte/store'
 import { v4 as uuidv4 } from 'uuid';
 let longest = 0
@@ -71,17 +71,20 @@ export function resizeAllInputs() {
     });
 }
 
-export function resizeInput() {
+export function resizeInput(input) {
+    
     let show = get(showAnswers)
+    let sheet = get(worksheet)
+    console.log(`🚀 ~ file: math_operations.js ~ line 109 ~ thissArray.forEach ~ this`, this)
+    console.log(`🚀 ~ file: math_operations.js ~ line 109 ~ thissArray.forEach ~ this.value: `, this.value)
     this.style.width = this.value.length + 2 + 'ch'
     let thisLength = this.value.length;
     thisLength > longest ? longest = thisLength : longest;
-    let res = this.getAttribute('data-value')
+    let val = this.getAttribute('data-value')
     if (this.name === "result") {
-        // console.log(`🚀 ~ file: math_operations.js ~ line 109 ~ thissArray.forEach ~ this`, this)
-        // this.setAttribute('data-value', res);
-        show ? this.value = res : this.value = ' ';
+        this.setAttribute('data-value', val);
+        show ? this.value = val : this.value = ' ';
         // show ? this.style.opacity = 100 : this.style.opacity = 0;
-        this.style.width = res.toString().length + 2 + 'ch'
+        this.style.width = val.length + 2 + 'ch'
     }
 }

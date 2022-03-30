@@ -44,6 +44,8 @@
         saved = sheet.saved
 		selectedOperation.set(sheet.operation);
 		worksheet.set(sheet);
+        pageColumns.set(sheet.columns);
+        problemsPerPage.set(sheet.problems.length);
 		await setWorksheetValuesToDOM(sheet);
 		// setTimeout(() => {
 		// resizeAllInputs()
@@ -66,7 +68,7 @@
 <div id="worksheet" class="flex mx-2 px-4 items-start justify-around h-full">
 	{#if loaded}
 		{#each Array($pageColumns) as column, i}
-			<div class="flex flex-col justify-between h-full">
+			<div class="flex flex-col justify-start h-full">
 				{#each Array(Math.ceil($problemsPerPage / $pageColumns)) as problem, j}
 					<!-- {Math.ceil($problemsPerPage / $pageColumns) * i + j + 1} -->
 					<MathProblem

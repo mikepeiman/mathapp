@@ -1,7 +1,7 @@
 <script>
 	import Icon from '@iconify/svelte';
 	import { processCalculation } from '$utils/math_operations';
-	import { resizeAllInputs } from '$utils/dom_operations';
+	import { resizeInput, resizeAllInputs } from '$utils/dom_operations';
 	import { selectedOperation, randomizeOperations, worksheet } from '$stores/math';
 	import { onMount } from 'svelte';
 	const icons = {
@@ -12,35 +12,49 @@
 		equals: 'fa-solid:equals'
 	};
 	let valueA, valueB, result;
-	$: sheet = $worksheet
+	$: sheet = $worksheet;
 
 	export let problem = {};
-    // $: console.log(`🚀 ~ file: MathProblem.svelte ~ line 18 ~ $: problem.op - `, problem.op)
+	// $: console.log(`🚀 ~ file: MathProblem.svelte ~ line 18 ~ $: problem.op - `, problem.op)
 
 	onMount(() => {
 		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ onMount problem.op `, problem.op);
 	});
 
 	function calculate() {
+		this;
+		console.log(`🚀 ~ file: MathProblem.svelte ~ line 26 ~ calculate ~ this`, this);
 		console.log(`🚀 ~ file: MathProblem.svelte ~ line 21 ~ calculate ~ problem`, problem);
 		let a = problem.valueA;
 		let b = problem.valueB;
 		// let operation = $randomizeOperations ? problem.op : $selectedOperation;
-		let operation = problem.op
+		let operation = problem.op;
 		problem.result = processCalculation(a, b, operation);
-		resizeAllInputs();
+        console.log(`🚀 ~ file: MathProblem.svelte ~ line 33 ~ calculate ~ problem`, problem)
+		// resizeAllInputs();
+		let inputs = Array.from(this.children).filter(child => child.nodeName === 'INPUT');
+		let resultInput = inputs.find(input => input.name === 'result');
+        console.log(`🚀 ~ file: MathProblem.svelte ~ line 37 ~ calculate ~ resultInput`, resultInput)
+		resultInput.value = problem.result;
+		resultInput.setAttribute("data-value", problem.result)
+		console.log(`🚀 ~ file: MathProblem.svelte ~ line 35 ~ calculate ~ inputs`, inputs);
+		// inputs = inputs.filter((input) => input.tagName === 'INPUT');
+		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 35 ~ calculate ~ inputs`, inputs);
+		inputs.forEach(input => {
+			resizeInput.call(input);
+		});
 	}
 
 	function updateDataAttributes() {}
 
-	function resizeInput() {
-		this.value ? (this.style.width = this.value.length + 2 + 'ch') : (this.style.width = '1ch');
-	}
+	// function resizeInput() {
+	// 	this.value ? (this.style.width = this.value.length + 2 + 'ch') : (this.style.width = '1ch');
+	// }
 
 	function getIcon() {
 		// return $randomizeOperations ? problem.op.iconname : $selectedOperation.iconname;
-        // console.log(`🚀 ~ file: MathProblem.svelte ~ line 40 ~ getIcon ~ problem.op.iconname `, problem?.op?.iconname )
-		return problem.op.iconname 
+		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 40 ~ getIcon ~ problem.op.iconname `, problem?.op?.iconname )
+		return problem.op.iconname;
 	}
 </script>
 
@@ -50,23 +64,21 @@
 			type="number"
 			name="valueA"
 			bind:value={problem.valueA}
-			on:blur={calculate}
 			class="basic-underline-text-input"
 			placeholder="value A"
 		/>
 		<div class="flex flex-col items-center justify-center text-lime-500 mx-2">
-			<Icon icon={problem.op.iconname} name="operation-icon" class="text-2xl" />
+			<Icon icon={problem.op?.iconname} name="operation-icon" class="text-2xl" />
 			<!-- <Icon icon={$selectedOperation.iconname || icons.times} class="text-2xl" /> -->
 		</div>
 		<input
 			type="number"
 			name="valueB"
 			bind:value={problem.valueB}
-			on:blur={calculate}
 			class="basic-underline-text-input"
 			placeholder="value B"
 		/>
-		<div on:click={calculate} class="flex items-center justify-center mx-2">
+		<div class="flex items-center justify-center mx-2">
 			<!-- <Icon icon={icons.equal} class="text-4xl text-lime-500" /> -->
 			<Icon icon={icons.equals} class="text-2xl text-lime-500 " />
 		</div>
@@ -75,7 +87,6 @@
 			name="result"
 			bind:value={problem.result}
 			class="basic-underline-text-input"
-
 		/>
 	</div>
 </div>

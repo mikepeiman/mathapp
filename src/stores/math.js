@@ -79,6 +79,17 @@ export const saveWorksheetSupabase = async () => {
     }
 }
 
+export const deleteWorksheet = async (id) => {
+    const { data, error } = await supabase.from('worksheets').delete().match({ id });
+    if (error) {
+        return console.error(error)
+    } else {
+        worksheets.update((worksheets) => worksheets.filter(ws => ws.id !== id))
+    }
+}
+
+
+
 export const LScheckForWorksheet = () => {
     let sheet = get(worksheet)
     if (sheet.length) {

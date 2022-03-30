@@ -4,6 +4,7 @@
 	import { currentView } from '$stores/stores';
 	import { get } from 'svelte/store';
     import { page } from '$app/stores'
+import Auth from './Auth.svelte';
     console.log(`🚀 ~ file: TopNav.svelte ~ line 7 ~ page`, $page.url)
 	$: current = get(currentView);
 
@@ -38,4 +39,7 @@
 			<Icon icon={icon.icon} />
 		</a>
 	{/each}
+    <div class="flex self-center items-center">
+        <Auth />
+    </div>
 </div>
