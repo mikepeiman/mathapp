@@ -75,7 +75,7 @@
 			name="result"
 			bind:value={problem.result}
 			class="basic-underline-text-input"
-			placeholder="value C"
+
 		/>
 	</div>
 </div>

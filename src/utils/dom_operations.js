@@ -58,7 +58,6 @@ export function LSgetWorksheetValuesFromDOM() {
 
 export function resizeAllInputs() {
     let problemsElements = document.getElementsByClassName('math-problem');
-    let show = get(showAnswers);
     Object.keys(problemsElements).forEach((i) => {
         let problemEl = problemsElements[i];
         let inputs = problemEl.children;
@@ -73,16 +72,16 @@ export function resizeAllInputs() {
 }
 
 export function resizeInput() {
-    let dA = get(digitsA)
-    let dB = get(digitsB)
-    let show = get(showAnswers);
-    // this.getAttribute('data-value') ? (this.style.width = this.getAttribute('data-value').length + 2 + 'ch') : (this.style.width = dA + dB + 1 + 'ch');
+    let show = get(showAnswers)
     this.style.width = this.value.length + 2 + 'ch'
-    // (this.style.width = dA + dB + 1 + 'ch')
     let thisLength = this.value.length;
     thisLength > longest ? longest = thisLength : longest;
-    // console.log(`🚀 ~ file: math_operations.js ~ line 127 ~ resizeInput ~ longest`, longest)
+    let res = this.getAttribute('data-value')
     if (this.name === "result") {
-        show ? this.value = this.getAttribute('data-value') : this.value = ' ';
+        // console.log(`🚀 ~ file: math_operations.js ~ line 109 ~ thissArray.forEach ~ this`, this)
+        // this.setAttribute('data-value', res);
+        show ? this.value = res : this.value = ' ';
+        // show ? this.style.opacity = 100 : this.style.opacity = 0;
+        this.style.width = res.toString().length + 2 + 'ch'
     }
 }

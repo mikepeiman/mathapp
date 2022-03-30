@@ -1,6 +1,6 @@
 <script>
 	// export let digitsA, digitsB
-	import { newProblemWithRandomValues, generateNewWorksheet } from '$utils/math_operations.js';
+	import { newProblemWithRandomValues, generateNewWorksheet, showOrHideResults } from '$utils/math_operations.js';
 	import {
 		LSgetWorksheetValuesFromDOM,
 		setWorksheetValuesToDOM,
@@ -37,6 +37,7 @@
 		resizeAllInputs();
 	}
 	function revealAnswers() {
+		showOrHideResults()
 		resizeAllInputs();
 	}
 	$: {

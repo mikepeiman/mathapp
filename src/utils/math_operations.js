@@ -80,25 +80,39 @@ export function recalculateProblems() {
     sheet.problems = problems
     worksheet.set(sheet)
     saveWorksheetLS()
-    // let problemsElements = document.getElementsByClassName('math-problem');
-    // let show = get(showAnswers);
-    // Object.keys(problemsElements).forEach((i) => {
-    //     let problemEl = problemsElements[i];
-    //     let inputs = problemEl.children;
-    //     inputs = Array.from(inputs);
-    //     inputs = inputs.filter((input) => input.tagName === 'INPUT');
-    //     let inputsArray = Array.from(inputs)
-    //     // let res = processCalculationFromAttributes(inputsArray);
-    //     let res = processCalculationFromValues(inputsArray);
-    //     inputsArray.forEach((input, i) => {
-    //         input.value ? (input.style.width = input.value.length + 2 + 'ch') : (input.style.width = '1ch');
-    //         if (input.name === "result") {
-    //             input.setAttribute('data-value', res);
-    //             show ? input.value = res : input.value = '';
-    //         }
-    //         resizeInput.call(input);
-    //     });
-    // });
+
+}
+
+export function showOrHideResults() {
+    let problemsElements = document.getElementsByClassName('math-problem');
+    console.log(`🚀 ~ file: math_operations.js ~ line 88 ~ showOrHideResults ~ problemsElements`, problemsElements)
+    let show = get(showAnswers);
+    let sheet = get(worksheet)
+    let problems = sheet.problems
+    console.log(`🚀 ~ file: math_operations.js ~ line 91 ~ showOrHideResults ~ problems`, problems)
+    Object.keys(problemsElements).forEach((i) => {
+        let problemEl = problemsElements[i];
+        let inputs = problemEl.children;
+        // console.log(`🚀 ~ file: math_operations.js ~ line 92 ~ Object.keys ~ inputs`, inputs)
+        inputs = Array.from(inputs);
+        inputs = inputs.filter((input) => input.tagName === 'INPUT');
+        let inputsArray = Array.from(inputs)
+        // let res = processCalculationFromAttributes(inputsArray);
+        // let res = processCalculationFromValues(inputsArray);
+        let res = problems[i].result;
+        inputsArray.forEach((input, i) => {
+            // input.value ? (input.style.width = input.value.length + 2 + 'ch') : (input.style.width = '1ch');
+            input.style.width = input.value.length + 2 + 'ch'
+            // if (input.name === "result") {
+            //     console.log(`🚀 ~ file: math_operations.js ~ line 109 ~ inputsArray.forEach ~ input`, input)
+            //     input.setAttribute('data-value', res);
+            //     show ? input.value = res : input.value = ' ';
+            //     // show ? input.style.opacity = 100 : input.style.opacity = 0;
+            //     input.style.width = res.toString().length + 2 + 'ch'
+            // }
+            resizeInput.call(input);
+        });
+    });
 }
 
 export function setDivisionPrecision(res) {
@@ -166,5 +180,6 @@ export function generateNewWorksheet() {
     worksheet.set(sheet);
     console.log(`🚀 ~ file: math_operations.js ~ line 128 ~ newworksheet setWorksheetValuesToDOM ~ worksheet`, sheet)
     setWorksheetValuesToDOM(sheet);
+    saveWorksheetLS();
     return sheet
 }
