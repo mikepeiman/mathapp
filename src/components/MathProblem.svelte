@@ -15,17 +15,18 @@
 	$: sheet = $worksheet
 
 	export let problem = {};
-    $: console.log(`🚀 ~ file: MathProblem.svelte ~ line 18 ~ $: problem.op - `, problem.op)
+    // $: console.log(`🚀 ~ file: MathProblem.svelte ~ line 18 ~ $: problem.op - `, problem.op)
 
 	onMount(() => {
-		console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ onMount problem.op `, problem.op);
+		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ onMount problem.op `, problem.op);
 	});
 
 	function calculate() {
 		console.log(`🚀 ~ file: MathProblem.svelte ~ line 21 ~ calculate ~ problem`, problem);
 		let a = problem.valueA;
 		let b = problem.valueB;
-		let operation = $randomizeOperations ? problem.op : $selectedOperation;
+		// let operation = $randomizeOperations ? problem.op : $selectedOperation;
+		let operation = problem.op
 		problem.result = processCalculation(a, b, operation);
 		resizeAllInputs();
 	}
@@ -46,7 +47,7 @@
 <div class="flex flex-col justify-center items-start text-4xl">
 	<div class="math-problem flex" on:change={calculate}>
 		<input
-			type="text"
+			type="number"
 			name="valueA"
 			bind:value={problem.valueA}
 			on:blur={calculate}
@@ -58,7 +59,7 @@
 			<!-- <Icon icon={$selectedOperation.iconname || icons.times} class="text-2xl" /> -->
 		</div>
 		<input
-			type="text"
+			type="number"
 			name="valueB"
 			bind:value={problem.valueB}
 			on:blur={calculate}
@@ -70,7 +71,7 @@
 			<Icon icon={icons.equals} class="text-2xl text-lime-500 " />
 		</div>
 		<input
-			type="text"
+			type="number"
 			name="result"
 			bind:value={problem.result}
 			class="basic-underline-text-input"
@@ -78,3 +79,16 @@
 		/>
 	</div>
 </div>
+
+<style lang="scss">
+	input[type='number'] {
+		-moz-appearance: textfield;
+		appearance: textfield;
+		margin: 0;
+	}
+	input[type='number']::-webkit-inner-spin-button,
+	input[type='number']::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+</style>

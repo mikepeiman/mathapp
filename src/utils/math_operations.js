@@ -1,4 +1,4 @@
-import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns, problemsPerPage, worksheet, randomizeOperations } from '$stores/math.js'
+import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns, problemsPerPage, worksheet, randomizeOperations, saveWorksheetLS} from '$stores/math.js'
 import { setWorksheetValuesToDOM, resizeAllInputs, resizeInput } from './dom_operations';
 import { get } from 'svelte/store'
 import { v4 as uuidv4 } from 'uuid';
@@ -11,22 +11,22 @@ let res = get(result)
 let longest = 0
 let operations = [
     {
-        name: 'Multiply',
-        symbol: '*',
-        iconname: 'fa-solid:times'
-    },
-    {
-        name: 'Subtract',
-        symbol: '-',
-        iconname: 'fa-solid:minus'
-    },
-    {
-        name: 'Add',
+        name: 'addition',
         symbol: '+',
         iconname: 'fa-solid:plus'
     },
     {
-        name: 'Divide',
+        name: 'subtraction',
+        symbol: '-',
+        iconname: 'fa-solid:minus'
+    },
+    {
+        name: 'multiplication',
+        symbol: '*',
+        iconname: 'fa-solid:times'
+    },
+    {
+        name: 'division',
         symbol: '/',
         iconname: 'fa-solid:divide'
     },
@@ -36,6 +36,7 @@ export function processCalculation(a, b, operation) {
     res = eval(`${a} ${operation.symbol} ${b}`);
     operation.symbol === '/'  ? (res = setDivisionPrecision(res)) : res;
     result.set(res);
+    saveWorksheetLS();
     return res;
 }
 export function processCalculationFromAttributes(inputs) {
@@ -63,14 +64,14 @@ export function recalculateProblems() {
     let op = get(selectedOperation)
     let thisop = op
 
-    console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ op.symbol === '?'`, op.symbol === '?')
+    // console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ op.symbol === '?'`, op.symbol === '?')
 
-    console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ recalculateProblems ~ problems`, problems)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ recalculateProblems ~ problems`, problems)
     problems?.forEach(problem => {
-        console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ problem`, problem)
+        // console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ problem`, problem)
         if(op.symbol === '?'){
-            thisop = operations[Math.ceil(Math.random() * operations.length) - 1]
-            console.log(`🚀 ~ file: math_operations.js ~ line 67 ~ recalculateProblems ~ thisop`, thisop)
+            thisop = operations[Math.floor(Math.random() * operations.length)]
+            // console.log(`🚀 ~ file: math_operations.js ~ line 67 ~ recalculateProblems ~ thisop`, thisop)
             // selectedOperation.set(op)
         }
         problem.op = thisop
@@ -78,8 +79,9 @@ export function recalculateProblems() {
     })
     sheet.problems = problems
     worksheet.set(sheet)
-    let problemsElements = document.getElementsByClassName('math-problem');
-    let show = get(showAnswers);
+    saveWorksheetLS()
+    // let problemsElements = document.getElementsByClassName('math-problem');
+    // let show = get(showAnswers);
     // Object.keys(problemsElements).forEach((i) => {
     //     let problemEl = problemsElements[i];
     //     let inputs = problemEl.children;

@@ -45,7 +45,7 @@
 			iconname: 'fa-solid:divide'
 		},
 		{
-			name: 'Equals',
+			name: 'equals',
 			symbol: '=',
 			iconname: 'fa-solid:equals'
 		},
