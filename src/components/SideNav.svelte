@@ -12,12 +12,12 @@
 	import Icon from '@iconify/svelte';
 	import tooltip from '$utils/tooltip';
 	import { format, compareAsc } from 'date-fns';
-
-	// import { getWorksheetsFromSupabase } from '$stores/math';
+    import { get } from 'svelte/store';
+	import { worksheets } from '$stores/math';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { worksheets } from '$stores/math';
-	$: sheets = $page.stuff.data || [];
+
+	$: sheets = get(worksheets) || [];
 	onMount(async () => {
 		console.log(`🚀 ~ file: SideNav.svelte ~ line 14 ~ page`, $page);
 		sheets = $page.stuff.data;

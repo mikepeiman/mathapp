@@ -152,14 +152,6 @@
 			class=" m-4 bg-winterblues-500 bg-opacity-50"
 		/>{$showAnswers}
 	</label>
-	<label for="randomizeOperations" class="flex items-center"
-		>Randomize Operations
-		<Checkbox
-			name="randomizeOperations"
-			bind:checked={$randomizeOperations}
-			class=" m-4 bg-winterblues-500 bg-opacity-50"
-		/>{$randomizeOperations}
-	</label>
 </div>
 
 <style lang="scss">

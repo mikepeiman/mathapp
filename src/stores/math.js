@@ -56,19 +56,25 @@ async function updateWorksheet() {
 
 export const saveWorksheetSupabase = async () => {
     // let sheet = await updateWorksheet()
+    let sheet = get(worksheet);
     sheet.saved = true
+    sheet.user_id ? true : sheet.user_id = uuidv4()
+    let user_id = sheet.user_id 
     console.log(`🚀 ~ file: math.js ~ line 41 ~ saveWorksheetSupabase ~ sheet`, sheet)
     console.log(`🚀 ~ file: math.js ~ line 43 ~ saveWorksheetSupabase ~ supabase`, supabase)
     console.log(`🚀 ~ file: math.js ~ line 45 ~ saveWorksheetSupabase ~ {id: sheet.id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation}`, { xid: sheet.xid, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation })
 
-    const { data, error } = await supabase.from('worksheets').insert([{ xid: sheet.xid, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }]);
+    const { data, error } = await supabase.from('worksheets').insert([{ xid: sheet.xid, user_id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }]);
     if (error) {
         sheet.saved = false
         worksheetSaved.set(false)
         return console.error(error)
     } else {
         console.log(`🚀 ~ file: math.js ~ line 47 ~ saveWorksheetSupabase ~ data`, data)
-        
+        worksheets.update((cur) => {
+            const newWorksheets = [...cur, sheet]
+            return newWorksheets
+        })
         worksheetSaved.set(true)
     }
 }
