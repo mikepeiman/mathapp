@@ -26,20 +26,19 @@ export const saveWorksheetLS = async () => {
     sheet.saved = true
     sheet.num_problems = sheet.problems.length
     worksheetSaved.set(true)
-    // worksheet.set(sheet)
-    let sheets = get(worksheets);
     // check by id if worksheet exists in worksheets array; if it is, replace it; if not, add it
-    let index = sheets.findIndex(sheet => sheet.id === sheet.id);
-    if (index > -1) {
-        sheets[index] = sheet;
-    } else {
-        sheets.push(sheet);
-    }
+    // let sheets = get(worksheets);
+    // let index = sheets.findIndex(sheet => sheet.id === sheet.id);
+    // if (index > -1) {
+    //     sheets[index] = sheet;
+    // } else {
+    //     sheets.push(sheet);
+    // }
     worksheet.set(sheet)
     localStorage.setItem("worksheet", JSON.stringify(sheet));
-    worksheets.set(sheets)
-    localStorage.setItem("worksheets", JSON.stringify(sheets));
-    }
+    // worksheets.set(sheets)
+    // localStorage.setItem("worksheets", JSON.stringify(sheets));
+}
 
 export const getWorksheetsFromSupabase = async () => {
     const { data, error } = await supabase.from('worksheets').select()
@@ -68,7 +67,7 @@ export const saveWorksheetSupabase = async () => {
     let sheet = get(worksheet);
     sheet.saved = true
     sheet.user_id ? true : sheet.user_id = uuidv4()
-    let user_id = sheet.user_id 
+    let user_id = sheet.user_id
     console.log(`🚀 ~ file: math.js ~ line 41 ~ saveWorksheetSupabase ~ sheet`, sheet)
     console.log(`🚀 ~ file: math.js ~ line 43 ~ saveWorksheetSupabase ~ supabase`, supabase)
     console.log(`🚀 ~ file: math.js ~ line 45 ~ saveWorksheetSupabase ~ {id: sheet.id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation}`, { xid: sheet.xid, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation })
