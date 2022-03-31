@@ -80,7 +80,7 @@ export const saveWorksheetSupabase = async () => {
     } else {
         console.log(`🚀 ~ file: math.js ~ line 47 ~ saveWorksheetSupabase ~ data`, data)
         worksheets.update((cur) => {
-            const newWorksheets = [...cur, sheet]
+            const newWorksheets = [...cur, data[0]]
             return newWorksheets
         })
         worksheetSaved.set(true)

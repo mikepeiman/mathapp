@@ -1,13 +1,3 @@
-<script context="module">
-	import { getWorksheetsFromSupabase } from '$stores/math';
-	export async function load() {
-		// let res = await fetch('$api/worksheets.get.json');
-		let data = await getWorksheetsFromSupabase();
-		console.log(`🚀 ~ file: SideNav.svelte ~ line 4 ~ load ~ data`, data);
-		return { stuff: { data }, params: { data }, props: { data } };
-	}
-</script>
-
 <script>
 	import Icon from '@iconify/svelte';
 	import tooltip from '$utils/tooltip';
@@ -15,15 +5,21 @@
     import { get } from 'svelte/store';
 	import { worksheets } from '$stores/math';
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
+	import { onMount, afterUpdate } from 'svelte';
 
-	$: sheets = get(worksheets) || [];
+	// $: sheets = get(worksheets) || [];
+    let sheets = []
+    worksheets.subscribe(cur => {
+        sheets = cur
+    });
 	onMount(async () => {
 		console.log(`🚀 ~ file: SideNav.svelte ~ line 14 ~ page`, $page);
-		sheets = $page.stuff.data;
-		// worksheets = await getWorksheetsFromSupabase();
-		// console.log(`🚀 ~ file: SideNav.svelte ~ line 9 ~ onMount ~ worksheets`, worksheets)
+
 	});
+
+    afterUpdate(() => {
+        console.log(`🚀 ~ file: SideNav.svelte ~ line 27 ~ afterUpdate ~ sheets`, sheets)
+    });
 	const icons = {
 		// 'equalizer-1': 'ph:equalizer-bold',
 		// 'equalizer-2': 'mdi:equalizer',
@@ -50,10 +46,10 @@
 	}
 
     function tooltipData(cur) {
-        console.log(`🚀 ~ file: SideNav.svelte ~ line 53 ~ tooltipData ~ cur`, cur)
+        // console.log(`🚀 ~ file: SideNav.svelte ~ line 53 ~ tooltipData ~ cur`, cur)
         let date, numProblems
         let tof = typeof cur.problems
-        console.log(`🚀 ~ file: SideNav.svelte ~ line 56 ~ tooltipData ~ tof`, tof)
+        // console.log(`🚀 ~ file: SideNav.svelte ~ line 56 ~ tooltipData ~ tof`, tof)
         cur.created_at ? date = formatDate(cur.created_at) : date = 'N/A'
         tof === "string" ? numProblems = JSON.parse(cur.problems).length : numProblems = cur.problems.length
         return `${date} ${numProblems} problems`
@@ -62,7 +58,7 @@
 
 <div id="sidenav" class="flex flex-col w-full items-center justify-start bg-winterblues-900">
 	{#if sheets && sheets.length}
-		{#each sheets as cur}
+		{#each sheets as cur, i}
 			<div
 				class="tooltip flex items-center justify-center text-4xl my-2  hover:text-winterblues-400 hover:cursor-pointer transition-all"
 				use:tooltip
@@ -70,7 +66,7 @@
 				on:click={() => {
 					worksheetNavigate(cur);
 				}}
-			>
+			>{i}: id: {cur.id}
 				<Icon icon={icons['grid-view']} />
 			</div>
 		{/each}

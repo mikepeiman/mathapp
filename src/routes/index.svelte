@@ -3,7 +3,6 @@
     export async function load() {
         // let res = await fetch('$api/worksheets.get.json');
         let data = await getWorksheetsFromSupabase();
-        console.log(`🚀 ~ file: SideNav.svelte ~ line 4 ~ load ~ data`, data)
         return { stuff: { data }, params: { data }, props: {data } }
     }
 </script>
@@ -25,15 +24,16 @@
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
 	$: sheet = [];
-	$: console.log(`🚀 ~ file: index.svelte ~ line 13 ~ sheet`, sheet);
+	// $: console.log(`🚀 ~ file: index.svelte ~ line 13 ~ sheet`, sheet);
 	onMount(() => {
 		let sheets = $page.stuff.data
 		sheets.forEach(ws => {
+        // console.log(`🚀 ~ file: index.svelte ~ line 32 ~ onMount ~ ws`, ws)
 			ws.problems = JSON.parse(ws.problems)
 		})
 		localStorage.setItem("worksheets", JSON.stringify(sheets));
-        console.log(`🚀 ~ file: index.svelte ~ line 39 ~ onMount ~ $page`, $page)
-		console.log(`🚀 ~ file: index.svelte ~ line 17 ~ onMount ~ onMount - sheet`, sheet);
+        // console.log(`🚀 ~ file: index.svelte ~ line 39 ~ onMount ~ $page`, $page)
+		// console.log(`🚀 ~ file: index.svelte ~ line 17 ~ onMount ~ onMount - sheet`, sheet);
 		resizeAllInputs();
 	});
 

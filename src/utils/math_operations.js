@@ -131,10 +131,8 @@ export function newProblemWithRandomValues() {
     //     selectedOperation.set(sO);
     // } 
      if (operation.symbol === '?') {
-       console.log(`🚀 ~ file: math_operations.js ~ line 124 ~ newProblemWithRandomValues ~ operation.symbol === '?'`, operation.symbol === '?')
        operation = randomOperation
     }
-    console.log(`🚀 ~ file: math_operations.js ~ line 125 ~ newProblemWithRandomValues ~ operation`, operation)
     
     randomize ? operation = randomOperation : false;
     vA = randomIntegerRange(Math.pow(10, dA - 1), Math.pow(10, dA), dA)
