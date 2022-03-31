@@ -2,7 +2,7 @@
 	import Icon from '@iconify/svelte';
 	import { processCalculation } from '$utils/math_operations';
 	import { resizeInput, resizeAllInputs } from '$utils/dom_operations';
-	import { selectedOperation, randomizeOperations, worksheet } from '$stores/math';
+	import { selectedOperation, randomizeOperations, worksheet, saveWorksheetLS } from '$stores/math';
 	import { onMount } from 'svelte';
 	const icons = {
 		times: 'fa-solid:times',
@@ -13,36 +13,31 @@
 	};
 	let valueA, valueB, result;
 	$: sheet = $worksheet;
-
-	export let problem = {};
+	
+	export let problem = {}, i = 0
 	// $: console.log(`🚀 ~ file: MathProblem.svelte ~ line 18 ~ $: problem.op - `, problem.op)
-
+	
 	onMount(() => {
 		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ onMount problem.op `, problem.op);
 	});
-
+	
 	function calculate() {
-		this;
-		console.log(`🚀 ~ file: MathProblem.svelte ~ line 26 ~ calculate ~ this`, this);
-		console.log(`🚀 ~ file: MathProblem.svelte ~ line 21 ~ calculate ~ problem`, problem);
+		console.log(`🚀 ~ file: MathProblem.svelte ~ line 19 ~ i`, i)
+		console.log(`🚀 ~ file: MathProblem.svelte ~ line 16 ~ sheet`, sheet)
 		let a = problem.valueA;
 		let b = problem.valueB;
-		// let operation = $randomizeOperations ? problem.op : $selectedOperation;
 		let operation = problem.op;
-		problem.result = processCalculation(a, b, operation);
-        console.log(`🚀 ~ file: MathProblem.svelte ~ line 33 ~ calculate ~ problem`, problem)
-		// resizeAllInputs();
+		problem.result = processCalculation(a, b, operation);	
 		let inputs = Array.from(this.children).filter(child => child.nodeName === 'INPUT');
 		let resultInput = inputs.find(input => input.name === 'result');
-        console.log(`🚀 ~ file: MathProblem.svelte ~ line 37 ~ calculate ~ resultInput`, resultInput)
 		resultInput.value = problem.result;
 		resultInput.setAttribute("data-value", problem.result)
-		console.log(`🚀 ~ file: MathProblem.svelte ~ line 35 ~ calculate ~ inputs`, inputs);
-		// inputs = inputs.filter((input) => input.tagName === 'INPUT');
-		// console.log(`🚀 ~ file: MathProblem.svelte ~ line 35 ~ calculate ~ inputs`, inputs);
 		inputs.forEach(input => {
 			resizeInput.call(input);
 		});
+		sheet.problems[i] = problem
+		worksheet.set(sheet)
+		saveWorksheetLS()
 	}
 
 	function updateDataAttributes() {}

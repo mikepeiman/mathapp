@@ -50,9 +50,13 @@
 	}
 
     function tooltipData(cur) {
-        let date
+        console.log(`🚀 ~ file: SideNav.svelte ~ line 53 ~ tooltipData ~ cur`, cur)
+        let date, numProblems
+        let tof = typeof cur.problems
+        console.log(`🚀 ~ file: SideNav.svelte ~ line 56 ~ tooltipData ~ tof`, tof)
         cur.created_at ? date = formatDate(cur.created_at) : date = 'N/A'
-        return `${date} ${JSON.parse(cur.problems).length} problems`
+        tof === "string" ? numProblems = JSON.parse(cur.problems).length : numProblems = cur.problems.length
+        return `${date} ${numProblems} problems`
     }
 </script>
 

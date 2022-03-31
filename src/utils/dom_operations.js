@@ -75,8 +75,8 @@ export function resizeInput(input) {
     
     let show = get(showAnswers)
     let sheet = get(worksheet)
-    console.log(`🚀 ~ file: math_operations.js ~ line 109 ~ thissArray.forEach ~ this`, this)
-    console.log(`🚀 ~ file: math_operations.js ~ line 109 ~ thissArray.forEach ~ this.value: `, this.value)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 109 ~ thissArray.forEach ~ this`, this)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 109 ~ thissArray.forEach ~ this.value: `, this.value)
     this.style.width = this.value.length + 2 + 'ch'
     let thisLength = this.value.length;
     thisLength > longest ? longest = thisLength : longest;

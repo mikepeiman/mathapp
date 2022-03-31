@@ -78,7 +78,6 @@ export function recalculateProblems() {
         problem.result = processCalculation(problem.valueA, problem.valueB, thisop)
     })
     sheet.problems = problems
-    worksheet.set(sheet)
     saveWorksheetLS()
 
 }

@@ -44,6 +44,7 @@
 * on # of problems change, update worksheet.problems, adding new or deleting problems - OR eliminate this by UI design, only render whole worksheets, no adjusting # of problems on an existing sheet unless it is a direct per-problem action (like a delete icon on a problem)
 * updating individual problem not resizing result properly again
 
-## logic
+## logic & data
 * STORES should be single source of truth. DOM and LS should reflect stores immediately & reactively; calculations should occur entirely with store values; DB should be updated or called on user action only (or eventually, auto-save features possibly)
 * making the # of problems input step="2" only solves for 2-column layout. This is bad. Instead, the worksheet layout should accomodate as many problems as there are without breaking. Don't try to render nonexistent problems, and if you do, make a failsafe.
+* the worksheets collection is getting updated incorrectly; I need to check if a worksheet exists by ID and then upsert if it does, and only push new entry to array if ID is not found

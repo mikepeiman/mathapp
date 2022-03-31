@@ -45,13 +45,9 @@
 	}
 	function save() {
 		saveWorksheetLS();
-		console.log(`🚀 ~ file: MathSettings.svelte ~ line 47 ~ saveWorksheetLS ~ sheet`, sheet);
-		// ...
 	}
 	function saveDB() {
 		saveWorksheetSupabase();
-		console.log(`🚀 ~ file: MathSettings.svelte ~ line 47 ~ saveWorksheetLS ~ sheet`, sheet);
-		// ...
 	}
 	function checkWorksheetValues() {
 		sheet = get(worksheet);

@@ -73,6 +73,7 @@
 					<!-- {Math.ceil($problemsPerPage / $pageColumns) * i + j + 1} -->
 					<MathProblem
 						problem={sheet.problems[Math.ceil($problemsPerPage / $pageColumns) * i + j]}
+                        i={Math.ceil($problemsPerPage / $pageColumns) * i + j}
 					/>
 				{/each}
 			</div>

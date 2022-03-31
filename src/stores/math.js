@@ -24,13 +24,22 @@ export const saveWorksheetLS = async () => {
     let operation = get(selectedOperation);
     sheet.operation = operation;
     sheet.saved = true
+    sheet.num_problems = sheet.problems.length
     worksheetSaved.set(true)
     // worksheet.set(sheet)
+    let sheets = get(worksheets);
+    // check by id if worksheet exists in worksheets array; if it is, replace it; if not, add it
+    let index = sheets.findIndex(sheet => sheet.id === sheet.id);
+    if (index > -1) {
+        sheets[index] = sheet;
+    } else {
+        sheets.push(sheet);
+    }
+    worksheet.set(sheet)
     localStorage.setItem("worksheet", JSON.stringify(sheet));
-    // let sheets = get(worksheets);
-    // sheets.push(sheet)
-    // localStorage.setItem("worksheets", JSON.stringify(sheets));
-}
+    worksheets.set(sheets)
+    localStorage.setItem("worksheets", JSON.stringify(sheets));
+    }
 
 export const getWorksheetsFromSupabase = async () => {
     const { data, error } = await supabase.from('worksheets').select()
