@@ -25,12 +25,15 @@
 * make the sidenav wider to accomodate labels, and enable it to collapse to icons
 * add a question mark symbol to operations menu to denote mixed operations, and to trigger random operations on click
 * give user layout options - fit problems to page, or stack them with adjustable margins; allow problems to overflow to additional pages; column gap/margin
+* allow user to set/change operations on individual problems in worksheet
+* Provide icons for two main views: page-width and full-width
 
 ## Features
 * rather than "generate random values" make it a random problem, ie. randomize operation also
 * rather than only hiding answers, have an option to randomly blank any field, thus making it an exercise in rearranging equations
 * give it a timer, to allow for timed tests as well as time tracking overall work and engagement
 * allow user to create math patterns; sequences of numbers that progress by ~n integers. Eg. the numbers 1-10 inclusive, or skip-count by 2's, 3's, etc.
+* devise a useful difficulty rating for problems and for worksheets overall (avg of problems). Give a weight of difficulty to each operation, multiplied by digits per value, by number of values, and compounded by brackets and mixed operations
 
 ## Production
 * will need to look at printing and saving to .pdf. Will need to work on styling for standard A4 paper size

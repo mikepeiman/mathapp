@@ -2,24 +2,24 @@
 	import Icon from '@iconify/svelte';
 	import tooltip from '$utils/tooltip';
 	import { format, compareAsc } from 'date-fns';
-    import { get } from 'svelte/store';
-	import { worksheets } from '$stores/math';
+	import { get } from 'svelte/store';
+	import { worksheet, worksheets, loadWorksheet } from '$stores/math';
 	import { page } from '$app/stores';
 	import { onMount, afterUpdate } from 'svelte';
 
 	// $: sheets = get(worksheets) || [];
-    let sheets = []
-    worksheets.subscribe(cur => {
-        sheets = cur
-    });
+	$: open = false;
+	let sheets = [];
+	worksheets.subscribe((cur) => {
+		sheets = cur;
+	});
 	onMount(async () => {
-		console.log(`🚀 ~ file: SideNav.svelte ~ line 14 ~ page`, $page);
-
+		// console.log(`🚀 ~ file: SideNav.svelte ~ line 14 ~ page`, $page);
 	});
 
-    afterUpdate(() => {
-        console.log(`🚀 ~ file: SideNav.svelte ~ line 27 ~ afterUpdate ~ sheets`, sheets)
-    });
+	afterUpdate(() => {
+		// console.log(`🚀 ~ file: SideNav.svelte ~ line 27 ~ afterUpdate ~ sheets`, sheets)
+	});
 	const icons = {
 		// 'equalizer-1': 'ph:equalizer-bold',
 		// 'equalizer-2': 'mdi:equalizer',
@@ -27,50 +27,68 @@
 		// 'list-view': 'dashicons:list-view',
 		'grid-view': 'dashicons:grid-view',
 		calculator: 'ant-design:calculator-filled',
-		worksheets: 'ic:baseline-view-comfy'
-		// 'carousel': 'ic:outline-view-carousel',
-		// 'calculator-2': 'ic:round-table-view',
-		// 'calculator-3': 'bi:calculator-fill',
-		// 'calculator-5': 'clarity:calculator-solid',
-		// 'quiz': 'ic:baseline-quiz',
-		// 'quiz-2': 'fluent:quiz-new-28-filled',
-		// 'user-profile': 'bxs:user-circle'
+		worksheets: 'ic:baseline-view-comfy',
+		'arrow-left': 'bxs:arrow-to-left',
+		'arrow-right': 'bxs:arrow-to-right'
 	};
 
 	function worksheetNavigate(cur) {
 		console.log(`🚀 ~ file: SideNav.svelte ~ line 43 ~ worksheetNavigate ~ cur`, cur);
+        worksheet.set(cur)
 	}
 
 	function formatDate(date) {
-	 return	format(new Date(date), 'MM/dd/yyyy');
+		return format(new Date(date), 'MM/dd/yyyy');
 	}
 
-    function tooltipData(cur) {
-        // console.log(`🚀 ~ file: SideNav.svelte ~ line 53 ~ tooltipData ~ cur`, cur)
-        let date, numProblems
-        let tof = typeof cur.problems
-        // console.log(`🚀 ~ file: SideNav.svelte ~ line 56 ~ tooltipData ~ tof`, tof)
-        cur.created_at ? date = formatDate(cur.created_at) : date = 'N/A'
-        tof === "string" ? numProblems = JSON.parse(cur.problems).length : numProblems = cur.problems.length
-        return `${date} ${numProblems} problems`
-    }
+	function tooltipData(cur) {
+		// console.log(`🚀 ~ file: SideNav.svelte ~ line 53 ~ tooltipData ~ cur`, cur)
+		let date, numProblems;
+		let tof = typeof cur.problems;
+		// console.log(`🚀 ~ file: SideNav.svelte ~ line 56 ~ tooltipData ~ tof`, tof)
+		cur.created_at ? (date = formatDate(cur.created_at)) : (date = 'N/A');
+		tof === 'string'
+			? (numProblems = JSON.parse(cur.problems).length)
+			: (numProblems = cur.problems.length);
+		return `${date} ${numProblems} problems`;
+	}
+
+	function collapseMenu() {
+		console.log(`🚀 ~ file: SideNav.svelte ~ line 55 ~ collapseMenu ~ collapseMenu`);
+	}
 </script>
 
 <div id="sidenav" class="flex flex-col w-full items-center justify-start bg-winterblues-900">
-	{#if sheets && sheets.length}
-		{#each sheets as cur, i}
-			<div
-				class="tooltip flex items-center justify-center text-4xl my-2  hover:text-winterblues-400 hover:cursor-pointer transition-all"
-				use:tooltip
-				title={tooltipData(cur)}
-				on:click={() => {
-					worksheetNavigate(cur);
-				}}
-			>{i}: id: {cur.id}
-				<Icon icon={icons['grid-view']} />
-			</div>
-		{/each}
-	{/if}
+	<div class="flex items-center justify-end cursor-pointer group w-full" on:click={collapseMenu}>
+		<!-- <hr class="w-full border-b-2 border-winterblues-500 mx-2"> -->
+		<Icon
+			icon={icons['arrow-left']}
+			class="w-8 h-8 self-end mr-2 group-hover:text-sky-500 transition-all"
+		/>
+	</div>
+	<h3 class="">Saved Worksheets</h3>
+	<hr class="w-full border-b-2 border-winterblues-500 mx-2" />
+	<div class="flex flex-col justify-between w-full">
+		{#if sheets && sheets.length}
+			{#each sheets as cur, i}
+				<div
+					class="tooltip flex items-center justify-between text-2xl my-2 border-b-2 border-transparent hover:bg-sky-900 hover:text-winterblues-400 hover:cursor-pointer transition-all duration-75 hover:border-b-2 hover:border-sky-500"
+					use:tooltip
+					title={tooltipData(cur)}
+					on:click={() => {
+						worksheetNavigate(cur);
+					}}
+				>
+					<div class="ml-2">{i + 1}.</div>
+					<div class="flex flex-col">
+                        <div class="text-sm">{formatDate(cur.created_at)}</div>
+                                            <div class="text-sm">{cur.problems.length} problems</div>
+                    </div>
+					<Icon icon={icons['calculator']} class="mr-2" />
+				</div>
+			{/each}
+		{/if}
+	</div>
 	<!-- {#each Object.keys(icons) as icon}
 		<div
 			class="tooltip flex items-center justify-center text-4xl my-2 hover:text-winterblues-400 hover:cursor-pointer transition-all"
