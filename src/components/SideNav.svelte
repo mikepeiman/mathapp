@@ -3,7 +3,7 @@
 	import tooltip from '$utils/tooltip';
 	import { format, compareAsc } from 'date-fns';
 	import { get } from 'svelte/store';
-	import { worksheet, worksheets, loadWorksheet } from '$stores/math';
+	import { worksheet, worksheets, loadWorksheet, currentWorksheetID } from '$stores/math';
 	import { page } from '$app/stores';
 	import { onMount, afterUpdate } from 'svelte';
 
@@ -80,7 +80,9 @@
 		{#if sheets && sheets.length}
 			{#each sheets as cur, i}
 				<div
-					class="tooltip flex items-center justify-between text-2xl my-2 border-b-2 border-transparent hover:bg-sky-900 hover:text-winterblues-400 hover:cursor-pointer transition-all duration-75 hover:border-b-2 hover:border-sky-500"
+					class="tooltip flex items-center justify-between text-2xl my-2 border-b-2 border-transparent 
+                    hover:bg-sky-900 hover:text-winterblues-400 hover:cursor-pointer transition-all duration-75 hover:border-b-2 hover:border-sky-500
+                    {cur.xid === $currentWorksheetID ? 'text-amber-200 bg-winterblues-800' : ''}"
 					use:tooltip
 					title={tooltipData(cur)}
 					on:click={() => {
@@ -92,7 +94,12 @@
                         <div class="text-sm">{formatDate(cur.created_at)}</div>
                                             <div class="text-sm">{getNumProblems(cur)} problems</div>
                     </div>
-					<Icon icon={icons['calculator']} class="mr-2" />
+					<div  class="mr-2 text-sm text-amber-300 bg-winterblues-800 w-6 h-6 rounded-3xl flex items-center justify-center" >
+                        <Icon icon={cur.operation.iconname}/>
+                    </div>
+					<div  class="mr-2 text-sm text-amber-300 bg-winterblues-800 w-6 h-6 rounded-3xl flex items-center justify-center" >
+                        <Icon icon={cur.operation.iconname}/>
+                    </div>
 				</div>
 			{/each}
 		{/if}
