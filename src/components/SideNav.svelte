@@ -3,7 +3,13 @@
 	import tooltip from '$utils/tooltip';
 	import { format, compareAsc } from 'date-fns';
 	import { get } from 'svelte/store';
-	import { worksheet, worksheets, loadWorksheet, currentWorksheetID } from '$stores/math';
+	import {
+		worksheet,
+		worksheets,
+		loadWorksheet,
+		deleteWorksheet,
+		currentWorksheetID
+	} from '$stores/math';
 	import { page } from '$app/stores';
 	import { onMount, afterUpdate } from 'svelte';
 
@@ -29,32 +35,37 @@
 		calculator: 'ant-design:calculator-filled',
 		worksheets: 'ic:baseline-view-comfy',
 		'arrow-left': 'bxs:arrow-to-left',
-		'arrow-right': 'bxs:arrow-to-right'
+		'arrow-right': 'bxs:arrow-to-right',
+		delete: 'fluent:delete-dismiss-24-filled'
 	};
 
 	function worksheetNavigate(cur) {
 		console.log(`🚀 ~ file: SideNav.svelte ~ line 43 ~ worksheetNavigate ~ cur`, cur);
-        loadWorksheet(cur);
+		// loadWorksheet(cur);
+	}
+	function del(cur) {
+		console.log(`🚀 ~ file: SideNav.svelte ~ line 43 ~ worksheetNavigate ~ cur`, cur);
+		deleteWorksheet(cur.id);
 	}
 
 	function formatDate(date) {
 		return format(new Date(date), 'MM/dd/yyyy');
 	}
 
-    function getNumProblems(cur) {
-        let numProblems;
-        let tof = typeof cur.problems;
-        // console.log(`🚀 ~ file: SideNav.svelte ~ line 47 ~ getNumProblems ~ tof`, tof)
+	function getNumProblems(cur) {
+		let numProblems;
+		let tof = typeof cur.problems;
+		// console.log(`🚀 ~ file: SideNav.svelte ~ line 47 ~ getNumProblems ~ tof`, tof)
 		tof === 'string'
 			? (numProblems = JSON.parse(cur.problems).length)
 			: (numProblems = cur.problems.length);
-        return numProblems;
-    }
+		return numProblems;
+	}
 
 	function tooltipData(cur) {
 		// console.log(`🚀 ~ file: SideNav.svelte ~ line 53 ~ tooltipData ~ cur`, cur)
-		let date, numProblems
-        numProblems = getNumProblems(cur);
+		let date, numProblems;
+		numProblems = getNumProblems(cur);
 		// console.log(`🚀 ~ file: SideNav.svelte ~ line 56 ~ tooltipData ~ tof`, tof)
 		cur.created_at ? (date = formatDate(cur.created_at)) : (date = 'N/A');
 
@@ -79,27 +90,36 @@
 	<div class="flex flex-col justify-between w-full">
 		{#if sheets && sheets.length}
 			{#each sheets as cur, i}
-				<div
-					class="tooltip flex items-center justify-between text-2xl my-2 border-b-2 border-transparent 
-                    hover:bg-sky-900 hover:text-winterblues-400 hover:cursor-pointer transition-all duration-75 hover:border-b-2 hover:border-sky-500
-                    {cur.xid === $currentWorksheetID ? 'text-amber-200 bg-winterblues-800' : ''}"
-					use:tooltip
-					title={tooltipData(cur)}
-					on:click={() => {
-						worksheetNavigate(cur);
-					}}
-				>
-					<div class="ml-2">{i + 1}.</div>
-					<div class="flex flex-col">
-                        <div class="text-sm">{formatDate(cur.created_at)}</div>
-                                            <div class="text-sm">{getNumProblems(cur)} problems</div>
-                    </div>
-					<div  class="mr-2 text-sm text-amber-300 bg-winterblues-800 w-6 h-6 rounded-3xl flex items-center justify-center" >
-                        <Icon icon={cur.operation.iconname}/>
-                    </div>
-					<div  class="mr-2 text-sm text-amber-300 bg-winterblues-800 w-6 h-6 rounded-3xl flex items-center justify-center" >
-                        <Icon icon={cur.operation.iconname}/>
-                    </div>
+				<div class="relative group">
+					<div
+						class="tooltip relative flex items-center justify-between text-2xl my-2 border-b-2 border-transparent 
+                                        hover:bg-sky-900 hover:text-winterblues-400 hover:cursor-pointer transition-all duration-75 hover:border-b-2 hover:border-sky-500
+                                        {cur.xid === $currentWorksheetID
+							? 'text-amber-200 bg-winterblues-800'
+							: ''}"
+						use:tooltip
+						title={tooltipData(cur)}
+						on:click={() => {
+							worksheetNavigate(cur);
+						}}
+					>
+						<div class="ml-2">{i + 1}.</div>
+						<div class="flex flex-col">
+							<div class="text-sm">{formatDate(cur.created_at)}</div>
+							<div class="text-sm">{getNumProblems(cur)} problems</div>
+						</div>
+						<div
+							class="mr-2 text-sm text-amber-300 bg-winterblues-800 w-6 h-6 rounded-3xl flex items-center justify-center"
+						>
+							<Icon icon={cur.operation.iconname} />
+						</div>
+					</div>
+					<div
+						on:click={del(cur)}
+						class="z-50 absolute -right-8 bg-deepreds-100 top-[10px] mr-2 text-xl text-amber-700  w-6 h-10 opacity-0 group-hover:opacity-100 hover:text-red-600 hover:bg-amber-300 flex items-center justify-center"
+					>
+						<Icon icon={icons.delete} />
+					</div>
 				</div>
 			{/each}
 		{/if}
