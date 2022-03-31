@@ -51,6 +51,17 @@ export const getWorksheetsFromSupabase = async () => {
     }
 }
 
+export const loadWorksheet = async (sheet) => {
+    // let sheet = get(worksheets).find(sheet => sheet.id === id)
+    console.log(`🚀 ~ file: math.js ~ line 48 ~ loadWorksheet ~ sheet`, sheet)
+    currentWorksheetID.set(sheet.id)
+    worksheet.set(sheet)
+    selectedOperation.set(sheet.operation)
+    problemsPerPage.set(sheet.problems.length)
+    pageColumns.set(sheet.columns)
+
+}
+
 async function updateWorksheet() {
     let sheet = get(worksheet);
     let operation = get(selectedOperation);

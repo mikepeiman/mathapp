@@ -7,7 +7,10 @@
 	// $: selectedOperation = '';
 	let sheet = {}
 	$: current = sheet['operation'] ? sheet['operation']  : operations[3];
-
+	selectedOperation.subscribe(operation => {
+    console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 11 ~ operation`, operation)
+		current = operation;
+	});
 	onMount(() => {
 		sheet = LSgetWorksheet("current")
         console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 13 ~ onMount ~ sheet`, sheet)

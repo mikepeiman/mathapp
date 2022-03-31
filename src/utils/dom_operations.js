@@ -21,6 +21,7 @@ export function setWorksheetValuesToDOM(sheet) {
         Array.from(inputs).forEach((input, j) => {
             // console.log(`🚀 ~ file: math_operations.js ~ line 88 ~ Array.from ~ input #${j}`, input)
             input.value = values[j]
+            // console.log(`🚀 ~ file: dom_operations.js ~ line 24 ~ Array.from ~ values`, values)
             input.setAttribute("data-value", values[j])
         });
     });

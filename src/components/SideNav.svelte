@@ -34,22 +34,30 @@
 
 	function worksheetNavigate(cur) {
 		console.log(`🚀 ~ file: SideNav.svelte ~ line 43 ~ worksheetNavigate ~ cur`, cur);
-        worksheet.set(cur)
+        loadWorksheet(cur);
 	}
 
 	function formatDate(date) {
 		return format(new Date(date), 'MM/dd/yyyy');
 	}
 
-	function tooltipData(cur) {
-		// console.log(`🚀 ~ file: SideNav.svelte ~ line 53 ~ tooltipData ~ cur`, cur)
-		let date, numProblems;
-		let tof = typeof cur.problems;
-		// console.log(`🚀 ~ file: SideNav.svelte ~ line 56 ~ tooltipData ~ tof`, tof)
-		cur.created_at ? (date = formatDate(cur.created_at)) : (date = 'N/A');
+    function getNumProblems(cur) {
+        let numProblems;
+        let tof = typeof cur.problems;
+        // console.log(`🚀 ~ file: SideNav.svelte ~ line 47 ~ getNumProblems ~ tof`, tof)
 		tof === 'string'
 			? (numProblems = JSON.parse(cur.problems).length)
 			: (numProblems = cur.problems.length);
+        return numProblems;
+    }
+
+	function tooltipData(cur) {
+		// console.log(`🚀 ~ file: SideNav.svelte ~ line 53 ~ tooltipData ~ cur`, cur)
+		let date, numProblems
+        numProblems = getNumProblems(cur);
+		// console.log(`🚀 ~ file: SideNav.svelte ~ line 56 ~ tooltipData ~ tof`, tof)
+		cur.created_at ? (date = formatDate(cur.created_at)) : (date = 'N/A');
+
 		return `${date} ${numProblems} problems`;
 	}
 
@@ -82,7 +90,7 @@
 					<div class="ml-2">{i + 1}.</div>
 					<div class="flex flex-col">
                         <div class="text-sm">{formatDate(cur.created_at)}</div>
-                                            <div class="text-sm">{cur.problems.length} problems</div>
+                                            <div class="text-sm">{getNumProblems(cur)} problems</div>
                     </div>
 					<Icon icon={icons['calculator']} class="mr-2" />
 				</div>
