@@ -95,7 +95,7 @@
 						class="tooltip relative flex items-center justify-between text-2xl my-2 border-b-2 border-transparent 
                                         hover:bg-sky-900 hover:text-winterblues-400 hover:cursor-pointer transition-all duration-75 hover:border-b-2 hover:border-sky-500
                                         {cur.xid === $currentWorksheetID
-							? 'text-amber-200 bg-winterblues-800'
+							? 'text-amber-200 bg-winterblues-700'
 							: ''}"
 						use:tooltip
 						title={tooltipData(cur)}
@@ -109,10 +109,9 @@
 							<div class="text-sm">{getNumProblems(cur)} problems</div>
 						</div>
 						<div
-							class="mr-2 text-sm text-amber-300 bg-winterblues-800 w-6 h-6 rounded-3xl flex items-center justify-center"
+							class="mr-2 text-sm text-amber-600 bg-winterblues-800 w-6 h-6 rounded-3xl flex items-center justify-center"
 						>
 							<Icon icon={cur.operation.iconname}  />
-                            {cur.id}
 						</div>
 					</div>
 					<div
