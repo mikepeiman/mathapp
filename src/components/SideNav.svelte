@@ -41,7 +41,7 @@
 
 	function worksheetNavigate(cur) {
 		console.log(`🚀 ~ file: SideNav.svelte ~ line 43 ~ worksheetNavigate ~ cur`, cur);
-		// loadWorksheet(cur);
+		loadWorksheet(cur);
 	}
 	function del(cur) {
 		console.log(`🚀 ~ file: SideNav.svelte ~ line 43 ~ worksheetNavigate ~ cur`, cur);
@@ -111,7 +111,8 @@
 						<div
 							class="mr-2 text-sm text-amber-300 bg-winterblues-800 w-6 h-6 rounded-3xl flex items-center justify-center"
 						>
-							<Icon icon={cur.operation.iconname} />
+							<Icon icon={cur.operation.iconname}  />
+                            {cur.id}
 						</div>
 					</div>
 					<div

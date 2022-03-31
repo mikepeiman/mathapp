@@ -91,6 +91,7 @@ export const saveWorksheetSupabase = async () => {
     } else {
         console.log(`🚀 ~ file: math.js ~ line 47 ~ saveWorksheetSupabase ~ data`, data)
         worksheets.update((cur) => {
+            data[0].problems = JSON.parse(data[0].problems)
             const newWorksheets = [...cur, data[0]]
             return newWorksheets
         })
@@ -100,22 +101,22 @@ export const saveWorksheetSupabase = async () => {
 
 export const deleteWorksheet = async (id) => {
     // get index of sheet with parameter id from worksheets
-    let nextSheet
-    let sheets = get(worksheets)
-    let index = sheets.findIndex(x => x.id === id)
-    console.log(`🚀 ~ file: math.js ~ line 105 ~ deleteWorksheet ~ index`, index)
-    let len = sheets.length
-    console.log(`🚀 ~ file: math.js ~ line 107 ~ deleteWorksheet ~ len`, len)
-    index + 1 >= len ? nextSheet = sheets[0] : nextSheet = sheets[index + 1]
-    console.log(`🚀 ~ file: math.js ~ line 110 ~ deleteWorksheet ~ nextSheet`, nextSheet)
-    currentWorksheetID.set(nextSheet.xid)
-    // let nextSheet = sheets[index + 1]
-    // const { data, error } = await supabase.from('worksheets').delete().match({ id });
-    // if (error) {
-    //     return console.error(error)
-    // } else {
-    //     worksheets.update((worksheets) => worksheets.filter(ws => ws.id !== id))
-    // }
+    const { data, error } = await supabase.from('worksheets').delete().match({ id });
+    if (error) {
+        return console.error(error)
+    } else {
+        let sheets = get(worksheets)
+        let nextSheet
+        let index = sheets.findIndex(x => x.id === id)
+        worksheets.update((worksheets) => worksheets.filter(ws => ws.id !== id))
+        console.log(`🚀 ~ file: math.js ~ line 105 ~ deleteWorksheet ~ index`, index)
+        let len = sheets.length
+        console.log(`🚀 ~ file: math.js ~ line 107 ~ deleteWorksheet ~ len`, len)
+        index + 1 >= len ? nextSheet = sheets[0] : nextSheet = sheets[index + 1]
+        console.log(`🚀 ~ file: math.js ~ line 110 ~ deleteWorksheet ~ nextSheet`, nextSheet)
+        // currentWorksheetID.set(nextSheet.xid)
+        loadWorksheet(nextSheet)
+    }
 }
 
 
