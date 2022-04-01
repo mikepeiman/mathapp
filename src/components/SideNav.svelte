@@ -8,7 +8,9 @@
 		worksheets,
 		loadWorksheet,
 		deleteWorksheet,
-		currentWorksheetID
+		currentWorksheetID,
+        supabaseWorksheets,
+        getAllLSWorksheets,
 	} from '$stores/math';
 	import { page } from '$app/stores';
 	import { onMount, afterUpdate } from 'svelte';
@@ -36,7 +38,8 @@
 		worksheets: 'ic:baseline-view-comfy',
 		'arrow-left': 'bxs:arrow-to-left',
 		'arrow-right': 'bxs:arrow-to-right',
-		delete: 'fluent:delete-dismiss-24-filled'
+		delete: 'fluent:delete-dismiss-24-filled',
+        info: 'akar-icons:info-fill',
 	};
 
 	function worksheetNavigate(cur) {
@@ -46,6 +49,15 @@
 	function del(cur) {
 		console.log(`🚀 ~ file: SideNav.svelte ~ line 43 ~ worksheetNavigate ~ cur`, cur);
 		deleteWorksheet(cur.id);
+	}
+	function info(cur) {
+        console.log(`🚀 ~ file: SideNav.svelte ~ line 52 ~ info ~ cur`, cur.problems)
+        let supaSheets = get(supabaseWorksheets)
+        let lsSheets = getAllLSWorksheets()
+        let supaSheet = supaSheets.find(sheet => sheet.id === cur.id);
+        let lsSheet = lsSheets.find(sheet => sheet.id === cur.id);
+        console.log(`🚀 ~ file: SideNav.svelte ~ line 59 ~ info ~ lsSheet`, lsSheet.problems)
+        console.log(`🚀 ~ file: SideNav.svelte ~ line 54 ~ info ~ supaSheet`, supaSheet.problems)
 	}
 
 	function formatDate(date) {
@@ -119,6 +131,12 @@
 						class="z-50 absolute -right-8 bg-deepreds-100 top-[10px] mr-2 text-xl text-amber-700  w-6 h-10 opacity-0 group-hover:opacity-100 hover:text-red-600 hover:bg-amber-300 flex items-center justify-center"
 					>
 						<Icon icon={icons.delete} />
+					</div>
+					<div
+						on:click={info(cur)}
+						class="z-50 absolute -right-14 hover:bg-winterblues-100 top-[10px] mr-2 text-xl hover:text-winterblues-700  w-6 h-10 opacity-0 group-hover:opacity-100 text-sky-600 bg-emerald-900 flex items-center justify-center"
+					>
+						<Icon icon={icons.info} />
 					</div>
 				</div>
 			{/each}

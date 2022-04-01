@@ -6,6 +6,7 @@ import { LSgetWorksheetValuesFromDOM } from '$utils/dom_operations'
 export const currentWorksheetID = writable(null);
 export const worksheet = writable({});
 export const worksheets = writable([]);
+export const supabaseWorksheets = writable([]);
 export const selectedOperation = writable({});
 export const valueA = writable(0);
 export const valueB = writable(0);
@@ -45,7 +46,11 @@ export const getWorksheetsFromSupabase = async () => {
     if (error) {
         console.error(error)
     } else {
+        data.forEach(sheet => {
+            sheet.problems = JSON.parse(sheet.problems)
+        })
         worksheets.set(data)
+        supabaseWorksheets.set(data)
         console.log(`🚀 ~ file: math.js ~ line 37 ~ getWorksheetsFromSupabase ~ data`, data)
         return data
     }
@@ -140,6 +145,19 @@ export const getAllWorksheets = () => {
         console.log(`🚀 ~ file: stores.js ~ line 53 ~ getAllWorksheets ~ sheet`, sheets)
         return sheets
     } else if (localStorage && localStorage.getItem("worksheets")) {
+        sheets = JSON.parse(localStorage.getItem("worksheets"))
+        console.log(`🚀 ~ file: math.js ~ line 31 ~ getAllWorksheets ~ sheets`, sheets)
+        worksheets.set(sheets)
+        return sheets
+    } else {
+        console.log(`no worksheets found getAllWorksheets`)
+    }
+
+    return false
+}
+export const getAllLSWorksheets = () => {
+    let sheets = []
+    if (localStorage && localStorage.getItem("worksheets")) {
         sheets = JSON.parse(localStorage.getItem("worksheets"))
         console.log(`🚀 ~ file: math.js ~ line 31 ~ getAllWorksheets ~ sheets`, sheets)
         worksheets.set(sheets)

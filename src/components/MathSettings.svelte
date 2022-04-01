@@ -130,7 +130,7 @@
 		<button on:click={getWorksheetsFromSupabase} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 			>Get worksheets from DB</button
 		>
-		<button on:click={getAllWorksheets} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
+		<!-- <button on:click={getAllWorksheets} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 			>Get all worksheets</button
 		>
 		<button on:click={setDOMValues} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
@@ -141,7 +141,7 @@
 		>
 		<button on:click={getWorksheetValuesFromStore} class="p-4 m-4 bg-winterblues-500 bg-opacity-50"
 			>Get current worksheet store</button
-		>
+		> -->
 	</div>
 	<label for="showAnswers" class="flex items-center"
 		>Show Answers

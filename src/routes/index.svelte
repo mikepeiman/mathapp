@@ -27,10 +27,10 @@
 	// $: console.log(`🚀 ~ file: index.svelte ~ line 13 ~ sheet`, sheet);
 	onMount(() => {
 		let sheets = $page.stuff.data
-		sheets.forEach(ws => {
-        // console.log(`🚀 ~ file: index.svelte ~ line 32 ~ onMount ~ ws`, ws)
-			ws.problems = JSON.parse(ws.problems)
-		})
+		// sheets.forEach(ws => {
+        // // console.log(`🚀 ~ file: index.svelte ~ line 32 ~ onMount ~ ws`, ws)
+		// 	ws.problems = JSON.parse(ws.problems)
+		// })
 		localStorage.setItem("worksheets", JSON.stringify(sheets));
         // console.log(`🚀 ~ file: index.svelte ~ line 39 ~ onMount ~ $page`, $page)
 		// console.log(`🚀 ~ file: index.svelte ~ line 17 ~ onMount ~ onMount - sheet`, sheet);

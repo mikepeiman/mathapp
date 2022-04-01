@@ -84,7 +84,7 @@ export function resizeInput(input) {
     let val = this.getAttribute('data-value')
     if (this.name === "result") {
         this.setAttribute('data-value', val);
-        show ? this.value = val : this.value = ' ';
+        show ? this.value = val : this.value = '';
         // show ? this.style.opacity = 100 : this.style.opacity = 0;
         this.style.width = val.length + 2 + 'ch'
     }
