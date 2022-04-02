@@ -27,6 +27,7 @@
 * give user layout options - fit problems to page, or stack them with adjustable margins; allow problems to overflow to additional pages; column gap/margin
 * allow user to set/change operations on individual problems in worksheet
 * Provide icons for two main views: page-width and full-width
+* need modals - use for login/auth, use for confirm delete, possibly also for settings
 
 ## Features
 * rather than "generate random values" make it a random problem, ie. randomize operation also
@@ -46,6 +47,7 @@
     at generateNewWorksheet (DigitsSettings.svelte_svelte_type_style_lang-1a05efec.js:1:2428)
 * on # of problems change, update worksheet.problems, adding new or deleting problems - OR eliminate this by UI design, only render whole worksheets, no adjusting # of problems on an existing sheet unless it is a direct per-problem action (like a delete icon on a problem)
 * updating individual problem not resizing result properly again
+* "worksheet saved"/"not saved" indication not accurate - loaded sheets indicate not saved
 
 ## logic & data
 * STORES should be single source of truth. DOM and LS should reflect stores immediately & reactively; calculations should occur entirely with store values; DB should be updated or called on user action only (or eventually, auto-save features possibly)
