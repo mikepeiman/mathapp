@@ -25,7 +25,7 @@ import Auth from './Auth.svelte';
 	}
 </script>
 
-<div id="header" class="grid w-full items-center justify-center bg-winterblues-900">
+<div id="header" class="grid w-full  items-center justify-center bg-winterblues-900">
 	<div class="logo"></div>
 	<div class="nav flex items-center justify-center">
 		{#each icons as icon}
@@ -42,7 +42,7 @@ import Auth from './Auth.svelte';
 			</a>
 		{/each}
 	</div>
-    <div class="auth flex self-end justify-end items-end">
+    <div class="auth flex h-full justify-end items-center">
         <Auth />
     </div>
 </div>
