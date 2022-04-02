@@ -6,7 +6,9 @@
 		DialogDescription,
         Transition
 	} from '@rgossiaux/svelte-headlessui';
-	let isOpen = true;
+    export let isOpen = true;
+    $: console.log(`🚀 ~ file: Dialog.svelte ~ line 10 ~ isOpen`, isOpen)
+     
 </script>
 
 <Transition
@@ -20,10 +22,10 @@
 >
 	<Dialog on:close={() => (isOpen = false)}>
 		<DialogOverlay
-			class="p-3 bg-gray-900 bg-opacity-30 w-full h-full fixed top-0 left-0 text-white"
+			class="p-3  w-full h-full fixed top-0 left-0 text-white"
 		/>
 
-		<div class="flex w-full h-full z-50">
+		<div class="flex flex-col w-full h-full bg-black bg-opacity-75 fixed items-center justify-center top-0 left-0 p-20 lg:p-[15%] 2xl:p-[25%]">
 			<DialogTitle>Deactivate account</DialogTitle>
 			<DialogDescription>This will permanently deactivate your account</DialogDescription>
 			<p>

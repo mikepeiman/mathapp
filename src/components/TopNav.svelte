@@ -3,20 +3,19 @@
 	import tooltip from '$utils/tooltip';
 	import { currentView } from '$stores/stores';
 	import { get } from 'svelte/store';
-    import { page } from '$app/stores'
-import Auth from './Auth.svelte';
-import Dialog from './Dialog.svelte';
-    console.log(`🚀 ~ file: TopNav.svelte ~ line 7 ~ page`, $page.url)
+	import { page } from '$app/stores';
+	import Auth from './Auth.svelte';
+	import Dialog from './Dialog.svelte';
+	console.log(`🚀 ~ file: TopNav.svelte ~ line 7 ~ page`, $page.url);
 	$: current = get(currentView);
-
+	$: isOpen = true;
 	const icons = [
-        {
+		{
 			icon: 'ic:baseline-view-comfy',
 			url: '/',
 			name: 'Worksheets'
 		},
-		{ icon: 'ant-design:calculator-filled', url: '/calc', name: 'Calculator' },
-
+		{ icon: 'ant-design:calculator-filled', url: '/calc', name: 'Calculator' }
 	];
 
 	function navigate(icon) {
@@ -24,10 +23,26 @@ import Dialog from './Dialog.svelte';
 		current = icon;
 		currentView.set(icon);
 	}
+
+	function handleDialog() {
+		isOpen = !isOpen;
+		console.log(`🚀 ~ file: TopNav.svelte ~ line 30 ~ handleDialog ~ isOpen`, isOpen);
+	}
 </script>
 
 <div id="header" class="grid w-full  items-center justify-center bg-winterblues-900">
-	<div class="logo"></div>
+	<div class="logo">
+		<div class="flex">
+			<h1
+				class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-fuchsia-700 hover:bg-fuchsia-500 cursor-pointer"
+				on:mousedown={() => handleDialog()}
+				on:mouseup={() => handleDialog()}
+			>
+				Dialog
+			</h1>
+			<Dialog isOpen={isOpen} />
+		</div>
+	</div>
 	<div class="nav flex items-center justify-center">
 		{#each icons as icon}
 			<a
@@ -43,33 +58,31 @@ import Dialog from './Dialog.svelte';
 			</a>
 		{/each}
 	</div>
-	<div class="flex">
-		<Dialog />
+
+	<div class="auth flex h-full justify-end items-center">
+		<Auth />
 	</div>
-    <div class="auth flex h-full justify-end items-center">
-        <Auth />
-    </div>
 </div>
 
 <style lang="scss">
-#header {
-	display: grid;
-	// grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-	// grid-template-columns: repeat(auto-fit, 33%);
-	grid-template-rows: auto;
-	grid-template-columns: 33% 33% 33%;
-	grid-template-areas: 'logo nav auth';
-}
+	#header {
+		display: grid;
+		// grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+		// grid-template-columns: repeat(auto-fit, 33%);
+		grid-template-rows: auto;
+		grid-template-columns: 33% 33% 33%;
+		grid-template-areas: 'logo nav auth';
+	}
 
-.auth {
-	grid-area: auth;
-}
+	.auth {
+		grid-area: auth;
+	}
 
-.nav {
-	grid-area: nav;
-}
+	.nav {
+		grid-area: nav;
+	}
 
-.logo {
-	grid-area: logo;
-}
+	.logo {
+		grid-area: logo;
+	}
 </style>
