@@ -5,6 +5,7 @@
 	import { get } from 'svelte/store';
     import { page } from '$app/stores'
 import Auth from './Auth.svelte';
+import Dialog from './Dialog.svelte';
     console.log(`🚀 ~ file: TopNav.svelte ~ line 7 ~ page`, $page.url)
 	$: current = get(currentView);
 
@@ -41,6 +42,9 @@ import Auth from './Auth.svelte';
 				<Icon icon={icon.icon} />
 			</a>
 		{/each}
+	</div>
+	<div class="flex">
+		<Dialog />
 	</div>
     <div class="auth flex h-full justify-end items-center">
         <Auth />

@@ -28,6 +28,7 @@
 * allow user to set/change operations on individual problems in worksheet
 * Provide icons for two main views: page-width and full-width
 * need modals - use for login/auth, use for confirm delete, possibly also for settings
+* when dragging a bracket into place, if eg. left bracket is dragged directly in front of an operation, it will automatically insert a new value field between bracket and operation
 
 ## Features
 * rather than "generate random values" make it a random problem, ie. randomize operation also
