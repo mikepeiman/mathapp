@@ -25,21 +25,47 @@ import Auth from './Auth.svelte';
 	}
 </script>
 
-<div id="header" class="flex w-full items-center justify-center bg-winterblues-900">
-	{#each icons as icon}
-		<a
-			class="tooltip flex items-center justify-center text-4xl mx-2 hover:text-winterblues-400 hover:cursor-pointer transition-all
-            {$page.url.pathname.toLowerCase() === `${icon.url.toLowerCase()}` ? 'text-winterblues-600' : ''}
-            {icon.name == 'Worksheets' ? 'rotate-90' : ''}"
-			on:click={() => navigate(icon.url)}
-			href={icon.url}
-			use:tooltip
-			title={icon.name}
-		>
-			<Icon icon={icon.icon} />
-		</a>
-	{/each}
-    <div class="flex self-center items-center">
+<div id="header" class="grid w-full items-center justify-center bg-winterblues-900">
+	<div class="logo"></div>
+	<div class="nav flex items-center justify-center">
+		{#each icons as icon}
+			<a
+				class="tooltip flex items-center justify-center text-4xl mx-2 hover:text-winterblues-400 hover:cursor-pointer transition-all
+					{$page.url.pathname.toLowerCase() === `${icon.url.toLowerCase()}` ? 'text-winterblues-600' : ''}
+					{icon.name == 'Worksheets' ? 'rotate-90' : ''}"
+				on:click={() => navigate(icon.url)}
+				href={icon.url}
+				use:tooltip
+				title={icon.name}
+			>
+				<Icon icon={icon.icon} />
+			</a>
+		{/each}
+	</div>
+    <div class="auth flex self-end justify-end items-end">
         <Auth />
     </div>
 </div>
+
+<style lang="scss">
+#header {
+	display: grid;
+	// grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+	// grid-template-columns: repeat(auto-fit, 33%);
+	grid-template-rows: auto;
+	grid-template-columns: 33% 33% 33%;
+	grid-template-areas: 'logo nav auth';
+}
+
+.auth {
+	grid-area: auth;
+}
+
+.nav {
+	grid-area: nav;
+}
+
+.logo {
+	grid-area: logo;
+}
+</style>
