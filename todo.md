@@ -17,6 +17,7 @@
   * User can select between new BLANK worksheet and new FILLED worksheet
     * will need a separate "Save Worksheet" function in that case which reads DOM input values and operators (as I enable more complex/varied operations)
   * for state management, probably best UX if every change to worksheet is saved immediately to LS, which save/load from DB are user actions
+  * eventually, longterm: worksheets and collections (curriculums/courses) can be made public; they can be viewed by author or searched/filtered; authors can be followed and favorited; view of public sheets/collections offers default view of all-time best-rated, new sheets/authors, as well as hot (average ratings over recent period)
 
 ## UI
 * use range sliders for number of digits and precision inputs
@@ -29,6 +30,7 @@
 * Provide icons for two main views: page-width and full-width
 * need modals - use for login/auth, use for confirm delete, possibly also for settings
 * when dragging a bracket into place, if eg. left bracket is dragged directly in front of an operation, it will automatically insert a new value field between bracket and operation
+* give user the option to "update current worksheet OR save as new worksheet" (which generates and assigns a new XID)
 
 ## Features
 * rather than "generate random values" make it a random problem, ie. randomize operation also
@@ -56,4 +58,5 @@
 * UPSERT: the worksheets collection is getting updated incorrectly; I need to check if a worksheet exists by ID and then upsert if it does, and only push new entry to array if ID is not found
 * allow user to either "update worksheet" or "save as new worksheet" (upsert or add to db)
 * when a new worksheet is saved to DB, it needs to be reflected immediately in UI - currently in SideNav, using worksheets store, it is not
+  
   
