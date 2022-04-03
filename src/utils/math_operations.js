@@ -61,11 +61,14 @@ export function processCalculationFromValues(inputs) {
 export function recalculateProblems() {
     let sheet = get(worksheet)
     let problems = sheet.problems
-    let op = get(selectedOperation)
-    let thisop = op
+    if(problems){
 
-    // console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ op.symbol === '?'`, op.symbol === '?')
-
+        let op = get(selectedOperation)
+        console.log(`🚀 ~ file: math_operations.js ~ line 67 ~ recalculateProblems ~ op`, op)
+        let thisop = op
+        
+        // console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ op.symbol === '?'`, op.symbol === '?')
+        
     // console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ recalculateProblems ~ problems`, problems)
     problems?.forEach(problem => {
         // console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ problem`, problem)
@@ -79,6 +82,7 @@ export function recalculateProblems() {
     })
     sheet.problems = problems
     saveWorksheetLS()
+}
 
 }
 

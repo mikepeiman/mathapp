@@ -12,11 +12,10 @@
 		current = operation;
 	});
 	onMount(() => {
-		sheet = LSgetWorksheet("current")
-        console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 13 ~ onMount ~ sheet`, sheet)
+		// sheet = LSgetWorksheet("current")
+        // console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 13 ~ onMount ~ sheet`, sheet)
         console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 15 ~ onMount ~ current`, current)
 		dispatch('operationSelect', current);
-		console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 12 ~ onMount `);
 	});
 
 

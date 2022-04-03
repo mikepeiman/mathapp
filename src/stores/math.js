@@ -1,6 +1,7 @@
 import { writable, get } from "svelte/store";
 import { supabase } from "$lib/supabaseClient.js";
 import { v4 as uuidv4 } from 'uuid';
+import { user } from '$stores/auth.js';
 import { LSgetWorksheetValuesFromDOM } from '$utils/dom_operations'
 
 export const currentWorksheetID = writable(null);
@@ -22,10 +23,11 @@ export const worksheetSaved = writable(false);
 export const saveWorksheetLS = async () => {
     // let sheet = await updateWorksheet()
     let sheet = get(worksheet);
+    console.log(`🚀 ~ file: math.js ~ line 26 ~ saveWorksheetLS ~ sheet`, sheet)
     let operation = get(selectedOperation);
     sheet.operation = operation;
     sheet.saved = true
-    sheet.num_problems = sheet.problems.length
+    sheet.num_problems = sheet?.problems?.length
     worksheetSaved.set(true)
     // check by id if worksheet exists in worksheets array; if it is, replace it; if not, add it
     // let sheets = get(worksheets);
@@ -56,7 +58,8 @@ export const getWorksheetsFromSupabase = async () => {
     }
 }
 
-export const loadWorksheet = async (sheet) => {
+export const loadWorksheet = async () => {
+    let sheet = get(worksheet);
     // let sheet = get(worksheets).find(sheet => sheet.id === id)
     console.log(`🚀 ~ file: math.js ~ line 48 ~ loadWorksheet ~ sheet`, sheet)
     currentWorksheetID.set(sheet.xid)
@@ -82,25 +85,31 @@ export const saveWorksheetSupabase = async () => {
     // let sheet = await updateWorksheet()
     let sheet = get(worksheet);
     sheet.saved = true
-    sheet.user_id ? true : sheet.user_id = uuidv4()
-    let user_id = sheet.user_id
-    console.log(`🚀 ~ file: math.js ~ line 41 ~ saveWorksheetSupabase ~ sheet`, sheet)
-    console.log(`🚀 ~ file: math.js ~ line 43 ~ saveWorksheetSupabase ~ supabase`, supabase)
-    console.log(`🚀 ~ file: math.js ~ line 45 ~ saveWorksheetSupabase ~ {id: sheet.id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation}`, { xid: sheet.xid, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation })
+    let activeUser = get(user)
+    console.log(`🚀 ~ file: math.js ~ line 87 ~ saveWorksheetSupabase ~ user`, activeUser)
+    if(activeUser){
 
-    const { data, error } = await supabase.from('worksheets').insert([{ xid: sheet.xid, user_id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }]);
-    if (error) {
-        sheet.saved = false
-        worksheetSaved.set(false)
-        return console.error(error)
+        let user_id = activeUser.id
+        sheet.user_id = user_id
+        console.log(`🚀 ~ file: math.js ~ line 41 ~ saveWorksheetSupabase ~ sheet`, sheet)
+        // console.log(`🚀 ~ file: math.js ~ line 43 ~ saveWorksheetSupabase ~ supabase`, supabase)
+        
+        const { data, error } = await supabase.from('worksheets').insert([{ xid: sheet.xid, user_id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }]);
+        if (error) {
+            sheet.saved = false
+            worksheetSaved.set(false)
+            return console.error(error)
+        } else {
+            console.log(`🚀 ~ file: math.js ~ line 47 ~ saveWorksheetSupabase ~ data`, data)
+            worksheets.update((cur) => {
+                data[0].problems = JSON.parse(data[0].problems)
+                const newWorksheets = [...cur, data[0]]
+                return newWorksheets
+            })
+            worksheetSaved.set(true)
+        }
     } else {
-        console.log(`🚀 ~ file: math.js ~ line 47 ~ saveWorksheetSupabase ~ data`, data)
-        worksheets.update((cur) => {
-            data[0].problems = JSON.parse(data[0].problems)
-            const newWorksheets = [...cur, data[0]]
-            return newWorksheets
-        })
-        worksheetSaved.set(true)
+        alert('You must be logged in to save worksheets')
     }
 }
 
@@ -129,7 +138,7 @@ export const deleteWorksheet = async (id) => {
 export const LScheckForWorksheet = () => {
     let sheet = get(worksheet)
     if (sheet.length) {
-        // console.log(`🚀 ~ file: stores.js ~ line 53 ~ LScheckForWorksheet ~ sheet`, sheet)
+        console.log(`🚀 ~ file: stores.js ~ line 53 ~ LScheckForWorksheet ~ sheet`, sheet)
         return true
     } else if (localStorage && localStorage.getItem("worksheet")) {
         sheet = localStorage.getItem("worksheet")
@@ -172,7 +181,7 @@ export const getAllLSWorksheets = () => {
 export const LSgetWorksheet = (xid) => {
     let sheet = get(worksheet)
     if (xid === "current") {
-        sheet = get(worksheet)
+        return sheet = get(worksheet)
     } else if (xid) {
         sheet = get(worksheets).filter(sheet => sheet.xid === xid)[0]
     }

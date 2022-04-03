@@ -47,7 +47,7 @@
 	}
 
 	async function signOut() {
-		const { error } = await supabase.auth.signOut();
+		const {error} = await supabase.auth.signOut();
 		error ? console.error(error) : console.log('signed out');
 	}
 	function logUser() {
@@ -55,6 +55,7 @@
 	}
 </script>
 
+{#if !$user}
 <div
 	class="tooltip flex items-center justify-center p-2"
 	use:tooltip
@@ -84,16 +85,13 @@
 	>
 		Log In
 	</button>
-	<button
-		class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-fuchsia-700 hover:bg-fuchsia-500 cursor-pointer"
-		on:click={logUser}
-	>
-		Log user
-	</button>
-	<button
-		class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-fuchsia-700 hover:bg-fuchsia-500 cursor-pointer"
-		on:click={signOut}
-	>
-		Sign Out
-	</button>
 </div>
+{:else}
+{$user.email}
+<button
+	class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-fuchsia-700 hover:bg-fuchsia-500 cursor-pointer"
+	on:click={signOut}
+>
+	Sign Out
+</button>
+{/if}

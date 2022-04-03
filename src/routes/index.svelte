@@ -23,24 +23,16 @@
 
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
-	$: sheet = [];
-	// $: console.log(`🚀 ~ file: index.svelte ~ line 13 ~ sheet`, sheet);
 	onMount(() => {
 		let sheets = $page.stuff.data
-		// sheets.forEach(ws => {
-        // // console.log(`🚀 ~ file: index.svelte ~ line 32 ~ onMount ~ ws`, ws)
-		// 	ws.problems = JSON.parse(ws.problems)
-		// })
+        console.log(`🚀 ~ file: index.svelte ~ line 28 ~ onMount ~ sheets`, sheets)
 		localStorage.setItem("worksheets", JSON.stringify(sheets));
-        // console.log(`🚀 ~ file: index.svelte ~ line 39 ~ onMount ~ $page`, $page)
-		// console.log(`🚀 ~ file: index.svelte ~ line 17 ~ onMount ~ onMount - sheet`, sheet);
 		resizeAllInputs();
 	});
 
 	function handleOperationSelect(msg) {
 		console.log(`🚀 ~ file: index.svelte ~ line 10 ~ handleOperationSelect ~ msg`, msg);
 		msg.detail.symbol !== '=' ? selectedOperation.set(msg.detail) : false;
-		// msg.detail.symbol !== '?' ? selectedOperation.set(msg.detail) : false;
 		recalculateProblems();
 		resizeAllInputs();
 	}
@@ -49,7 +41,7 @@
 <div id="worksheet-layout" class="layout-main w-full h-full">
 	<OperationsMenu on:operationSelect={(msg) => handleOperationSelect(msg)} />
 	<MathSettings />
-	<Worksheet {sheet} />
+	<Worksheet />
 </div>
 
 <style lang="scss" global>
