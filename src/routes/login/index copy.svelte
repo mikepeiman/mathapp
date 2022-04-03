@@ -95,7 +95,21 @@
 			</li>
 		</ul>
 		<div class="tabs-wrapper flex w-full items-center justify-between">
-			
+			<TabGroup>
+				<TabList>
+					<Tab><div class="headless-tab p-2 bg-winterblues-300">Sign Up</div></Tab>
+					<Tab><div class="headless-tab p-2 bg-winterblues-400">Sign In</div></Tab>
+				</TabList>
+				<TabPanels>
+					<TabPanel>Content 1</TabPanel>
+					<TabPanel>
+						<TabGroup>
+							<TabList>
+								<Tab><div class="headless-tab p-2">Email Link</div></Tab>
+								<Tab><div class="headless-tab">With Password</div></Tab>
+							</TabList>
+							<TabPanels>
+								<TabPanel>
 									<div
 										class="tooltip flex flex-col items-center justify-center p-2"
 										use:tooltip
@@ -110,13 +124,19 @@
 														bind:value={email}
 														autocomplete="on"
 														placeholder="magic link email sign-in"
-														class="text-sky-900 outline-none w-auto bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
+														class="text-sky-900"
 													/>
 												</label>
-                                                <button class="p-2 roundd bg-winterblues-700" type="submit">Sign in</button>
 											</div>
 										</form>
-									</div>
+									</div></TabPanel
+								>
+								<TabPanel>Content 2</TabPanel>
+							</TabPanels>
+						</TabGroup></TabPanel
+					>
+				</TabPanels>
+			</TabGroup>
 		</div>
 
 		<!-- <div
@@ -125,6 +145,16 @@
 	</div>
 </div>
 
+<!-- <Switch
+    checked={enabled}
+    on:change={(e) => (enabled = e.detail)}
+    class={enabled ? 
+    'switch switch-enabled ' 
+    : 'switch switch-disabled '}
+>
+    <span class="sr-only">Enable notifications</span>
+    <span class="toggle" class:toggle-on={enabled} class:toggle-off={!enabled} />
+</Switch> -->
 <style lang="scss">
     :global(.tabs-wrapping-div) {
         display: flex;
@@ -197,23 +227,4 @@
 	.enabled {
 		transform: translateX(1rem);
 	}
-
-    /* Change Autocomplete styles in Chrome*/
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  border-bottom: 1px solid var(--color-winterblues-300);
-  -webkit-text-fill-color: white;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1rem;
-  font-weight: 300;
-  -webkit-box-shadow: 0 0 0px 1000px rgba(0,0,0,0.25) inset;
-  transition: background-color 5000s ease-in-out 0s;
-}
 </style>
