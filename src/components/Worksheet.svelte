@@ -31,7 +31,7 @@
 		loaded = true;
 		console.log(`🚀 ~ file: Worksheet.svelte ~ line 28 ~ onMount ~ sheet`, sheet);
 		saved = sheet.saved;
-		loadWorksheet();
+		loadWorksheet(sheet);
 		// selectedOperation.set(sheet.operation);
 		// worksheet.set(sheet);
 		// pageColumns.set(sheet.columns);

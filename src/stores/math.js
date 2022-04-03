@@ -58,8 +58,8 @@ export const getWorksheetsFromSupabase = async () => {
     }
 }
 
-export const loadWorksheet = async () => {
-    let sheet = get(worksheet);
+export const loadWorksheet = async (sheet) => {
+    // let sheet = get(worksheet);
     // let sheet = get(worksheets).find(sheet => sheet.id === id)
     console.log(`🚀 ~ file: math.js ~ line 48 ~ loadWorksheet ~ sheet`, sheet)
     currentWorksheetID.set(sheet.xid)
@@ -87,13 +87,12 @@ export const saveWorksheetSupabase = async () => {
     sheet.saved = true
     let activeUser = get(user)
     console.log(`🚀 ~ file: math.js ~ line 87 ~ saveWorksheetSupabase ~ user`, activeUser)
-    if(activeUser){
-
+    if (activeUser) {
         let user_id = activeUser.id
         sheet.user_id = user_id
         console.log(`🚀 ~ file: math.js ~ line 41 ~ saveWorksheetSupabase ~ sheet`, sheet)
         // console.log(`🚀 ~ file: math.js ~ line 43 ~ saveWorksheetSupabase ~ supabase`, supabase)
-        
+
         const { data, error } = await supabase.from('worksheets').insert([{ xid: sheet.xid, user_id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }]);
         if (error) {
             sheet.saved = false
@@ -114,22 +113,32 @@ export const saveWorksheetSupabase = async () => {
 }
 
 export const deleteWorksheet = async (id) => {
+    console.log(`🚀 ~ file: math.js ~ line 116 ~ deleteWorksheet ~ id`, id)
     // get index of sheet with parameter id from worksheets
-    const { data, error } = await supabase.from('worksheets').delete().match({ id });
-    if (error) {
-        return console.error(error)
+    let activeUser = get(user)
+    console.log(`🚀 ~ file: math.js ~ line 118 ~ deleteWorksheet ~ activeUser`, activeUser)
+    if(activeUser){
+        
+        let user_id = activeUser.id
+        const { data, error } = await supabase.from('worksheets').delete().match({ id, user_id });
+        console.log(`🚀 ~ file: math.js ~ line 121 ~ deleteWorksheet ~ data`, data)
+        if (error) {
+            return console.error(error)
+        } else {
+            let sheets = get(worksheets)
+            let nextSheet
+            let index = sheets.findIndex(x => x.id === id)
+            worksheets.update((worksheets) => worksheets.filter(ws => ws.id !== id))
+            console.log(`🚀 ~ file: math.js ~ line 105 ~ deleteWorksheet ~ index`, index)
+            let len = sheets.length
+            console.log(`🚀 ~ file: math.js ~ line 107 ~ deleteWorksheet ~ len`, len)
+            index + 1 >= len ? nextSheet = sheets[0] : nextSheet = sheets[index + 1]
+            console.log(`🚀 ~ file: math.js ~ line 110 ~ deleteWorksheet ~ nextSheet`, nextSheet)
+            // currentWorksheetID.set(nextSheet.xid)
+            loadWorksheet(nextSheet)
+        }
     } else {
-        let sheets = get(worksheets)
-        let nextSheet
-        let index = sheets.findIndex(x => x.id === id)
-        worksheets.update((worksheets) => worksheets.filter(ws => ws.id !== id))
-        console.log(`🚀 ~ file: math.js ~ line 105 ~ deleteWorksheet ~ index`, index)
-        let len = sheets.length
-        console.log(`🚀 ~ file: math.js ~ line 107 ~ deleteWorksheet ~ len`, len)
-        index + 1 >= len ? nextSheet = sheets[0] : nextSheet = sheets[index + 1]
-        console.log(`🚀 ~ file: math.js ~ line 110 ~ deleteWorksheet ~ nextSheet`, nextSheet)
-        // currentWorksheetID.set(nextSheet.xid)
-        loadWorksheet(nextSheet)
+        alert('You must be logged in to delete worksheets')
     }
 }
 
