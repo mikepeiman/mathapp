@@ -38,9 +38,6 @@
 		const {error} = await supabase.auth.signOut();
 		error ? console.error(error) : console.log('signed out');
 	}
-	function logUser() {
-		console.log(`🚀 ~ file: Auth.svelte ~ line 42 ~ logUser ~ user`, $user);
-	}
 </script>
 
 {#if !$user}
