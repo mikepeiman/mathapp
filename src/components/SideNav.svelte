@@ -61,6 +61,7 @@
 	}
 
 	function formatDate(date) {
+        console.log(`🚀 ~ file: SideNav.svelte ~ line 64 ~ formatDate ~ date`, date)
 		return format(new Date(date), 'MM/dd/yyyy');
 	}
 
@@ -141,6 +142,7 @@
 				</div>
 			{/each}
 		{/if}
+		
 	</div>
 	<!-- {#each Object.keys(icons) as icon}
 		<div

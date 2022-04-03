@@ -74,7 +74,9 @@
 					type="text"
 					name="email"
 					bind:value={email}
+					autocomplete="on"
 					placeholder="magic link email sign-in"
+					class="text-sky-900"
 				/>
 			</label>
 		</div>

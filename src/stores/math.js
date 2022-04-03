@@ -46,10 +46,10 @@ export const saveWorksheetLS = async () => {
 export const getWorksheetsFromSupabase = async () => {
     let activeUser = supabase.auth.user()
     console.log(`🚀 ~ file: math.js ~ line 48 ~ getWorksheetsFromSupabase ~ activeUser`, activeUser)
-    if(activeUser){
+    if (activeUser) {
 
         let user_id = activeUser.id;
-        const { data, error } = await supabase.from('worksheets').select().match({user_id})
+        const { data, error } = await supabase.from('worksheets').select().match({ user_id })
         if (error) {
             console.error(error)
         } else {
@@ -92,6 +92,7 @@ async function updateWorksheet() {
 export const saveWorksheetSupabase = async () => {
     // let sheet = await updateWorksheet()
     let sheet = get(worksheet);
+    let storeSheets = get(worksheets);
     sheet.saved = true
     let activeUser = get(user)
     console.log(`🚀 ~ file: math.js ~ line 87 ~ saveWorksheetSupabase ~ user`, activeUser)
@@ -103,18 +104,29 @@ export const saveWorksheetSupabase = async () => {
 
         // const { data, error } = await supabase.from('worksheets').insert({ xid: sheet.xid, user_id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation });
         // const { data, error } = await supabase.from('worksheets').upsert({ xid: sheet.xid, user_id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }, {onConflict: 'xid'});
-        const { data, error } = await supabase.from('worksheets').upsert({ xid, user_id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }, {onConflict: 'xid'})   
+        const { data, error } = await supabase.from('worksheets').upsert({ xid, user_id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }, { onConflict: 'xid' })
         if (error) {
             sheet.saved = false
             worksheetSaved.set(false)
             return console.error(error)
         } else {
             console.log(`🚀 ~ file: math.js ~ line 47 ~ saveWorksheetSupabase ~ data`, data)
-            worksheets.update((cur) => {
+            let exists = checkForExistingWorksheetXid(xid)
+            if (exists) {
+                let idx = storeSheets.findIndex(sheet => sheet.xid === xid);
                 data[0].problems = JSON.parse(data[0].problems)
-                const newWorksheets = [...cur, data[0]]
-                return newWorksheets
-            })
+                let updatedSheet = data[0]
+                storeSheets[idx] = updatedSheet;
+                console.log(`🚀 ~ file: math.js ~ line 118 ~ saveWorksheetSupabase ~ storeSheets`, storeSheets)
+                worksheets.set(storeSheets)
+                console.log(`🚀 ~ file: math.js ~ line 116 ~ saveWorksheetSupabase ~ exists idx`, idx)
+            } else {
+                worksheets.update((cur) => {
+                    data[0].problems = JSON.parse(data[0].problems)
+                    const newWorksheets = [...cur, data[0]]
+                    return newWorksheets
+                })
+            }
             worksheetSaved.set(true)
         }
     } else {
@@ -122,13 +134,20 @@ export const saveWorksheetSupabase = async () => {
     }
 }
 
+function checkForExistingWorksheetXid(xid) {
+    let storeSheets = get(worksheets);
+    let existingWorksheet = storeSheets.find(sheet => sheet.xid === xid);
+    console.log(`🚀 ~ file: math.js ~ line 128 ~ checkForExistingWorksheetXid ~ existingWorksheet`, existingWorksheet)
+    return existingWorksheet
+}
+
 export const deleteWorksheet = async (id) => {
     console.log(`🚀 ~ file: math.js ~ line 116 ~ deleteWorksheet ~ id`, id)
     // get index of sheet with parameter id from worksheets
     let activeUser = get(user)
     console.log(`🚀 ~ file: math.js ~ line 118 ~ deleteWorksheet ~ activeUser`, activeUser)
-    if(activeUser){
-        
+    if (activeUser) {
+
         let user_id = activeUser.id
         const { data, error } = await supabase.from('worksheets').delete().match({ id });
         console.log(`🚀 ~ file: math.js ~ line 121 ~ deleteWorksheet ~ data`, data)
