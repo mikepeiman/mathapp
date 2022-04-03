@@ -44,17 +44,25 @@ export const saveWorksheetLS = async () => {
 }
 
 export const getWorksheetsFromSupabase = async () => {
-    const { data, error } = await supabase.from('worksheets').select()
-    if (error) {
-        console.error(error)
+    let activeUser = supabase.auth.user()
+    console.log(`🚀 ~ file: math.js ~ line 48 ~ getWorksheetsFromSupabase ~ activeUser`, activeUser)
+    if(activeUser){
+
+        let user_id = activeUser.id;
+        const { data, error } = await supabase.from('worksheets').select().match({user_id})
+        if (error) {
+            console.error(error)
+        } else {
+            data.forEach(sheet => {
+                sheet.problems = JSON.parse(sheet.problems)
+            })
+            worksheets.set(data)
+            supabaseWorksheets.set(data)
+            console.log(`🚀 ~ file: math.js ~ line 37 ~ getWorksheetsFromSupabase ~ data`, data)
+            return data
+        }
     } else {
-        data.forEach(sheet => {
-            sheet.problems = JSON.parse(sheet.problems)
-        })
-        worksheets.set(data)
-        supabaseWorksheets.set(data)
-        console.log(`🚀 ~ file: math.js ~ line 37 ~ getWorksheetsFromSupabase ~ data`, data)
-        return data
+        console.log('Please log in to view your worksheets')
     }
 }
 
@@ -89,11 +97,10 @@ export const saveWorksheetSupabase = async () => {
     console.log(`🚀 ~ file: math.js ~ line 87 ~ saveWorksheetSupabase ~ user`, activeUser)
     if (activeUser) {
         let user_id = activeUser.id
-        sheet.user_id = user_id
         console.log(`🚀 ~ file: math.js ~ line 41 ~ saveWorksheetSupabase ~ sheet`, sheet)
         // console.log(`🚀 ~ file: math.js ~ line 43 ~ saveWorksheetSupabase ~ supabase`, supabase)
 
-        const { data, error } = await supabase.from('worksheets').insert([{ xid: sheet.xid, user_id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }]);
+        const { data, error } = await supabase.from('worksheets').insert([{ xid: sheet.xid, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }]);
         if (error) {
             sheet.saved = false
             worksheetSaved.set(false)

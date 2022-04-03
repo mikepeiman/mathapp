@@ -32,11 +32,11 @@ let operations = [
     },
 ];
 
-export function processCalculation(a, b, operation) {
+export function processCalculation(a, b, operation, singleOperation) {
     res = eval(`${a} ${operation.symbol} ${b}`);
     operation.symbol === '/'  ? (res = setDivisionPrecision(res)) : res;
     result.set(res);
-    saveWorksheetLS();
+    // singleOperation ? saveWorksheetLS() : null;
     return res;
 }
 export function processCalculationFromAttributes(inputs) {

@@ -18,7 +18,7 @@
 	import { fade } from 'svelte/transition';
 	console.log(`🚀 ~ file: TopNav.svelte ~ line 7 ~ page`, $page.url);
 	$: current = get(currentView);
-	$: isOpen = true;
+	$: isOpen = false;
 	const icons = [
 		{
 			icon: 'ic:baseline-view-comfy',
