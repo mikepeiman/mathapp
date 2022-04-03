@@ -98,9 +98,12 @@ export const saveWorksheetSupabase = async () => {
     if (activeUser) {
         let user_id = activeUser.id
         console.log(`🚀 ~ file: math.js ~ line 41 ~ saveWorksheetSupabase ~ sheet`, sheet)
+        let xid = sheet.xid
         // console.log(`🚀 ~ file: math.js ~ line 43 ~ saveWorksheetSupabase ~ supabase`, supabase)
 
-        const { data, error } = await supabase.from('worksheets').insert([{ xid: sheet.xid, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }]);
+        // const { data, error } = await supabase.from('worksheets').insert({ xid: sheet.xid, user_id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation });
+        // const { data, error } = await supabase.from('worksheets').upsert({ xid: sheet.xid, user_id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }, {onConflict: 'xid'});
+        const { data, error } = await supabase.from('worksheets').upsert({ xid, user_id, problems: JSON.stringify(sheet.problems), columns: sheet.columns, operation: sheet.operation }, {onConflict: 'xid'})   
         if (error) {
             sheet.saved = false
             worksheetSaved.set(false)
@@ -127,7 +130,7 @@ export const deleteWorksheet = async (id) => {
     if(activeUser){
         
         let user_id = activeUser.id
-        const { data, error } = await supabase.from('worksheets').delete().match({ id, user_id });
+        const { data, error } = await supabase.from('worksheets').delete().match({ id });
         console.log(`🚀 ~ file: math.js ~ line 121 ~ deleteWorksheet ~ data`, data)
         if (error) {
             return console.error(error)
