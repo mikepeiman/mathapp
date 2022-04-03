@@ -1,9 +1,21 @@
 <script>
 	import { supabase } from '$lib/supabaseClient.js';
+	import { user } from '$stores/auth.js';
+	user.set(supabase.auth.user());
+	$: console.log(`🚀 ~ file: Auth.svelte ~ line 6 ~ $: user`, $user);
+	supabase.auth.onAuthStateChange((_, session) => {
+		user.set(session?.user);
+		if (session?.user) {
+			console.log(
+				`🚀 ~ file: Auth.svelte ~ line 11 ~ supabase.auth.onAuthStateChange ~ user`,
+				user
+			);
+		}
+	});
 	import tooltip from '$utils/tooltip';
 	let loading = false;
 	let email;
-
+	// $: email = ''
 	function handleLogin() {
 		console.log(`🚀 ~ file: Auth.svelte ~ line 7 ~ handleLogin ~ handleLogin`);
 		email;
@@ -11,14 +23,21 @@
 	}
 
 	async function signInWithEmail() {
+		// console.log(`🚀 ~ file: Auth.svelte ~ line 18 ~ signInWithEmail ~ email`, email);
+		// console.log(`🚀 ~ file: Auth.svelte ~ line 20 ~ signInWithEmail ~ supabase`, supabase);
+		// console.log(
+		// 	`🚀 ~ file: Auth.svelte ~ line 21 ~ signInWithEmail ~ supabase.auth`,
+		// 	supabase.auth
+		// );
 		try {
-			loading = true
+			loading = true;
 			const { user, error } = await supabase.auth.signIn({
-				email: 'example@email.com',
-				password: 'example-password'
+				email: `${email}`
 			});
+			console.log(`🚀 ~ file: Auth.svelte ~ line 21 ~ signInWithEmail ~ user`, user);
 			if (error) throw error;
-			alert(`Welcome ${user.email}! Check your email for a verification link.`);
+			// return user	
+			alert(`Welcome! Check your email for a verification link.`);
 		} catch (error) {
 			console.error(error);
 			alert(error.error_description || error.message);
@@ -29,6 +48,10 @@
 
 	async function signOut() {
 		const { error } = await supabase.auth.signOut();
+		error ? console.error(error) : console.log('signed out');
+	}
+	function logUser() {
+		console.log(`🚀 ~ file: Auth.svelte ~ line 42 ~ logUser ~ user`, $user);
 	}
 </script>
 
@@ -37,20 +60,40 @@
 	use:tooltip
 	title="Sign in via magic link with your email below."
 >
-	<h1
+	<button
 		class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-blue-700 hover:bg-blue-500 cursor-pointer"
 	>
 		Sign Up
-	</h1>
-	<h1
+	</button>
+
+	<form on:submit|preventDefault={signInWithEmail}>
+		<div>
+			<label for="email"
+				><input
+					type="text"
+					name="email"
+					bind:value={email}
+					placeholder="magic link email sign-in"
+				/>
+			</label>
+		</div>
+	</form>
+	<button
 		class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-fuchsia-700 hover:bg-fuchsia-500 cursor-pointer"
-		on:click={handleLogin}
+		on:click={signInWithEmail}
 	>
 		Log In
-	</h1>
-	<form on:submit|preventDefault={handleLogin}>
-	<div>
-		<label for="email"><input type="text" name="email" placeholder="email address"></label>
-	</div>
-	</form>
+	</button>
+	<button
+		class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-fuchsia-700 hover:bg-fuchsia-500 cursor-pointer"
+		on:click={logUser}
+	>
+		Log user
+	</button>
+	<button
+		class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-fuchsia-700 hover:bg-fuchsia-500 cursor-pointer"
+		on:click={signOut}
+	>
+		Sign Out
+	</button>
 </div>

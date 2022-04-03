@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
 	import TopNav from '$components/TopNav.svelte';
 	import SideNav from '$components/SideNav.svelte';
+	import { supabase } from "$lib/supabaseClient.js";
+	import { user } from '$stores/auth.js'
 	let mounted = false;
 	onMount(() => {
 		mounted = true;
