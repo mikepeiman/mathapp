@@ -31,6 +31,7 @@
 * need modals - use for login/auth, use for confirm delete, possibly also for settings
 * when dragging a bracket into place, if eg. left bracket is dragged directly in front of an operation, it will automatically insert a new value field between bracket and operation
 * give user the option to "update current worksheet OR save as new worksheet" (which generates and assigns a new XID)
+* consider a fancy animated landing page that morphs a background gradient image between giant 'X + - %' symbols.
 
 ## Features
 * rather than "generate random values" make it a random problem, ie. randomize operation also

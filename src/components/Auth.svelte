@@ -4,8 +4,8 @@
 	user.set(supabase.auth.user());
 	$: console.log(`🚀 ~ file: Auth.svelte ~ line 6 ~ $: user`, $user);
 	supabase.auth.onAuthStateChange((_, session) => {
-		user.set(session?.user);
 		if (session?.user) {
+			user.set(session?.user);
 			console.log(
 				`🚀 ~ file: Auth.svelte ~ line 11 ~ supabase.auth.onAuthStateChange ~ user`,
 				user
@@ -15,20 +15,8 @@
 	import tooltip from '$utils/tooltip';
 	let loading = false;
 	let email;
-	// $: email = ''
-	function handleLogin() {
-		console.log(`🚀 ~ file: Auth.svelte ~ line 7 ~ handleLogin ~ handleLogin`);
-		email;
-		console.log(`🚀 ~ file: Auth.svelte ~ line 11 ~ handleLogin ~ email`, email);
-	}
 
 	async function signInWithEmail() {
-		// console.log(`🚀 ~ file: Auth.svelte ~ line 18 ~ signInWithEmail ~ email`, email);
-		// console.log(`🚀 ~ file: Auth.svelte ~ line 20 ~ signInWithEmail ~ supabase`, supabase);
-		// console.log(
-		// 	`🚀 ~ file: Auth.svelte ~ line 21 ~ signInWithEmail ~ supabase.auth`,
-		// 	supabase.auth
-		// );
 		try {
 			loading = true;
 			const { user, error } = await supabase.auth.signIn({
