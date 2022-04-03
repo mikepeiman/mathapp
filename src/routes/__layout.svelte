@@ -4,9 +4,11 @@
 	import { onMount } from 'svelte';
 	import TopNav from '$components/TopNav.svelte';
 	import SideNav from '$components/SideNav.svelte';
-	import { supabase } from "$lib/supabaseClient.js";
-	import { user } from '$stores/auth.js'
-	let mounted = false;
+	import { supabase } from '$lib/supabaseClient.js';
+	import { user } from '$stores/auth.js';
+	import { page } from '$app/stores';
+	$: mounted = false;
+	$: url = $page.url.pathname;
 	onMount(() => {
 		mounted = true;
 	});
@@ -17,14 +19,18 @@
 		id="app-layout"
 		class="grid w-full min-h-screen  bg-black absolute top-0 left-0 z-90 transition"
 	>
-		<TopNav />
-		<SideNav />
-		<div class="layout-main flex flex-col items-center jutify-center bg-black/40">
+		{#if url !== '/login'}
+			<TopNav />
+			<SideNav />
+			<div class="layout-main flex flex-col items-center jutify-center">
+				<slot />
+			</div>
+			<Footer />
+		{:else}
+		<div class="layout-main flex flex-col items-center jutify-center w-screen h-screen">
 			<slot />
 		</div>
-		<!-- <div class="relative z-20"> -->
-		<Footer />
-		<!-- </div> -->
+		{/if}
 	</div>
 {/if}
 
