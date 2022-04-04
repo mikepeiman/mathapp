@@ -1,11 +1,11 @@
 <script>
 	import { supabase } from '$lib/supabaseClient.js';
-	import { user } from '$stores/auth.js';
-	user.set(supabase.auth.user());
-	$: console.log(`🚀 ~ file: Auth.svelte ~ line 6 ~ $: user`, $user);
+	import { currentUser } from '$stores/auth.js';
+	currentUser.set(supabase.auth.user());
+    $: console.log(`🚀 ~ file: Auth.svelte ~ line 5 ~ currentUser`, currentUser)
 	supabase.auth.onAuthStateChange((_, session) => {
 		if (session?.user) {
-			user.set(session?.user);
+			currentUser.set(session?.user);
 			console.log(
 				`🚀 ~ file: Auth.svelte ~ line 11 ~ supabase.auth.onAuthStateChange ~ user`,
 				user
@@ -40,7 +40,7 @@
 	}
 </script>
 
-{#if !$user}
+{#if !$currentUser}
 <div
 	class="tooltip flex items-center justify-center p-2"
 	use:tooltip
@@ -74,7 +74,7 @@
 	</button>
 </div>
 {:else}
-{$user.email}
+{$currentUser.email}
 <button
 	class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-fuchsia-700 hover:bg-fuchsia-500 cursor-pointer"
 	on:click={signOut}

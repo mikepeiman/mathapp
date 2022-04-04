@@ -4,7 +4,7 @@
 	import { currentView } from '$stores/stores';
 	import { get } from 'svelte/store';
 	import { page } from '$app/stores';
-	import { user } from '$stores/auth.js';
+	import { currentUser } from '$stores/auth.js';
 	import Auth from './Auth.svelte';
 	import DialogComp from './Dialog.svelte';
 	import {

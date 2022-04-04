@@ -1,6 +1,6 @@
 <script>
 	import { supabase } from '$lib/supabaseClient.js';
-	import { user } from '$stores/auth.js';
+	import { currentUser } from '$stores/auth.js';
 	import { Switch } from '@rgossiaux/svelte-headlessui';
 	import {
 		Tab,
@@ -12,11 +12,11 @@
 		TransitionChild
 	} from '@rgossiaux/svelte-headlessui';
 	let enabled = false;
-	user.set(supabase.auth.user());
+	currentUser.set(supabase.auth.user());
 	$: console.log(`🚀 ~ file: Auth.svelte ~ line 6 ~ $: user`, $user);
 	supabase.auth.onAuthStateChange((_, session) => {
 		if (session?.user) {
-			user.set(session?.user);
+			currentUser.set(session?.user);
 		}
 	});
 	import tooltip from '$utils/tooltip';

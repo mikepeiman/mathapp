@@ -5,7 +5,7 @@
 	import TopNav from '$components/TopNav.svelte';
 	import SideNav from '$components/SideNav.svelte';
 	import { supabase } from '$lib/supabaseClient.js';
-	import { user } from '$stores/auth.js';
+	import { currentUser } from '$stores/auth.js';
 	import { page } from '$app/stores';
 	$: mounted = false;
 	$: url = $page.url.pathname;

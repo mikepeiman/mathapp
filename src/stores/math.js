@@ -1,7 +1,7 @@
 import { writable, get } from "svelte/store";
 import { supabase } from "$lib/supabaseClient.js";
 import { v4 as uuidv4 } from 'uuid';
-import { user } from '$stores/auth.js';
+import { currentUser } from '$stores/auth.js';
 import { LSgetWorksheetValuesFromDOM } from '$utils/dom_operations'
 
 export const currentWorksheetID = writable(null);
