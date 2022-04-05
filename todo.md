@@ -60,4 +60,5 @@
 * allow user to either "update worksheet" or "save as new worksheet" (upsert or add to db)
 * when a new worksheet is saved to DB, it needs to be reflected immediately in UI - currently in SideNav, using worksheets store, it is not
   
-  
+  ## Auth
+  * signing in a new email with magic link creates a user. If that user wants to use the same email/account in future to log in with password, they must first be logged in and then conduct an "update password" operation as per https://supabase.com/docs/reference/javascript/auth-update

@@ -12,7 +12,7 @@
 		TransitionChild
 	} from '@rgossiaux/svelte-headlessui';
 	let enabled = false;
-	currentUser.set(supabase.auth.user());
+	$: currentUser.set(supabase.auth.user());
 	$: console.log(`🚀 ~ file: index.svelte ~ line 16 ~ currentUser`, $currentUser);
 	supabase.auth.onAuthStateChange((_, session) => {
 		if (session?.user) {
@@ -35,15 +35,35 @@
 				email,
 				password
 			});
-			console.log(`🚀 ~ file: Auth.svelte ~ line 21 ~ signInWithEmail ~ user`, user);
+			console.log(`🚀 ~ file: index.svelte ~ line 38 ~ signInWithPassword ~ user`, user);
 			if (error) throw error;
 			// return user
-			alert(`Welcome! Check your email for a verification link.`);
 		} catch (error) {
 			console.error(error);
 			console.error(error.status, typeof error.status);
 			console.error(error.message);
 			// alert(error.error_description || error.message);
+			if (error.status >= 400 && error.status < 500) {
+				console.log(`conditional in received 400-series error`);
+				passwordError = true;
+			}
+		} finally {
+			loading = false;
+		}
+	}
+	async function signUpWithPassword() {
+		try {
+			loading = true;
+			const { user, error } = await supabase.auth.signUp({
+				email,
+				password
+			});
+			console.log(`🚀 ~ file: index.svelte ~ line 62 ~ signUpWithPassword ~ user`, user);
+			if (error) throw error;
+		} catch (error) {
+			console.error(error);
+			console.error(error.status, typeof error.status);
+			console.error(error.message);
 			if (error.status >= 400 && error.status < 500) {
 				console.log(`conditional in received 400-series error`);
 				passwordError = true;
@@ -69,13 +89,50 @@
 			loading = false;
 		}
 	}
+	async function resetPassword() {
+		try {
+			loading = true;
+			const { data, error } = await supabase.auth.api.resetPasswordForEmail(email);
+			console.log(
+				`🚀 ~ file: index.svelte ~ line 98 ~ resetPassword ~ email ${typeof email}: `,
+				email
+			);
+			console.log(`🚀 ~ file: index.svelte ~ line 102 ~ resetPassword ~ data`, data);
+			if (error) throw error;
+			// return user
+		} catch (error) {
+			console.error(error);
+			alert(error.error_description || error.message);
+		} finally {
+			loading = false;
+		}
+	}
+	async function updatePassword() {
+		try {
+			loading = true;
+			const { user, error } = await supabase.auth.update({ email });
+			console.log(`🚀 ~ file: index.svelte ~ line 111 ~ updatePassword ~ user`, user);
+			if (error) throw error;
+			// return user
+		} catch (error) {
+			console.error(error);
+			alert(error.error_description || error.message);
+		} finally {
+			loading = false;
+		}
+	}
 
-	function handleSubmit(msg) {
-		console.log(`🚀 ~ file: Auth.svelte ~ line 21 ~ handleSubmit ~ msg`, msg);
+	function handleSubmit(msg, event) {
+		console.log(`🚀 ~ file: Auth.svelte ~ line 21 ~ handleSubmit ~ msg ${msg}, event ${event}`);
 		if (msg === 'magic') {
 			signInWithEmail();
 		} else if (msg === 'password') {
-			signInWithPassword();
+			event === 'signin' ? signInWithPassword() : false;
+			event === 'signup' ? signUpWithPassword() : false;
+			event === 'update' ? updatePassword() : false;
+			event === 'reset' ? resetPassword() : false;
+		} else if (msg === 'user') {
+			event === 'signout' ? signOut() : false;
 		}
 	}
 
@@ -94,8 +151,9 @@
 		Math App
 	</h1>
 	<div
-		class="flex flex-col items-center justify-start bg-black bg-opacity-50  md:w-[70%] lg:w-[50%] lg:h-auto lg:rounded-b-lg "
+    class="flex flex-col items-center justify-start bg-black bg-opacity-50  md:w-[70%] lg:w-[50%] lg:h-auto lg:rounded-b-lg "
 	>
+
 		<ul class="features-list p-6 bg-winterblues-600 bg-opacity-60 mb-10">
 			<li class="feature text-left px-2 py-1">
 				The easiest way to create printable math worksheets for your students or children.
@@ -107,10 +165,19 @@
 				A curriculum and teaching aid with timed tests and scoring.
 			</li>
 		</ul>
+        {$currentUser ? $currentUser.email : 'not signed in'}
+		{#if $currentUser}
+			<button
+				class="p-2 bg-winterblues-700"
+				type="submit"
+				on:click={() => handleSubmit('user', 'signout')}>Sign out</button
+			>
+		{/if}
 		<div class="tabs-wrapper flex w-full items-center justify-center">
+            
 			<div class="flex flex-col items-center justify-center p-2">
-				<form on:submit|preventDefault={handleSubmit}>
-					<div class="flex flex-col">
+				<div class="flex flex-col">
+					<form on:submit|preventDefault={() => handleSubmit('magic')}>
 						<div class="formset mb-1 grid tooltip items-center justify-between">
 							<label
 								for="email"
@@ -128,9 +195,51 @@
 							<button
 								class="w-full p-2 bg-winterblues-700"
 								type="submit"
-								on:click={() => handleSubmit('magic')}>Get magic link</button
+								on:click={() => form.submit()}>Get magic link</button
 							>
 						</div>
+					</form>
+					<form on:submit|preventDefault={() => handleSubmit('password', 'signin')}>
+						<div class="formset grid items-center justify-between">
+							<label
+								for="password"
+								use:tooltip
+								title="Sign in with password if you created your acount that way."
+								><input
+									type="text"
+									name="password"
+									bind:value={password}
+									autocomplete="on"
+									placeholder="password"
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
+								/>
+							</label>
+							<button class="p-2 bg-winterblues-700" type="submit" on:click={() => form.submit()}
+								>Sign in with password</button
+							>
+						</div>
+					</form>
+					<form on:submit|preventDefault={() => handleSubmit('password', 'signup')}>
+						<div class="formset grid items-center justify-between">
+							<label
+								for="password"
+								use:tooltip
+								title="Sign in with password if you created your acount that way."
+								><input
+									type="text"
+									name="password"
+									bind:value={password}
+									autocomplete="on"
+									placeholder="password"
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
+								/>
+							</label>
+							<button class="p-2 bg-winterblues-700" type="submit" on:click={() => form.submit()}
+								>Sign up with password</button
+							>
+						</div>
+					</form>
+					<form on:submit|preventDefault>
 						<div class="formset grid items-center justify-between">
 							<label
 								for="password"
@@ -148,30 +257,38 @@
 							<button
 								class="p-2 bg-winterblues-700"
 								type="submit"
-								on:click={() => handleSubmit('password')}>Sign in with password</button
+								on:click={() => handleSubmit('password', 'update')}>Update password</button
 							>
 						</div>
-					</div>
+					</form>
+				</div>
 
-					<div
-						class="flex flex-col items-center justify-center bg-gradient-to-l to-lightBlue-400 via-winterblues-800 bg-opacity-50 w-full h-4 my-10 rounded-xl"
-					/>
-					<div class="flex flex-col bg-gray-900 rounded-lg">
+				<div
+					class="flex flex-col items-center justify-center bg-gradient-to-l to-lightBlue-400 via-winterblues-800 bg-opacity-50 w-full h-4 my-10 rounded-xl"
+				/>
+				<div class="flex flex-col bg-gray-900 rounded-lg text-center">
+					<p class="p-3 ">Change password, or create one for your account</p>
+					<form on:submit|preventDefault={() => handleSubmit('password', 'reset')}>
 						<div class="formset grid">
-
 							<label
 								for="password"
 								use:tooltip
 								title="Sign in with password if you created your acount that way."
-							>							<p class="p-3 ">Change password, or create one for your account</p></label>
-							<button
-								class="p-0 bg-greenge-700"
-								type="submit"
-								on:click={() => handleSubmit('password')}>Reset Password</button
+								><input
+									type="text"
+									name="email"
+									bind:value={email}
+									autocomplete="on"
+									placeholder="email address"
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
+								/>
+							</label>
+							<button class="p-0 bg-greenge-700" type="submit" on:click={() => form.submit()}
+								>Reset Password</button
 							>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
