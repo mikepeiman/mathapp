@@ -62,3 +62,4 @@
   
   ## Auth
   * signing in a new email with magic link creates a user. If that user wants to use the same email/account in future to log in with password, they must first be logged in and then conduct an "update password" operation as per https://supabase.com/docs/reference/javascript/auth-update
+  * when user wants to change password, I need to capture the token returned in the header and redirect to a form for this purpose

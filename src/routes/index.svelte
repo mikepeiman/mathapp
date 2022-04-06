@@ -1,11 +1,16 @@
 <script context="module">
-    import { getWorksheetsFromSupabase } from '$stores/math';
-    export async function load() {
-        // let res = await fetch('$api/worksheets.get.json');
-        let data = await getWorksheetsFromSupabase();
-        return { stuff: { data }, params: { data }, props: {data } }
-    }
+	import { getWorksheetsFromSupabase } from '$stores/math';
+	export async function load() {
+		// const {params} = page.params
+		console.log(`🚀 ~ file: index.svelte ~ line 5 ~ load ~ page hash`, page);
+
+		// console.log(`🚀 ~ file: index.svelte ~ line 5 ~ load ~ params`, params)
+		// let res = await fetch('$api/worksheets.get.json');
+		let data = await getWorksheetsFromSupabase();
+		return { stuff: { data }, params: { data }, props: { data } };
+	}
 </script>
+
 <script>
 	import { page } from '$app/stores';
 	import BasicCalculationForm from '$components/BasicCalculationForm.svelte';
@@ -15,18 +20,27 @@
 	import OperationsMenu from '$components/OperationsMenu.svelte';
 	import Worksheet from '$components/Worksheet.svelte';
 	import { supabase } from '$lib/supabaseClient';
-	import {
-		selectedOperation,
-	} from '$stores/math';
-	import {   recalculateProblems } from '$utils/math_operations';
-	import { resizeAllInputs } from '$utils/dom_operations'
+	import { selectedOperation } from '$stores/math';
+	import { recalculateProblems } from '$utils/math_operations';
+	import { resizeAllInputs } from '$utils/dom_operations';
 
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
+	// $page
+	$: console.log(`🚀 ~ file: index.svelte ~ line 30 ~ $page`, $page);
+let parsedHash
+	$: console.log(`🚀 ~ file: index.svelte ~ line 7 ~ load ~ parsedHash`, parsedHash);
+
 	onMount(() => {
-		let sheets = $page.stuff.data
-        console.log(`🚀 ~ file: index.svelte ~ line 28 ~ onMount ~ sheets`, sheets)
-		localStorage.setItem("worksheets", JSON.stringify(sheets));
+		let sheets = $page.stuff.data;
+		 parsedHash = $page.url.hash.split('&');
+		parsedHash.forEach((hash) => {
+		let [key, value] = hash.split('=');
+		console.log(`🚀 ~ file: index.svelte ~ line 10 ~ load ~ key`, key);
+		console.log(`🚀 ~ file: index.svelte ~ line 11 ~ load ~ value`, value);
+	});
+		console.log(`🚀 ~ file: index.svelte ~ line 28 ~ onMount ~ sheets`, sheets);
+		localStorage.setItem('worksheets', JSON.stringify(sheets));
 		resizeAllInputs();
 	});
 
@@ -43,6 +57,7 @@
 	<MathSettings />
 	<Worksheet />
 </div>
+<!-- hash: "#access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjQ5MjkwNjY3LCJzdWIiOiIyYWU0MzhiYS1mMjgxLTQzMzAtOGUxMy1iZGU4ZDU2ZWY4YTEiLCJlbWFpbCI6ImhlbGxvQG1pa2VwZWltYW4uY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6e30sInJvbGUiOiJhdXRoZW50aWNhdGVkIn0.ewZXI642tNOy27cQOO8-Cv0yhJJ6qXkmHYIsb6czX0w&expires_in=3600&refresh_token=JGgiunFjcu3cZo1t9GWdfw&token_type=bearer&type=recovery" -->
 
 <style lang="scss" global>
 	#worksheet-layout {

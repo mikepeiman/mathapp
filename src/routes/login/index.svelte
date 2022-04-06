@@ -11,8 +11,9 @@
 		Transition,
 		TransitionChild
 	} from '@rgossiaux/svelte-headlessui';
-	let enabled = false;
+	let loggedIn = false;
 	$: currentUser.set(supabase.auth.user());
+	$: $currentUser ? loggedIn = true : loggedIn = false;
 	$: console.log(`🚀 ~ file: index.svelte ~ line 16 ~ currentUser`, $currentUser);
 	supabase.auth.onAuthStateChange((_, session) => {
 		if (session?.user) {
@@ -110,7 +111,7 @@
 	async function updatePassword() {
 		try {
 			loading = true;
-			const { user, error } = await supabase.auth.update({ email });
+			const { user, error } = await supabase.auth.update({ password });
 			console.log(`🚀 ~ file: index.svelte ~ line 111 ~ updatePassword ~ user`, user);
 			if (error) throw error;
 			// return user
@@ -138,7 +139,7 @@
 
 	async function signOut() {
 		const { error } = await supabase.auth.signOut();
-		error ? console.error(error) : console.log('signed out');
+		error ? console.error(error) : (loggedIn = false);
 	}
 </script>
 
@@ -151,9 +152,8 @@
 		Math App
 	</h1>
 	<div
-    class="flex flex-col items-center justify-start bg-black bg-opacity-50  md:w-[70%] lg:w-[50%] lg:h-auto lg:rounded-b-lg "
+		class="flex flex-col items-center justify-start bg-black bg-opacity-50  md:w-[70%] lg:w-[50%] lg:h-auto lg:rounded-b-lg "
 	>
-
 		<ul class="features-list p-6 bg-winterblues-600 bg-opacity-60 mb-10">
 			<li class="feature text-left px-2 py-1">
 				The easiest way to create printable math worksheets for your students or children.
@@ -165,7 +165,7 @@
 				A curriculum and teaching aid with timed tests and scoring.
 			</li>
 		</ul>
-        {$currentUser ? $currentUser.email : 'not signed in'}
+		{$currentUser ? $currentUser.email : 'not signed in'}
 		{#if $currentUser}
 			<button
 				class="p-2 bg-winterblues-700"
@@ -174,10 +174,9 @@
 			>
 		{/if}
 		<div class="tabs-wrapper flex w-full items-center justify-center">
-            
 			<div class="flex flex-col items-center justify-center p-2">
 				<div class="flex flex-col">
-					<form on:submit|preventDefault={() => handleSubmit('magic')}>
+					<form >
 						<div class="formset mb-1 grid tooltip items-center justify-between">
 							<label
 								for="email"
@@ -195,11 +194,11 @@
 							<button
 								class="w-full p-2 bg-winterblues-700"
 								type="submit"
-								on:click={() => form.submit()}>Get magic link</button
+								on:click|preventDefault={() => handleSubmit('magic')}>Get magic link</button
 							>
 						</div>
 					</form>
-					<form on:submit|preventDefault={() => handleSubmit('password', 'signin')}>
+					<form >
 						<div class="formset grid items-center justify-between">
 							<label
 								for="password"
@@ -214,12 +213,12 @@
 									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
 								/>
 							</label>
-							<button class="p-2 bg-winterblues-700" type="submit" on:click={() => form.submit()}
+							<button class="p-2 bg-winterblues-700" type="submit" on:click|preventDefault={() => handleSubmit('password', 'signin')}
 								>Sign in with password</button
 							>
 						</div>
 					</form>
-					<form on:submit|preventDefault={() => handleSubmit('password', 'signup')}>
+					<form >
 						<div class="formset grid items-center justify-between">
 							<label
 								for="password"
@@ -234,12 +233,12 @@
 									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
 								/>
 							</label>
-							<button class="p-2 bg-winterblues-700" type="submit" on:click={() => form.submit()}
+							<button class="p-2 bg-winterblues-700" type="submit" on:click|preventDefault={() => handleSubmit('password', 'signup')}
 								>Sign up with password</button
 							>
 						</div>
 					</form>
-					<form on:submit|preventDefault>
+					<form >
 						<div class="formset grid items-center justify-between">
 							<label
 								for="password"
@@ -268,7 +267,7 @@
 				/>
 				<div class="flex flex-col bg-gray-900 rounded-lg text-center">
 					<p class="p-3 ">Change password, or create one for your account</p>
-					<form on:submit|preventDefault={() => handleSubmit('password', 'reset')}>
+					<form>
 						<div class="formset grid">
 							<label
 								for="password"
@@ -283,7 +282,7 @@
 									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
 								/>
 							</label>
-							<button class="p-0 bg-greenge-700" type="submit" on:click={() => form.submit()}
+							<button class="p-0 bg-greenge-700" type="submit" on:click|preventDefault={() => handleSubmit('password', 'reset')}
 								>Reset Password</button
 							>
 						</div>
