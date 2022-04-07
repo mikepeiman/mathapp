@@ -140,6 +140,7 @@
 	async function signOut() {
 		const { error } = await supabase.auth.signOut();
 		error ? console.error(error) : (loggedIn = false);
+        currentUser.set(supabase.auth.user())
 	}
 </script>
 

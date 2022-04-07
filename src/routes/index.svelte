@@ -13,6 +13,7 @@
 
 <script>
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import BasicCalculationForm from '$components/BasicCalculationForm.svelte';
 	import DigitsSettings from '$components/DigitsSettings.svelte';
 	import MathProblem from '$components/MathProblem.svelte';
@@ -21,37 +22,57 @@
 	import Worksheet from '$components/Worksheet.svelte';
 	import { supabase } from '$lib/supabaseClient';
 	import { selectedOperation } from '$stores/math';
+	import { token, tokenStore } from '$stores/auth';
 	import { recalculateProblems } from '$utils/math_operations';
 	import { resizeAllInputs } from '$utils/dom_operations';
 
-	import { onMount } from 'svelte';
+	import { onMount, beforeUpdate } from 'svelte';
 	import { get } from 'svelte/store';
 	// $page
 	$: console.log(`🚀 ~ file: index.svelte ~ line 30 ~ $page`, $page);
-	let parsedHash, urlHashObject = {};
+	let parsedHash,
+		urlHashObject = {};
 	$: console.log(`🚀 ~ file: index.svelte ~ line 7 ~ load ~ parsedHash`, parsedHash);
+
+	beforeUpdate(() => {
+		handleUrlHash();
+	});
 
 	onMount(() => {
 		let sheets = $page.stuff.data;
-		parsedHash = $page.url.hash.split('&');
-		parsedHash.forEach((hash) => {
-			let [key, value] = hash.split('=');
-			key = key.replace('#', '');
-			let obj = {key, value}
-			console.log(`🚀 ~ file: index.svelte ~ line 10 ~ load ~ key`, key);
-			console.log(`🚀 ~ file: index.svelte ~ line 11 ~ load ~ value`, value);
-            console.log(`🚀 ~ file: index.svelte ~ line 41 ~ parsedHash.forEach ~ obj`, obj)
-			key && value ? urlHashObject[key] = value : null;
-		});
-		console.log(`🚀 ~ file: index.svelte ~ line 44 ~ parsedHash.forEach ~ urlHashObject`, urlHashObject)
-		if(urlHashObject.hasOwnProperty('type')) {
-			// urlHashObject['type'] === 'recovery')
-            console.log(`🚀 ~ file: index.svelte ~ line 48 ~ onMount ~ urlHashObject['type'] === 'recovery')`, urlHashObject['type'] === 'recovery')
-		}
+
 		console.log(`🚀 ~ file: index.svelte ~ line 28 ~ onMount ~ sheets`, sheets);
 		localStorage.setItem('worksheets', JSON.stringify(sheets));
 		resizeAllInputs();
 	});
+
+	function handleUrlHash() {
+		parsedHash = $page.url.hash.split('&');
+		parsedHash.forEach((hash) => {
+			let [key, value] = hash.split('=');
+			key = key.replace('#', '');
+			let obj = { key, value };
+			console.log(`🚀 ~ file: index.svelte ~ line 10 ~ load ~ key`, key);
+			console.log(`🚀 ~ file: index.svelte ~ line 11 ~ load ~ value`, value);
+			console.log(`🚀 ~ file: index.svelte ~ line 41 ~ parsedHash.forEach ~ obj`, obj);
+			key && value ? (urlHashObject[key] = value) : null;
+		});
+		console.log(
+			`🚀 ~ file: index.svelte ~ line 44 ~ parsedHash.forEach ~ urlHashObject`,
+			urlHashObject
+		);
+		if (urlHashObject.hasOwnProperty('type')) {
+			// urlHashObject['type'] === 'recovery')
+			console.log(
+				`🚀 ~ file: index.svelte ~ line 48 ~ onMount ~ urlHashObject['type'] === 'recovery')`,
+				urlHashObject['type'] === 'recovery'
+			);
+			let access_token = urlHashObject['access_token']
+            console.log(`🚀 ~ file: index.svelte ~ line 71 ~ handleUrlHash ~ token`, access_token)
+			tokenStore.set(access_token);
+			goto('/password_reset');
+		}
+	}
 
 	function handleOperationSelect(msg) {
 		console.log(`🚀 ~ file: index.svelte ~ line 10 ~ handleOperationSelect ~ msg`, msg);

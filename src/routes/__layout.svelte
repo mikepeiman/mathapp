@@ -19,7 +19,7 @@
 		id="app-layout"
 		class="grid w-full min-h-screen  bg-black absolute top-0 left-0 z-90 transition"
 	>
-		{#if url !== '/login'}
+		{#if url !== '/login' && url !== '/password_reset'}
 			<TopNav />
 			<SideNav />
 			<div class="layout-main flex flex-col items-center jutify-center">
