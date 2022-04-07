@@ -28,17 +28,26 @@
 	import { get } from 'svelte/store';
 	// $page
 	$: console.log(`🚀 ~ file: index.svelte ~ line 30 ~ $page`, $page);
-let parsedHash
+	let parsedHash, urlHashObject = {};
 	$: console.log(`🚀 ~ file: index.svelte ~ line 7 ~ load ~ parsedHash`, parsedHash);
 
 	onMount(() => {
 		let sheets = $page.stuff.data;
-		 parsedHash = $page.url.hash.split('&');
+		parsedHash = $page.url.hash.split('&');
 		parsedHash.forEach((hash) => {
-		let [key, value] = hash.split('=');
-		console.log(`🚀 ~ file: index.svelte ~ line 10 ~ load ~ key`, key);
-		console.log(`🚀 ~ file: index.svelte ~ line 11 ~ load ~ value`, value);
-	});
+			let [key, value] = hash.split('=');
+			key = key.replace('#', '');
+			let obj = {key, value}
+			console.log(`🚀 ~ file: index.svelte ~ line 10 ~ load ~ key`, key);
+			console.log(`🚀 ~ file: index.svelte ~ line 11 ~ load ~ value`, value);
+            console.log(`🚀 ~ file: index.svelte ~ line 41 ~ parsedHash.forEach ~ obj`, obj)
+			key && value ? urlHashObject[key] = value : null;
+		});
+		console.log(`🚀 ~ file: index.svelte ~ line 44 ~ parsedHash.forEach ~ urlHashObject`, urlHashObject)
+		if(urlHashObject.hasOwnProperty('type')) {
+			// urlHashObject['type'] === 'recovery')
+            console.log(`🚀 ~ file: index.svelte ~ line 48 ~ onMount ~ urlHashObject['type'] === 'recovery')`, urlHashObject['type'] === 'recovery')
+		}
 		console.log(`🚀 ~ file: index.svelte ~ line 28 ~ onMount ~ sheets`, sheets);
 		localStorage.setItem('worksheets', JSON.stringify(sheets));
 		resizeAllInputs();
@@ -57,8 +66,8 @@ let parsedHash
 	<MathSettings />
 	<Worksheet />
 </div>
-<!-- hash: "#access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjQ5MjkwNjY3LCJzdWIiOiIyYWU0MzhiYS1mMjgxLTQzMzAtOGUxMy1iZGU4ZDU2ZWY4YTEiLCJlbWFpbCI6ImhlbGxvQG1pa2VwZWltYW4uY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6e30sInJvbGUiOiJhdXRoZW50aWNhdGVkIn0.ewZXI642tNOy27cQOO8-Cv0yhJJ6qXkmHYIsb6czX0w&expires_in=3600&refresh_token=JGgiunFjcu3cZo1t9GWdfw&token_type=bearer&type=recovery" -->
 
+<!-- hash: "#access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjQ5MjkwNjY3LCJzdWIiOiIyYWU0MzhiYS1mMjgxLTQzMzAtOGUxMy1iZGU4ZDU2ZWY4YTEiLCJlbWFpbCI6ImhlbGxvQG1pa2VwZWltYW4uY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6e30sInJvbGUiOiJhdXRoZW50aWNhdGVkIn0.ewZXI642tNOy27cQOO8-Cv0yhJJ6qXkmHYIsb6czX0w&expires_in=3600&refresh_token=JGgiunFjcu3cZo1t9GWdfw&token_type=bearer&type=recovery" -->
 <style lang="scss" global>
 	#worksheet-layout {
 		display: grid;
