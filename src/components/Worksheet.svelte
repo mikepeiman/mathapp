@@ -6,7 +6,8 @@
 		worksheet,
 		LSgetWorksheet,
 		LScheckForWorksheet,
-		loadWorksheet
+		loadWorksheet,
+		saveWorksheetLS
 	} from '$stores/math';
 	import { generateNewWorksheet } from '$utils/math_operations';
 	import { setWorksheetValuesToDOM, resizeAllInputs } from '$utils/dom_operations.js';
@@ -44,6 +45,9 @@
 
 	afterUpdate(() => {
 		if (loaded) {
+            console.log(`🚀 ~ file: Worksheet.svelte ~ line 47 ~ afterUpdate ~ loaded`, loaded)
+			sheet.columns = $pageColumns
+			saveWorksheetLS()
 			setWorksheetValuesToDOM(sheet);
 			resizeAllInputs();
 		}

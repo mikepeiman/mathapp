@@ -25,6 +25,8 @@ export const saveWorksheetLS = async () => {
     let sheet = get(worksheet);
     console.log(`🚀 ~ file: math.js ~ line 26 ~ saveWorksheetLS ~ sheet`, sheet)
     let operation = get(selectedOperation);
+    let cols = get(pageColumns);
+    sheet.columns = cols;
     sheet.operation = operation;
     sheet.saved = true
     sheet.num_problems = sheet?.problems?.length

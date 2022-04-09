@@ -18,6 +18,7 @@
     * will need a separate "Save Worksheet" function in that case which reads DOM input values and operators (as I enable more complex/varied operations)
   * for state management, probably best UX if every change to worksheet is saved immediately to LS, which save/load from DB are user actions
   * eventually, longterm: worksheets and collections (curriculums/courses) can be made public; they can be viewed by author or searched/filtered; authors can be followed and favorited; view of public sheets/collections offers default view of all-time best-rated, new sheets/authors, as well as hot (average ratings over recent period)
+  * implement a product tour for new users to show them the features and how to use the app
 
 ## UI
 * use range sliders for number of digits and precision inputs
@@ -39,7 +40,7 @@
 * give it a timer, to allow for timed tests as well as time tracking overall work and engagement
 * allow user to create math patterns; sequences of numbers that progress by ~n integers. Eg. the numbers 1-10 inclusive, or skip-count by 2's, 3's, etc.
 * devise a useful difficulty rating for problems and for worksheets overall (avg of problems). Give a weight of difficulty to each operation, multiplied by digits per value, by number of values, and compounded by brackets and mixed operations
-* user can add custom problems using keyboard with maximum efficiency - they can select a default operator, or enter the operator symbol as they go; set the number of values for each problem and tabbing from final value begins new problem on a new line; or allow indefinite fields and mark a problem as ready. This would be the easiest way to implement brackets as well.
+* user can add custom problems using keyboard with maximum efficiency - they can select a default operator, or enter the operator symbol as they go; set the number of values for each problem and tabbing from final value begins new problem on a new line; or allow indefinite fields and mark a problem as ready. This would be the easiest way to implement brackets as well. BLANK SHEET: one good way to provide this feature is the option to create a blank worksheet to specs; and then as described, the user can enter values, results are auto-calculated, and tab moves from one problem to the next
 
 ## Production
 * will need to look at printing and saving to .pdf. Will need to work on styling for standard A4 paper size
