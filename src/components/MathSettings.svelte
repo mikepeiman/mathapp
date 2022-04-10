@@ -26,7 +26,7 @@
 	import { page } from '$app/stores';
 	import { get } from 'svelte/store';
 	import Checkbox from './Checkbox.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, afterUpdate } from 'svelte';
 	$: sheet = {};
 	$: console.log(`🚀 ~ file: MathSettings.svelte ~ line 22 ~ sheet`, sheet);
 
@@ -36,6 +36,10 @@
 		worksheet.set(sheet);
 		resizeAllInputs();
 	}
+afterUpdate(() => {
+    console.log(`🚀 ~ file: MathSettings.svelte ~ line 42 ~ afterUpdate ~ 'afterUpdate';`, 'afterUpdate')
+})
+
 	function revealAnswers() {
 		showOrHideResults()
 		resizeAllInputs();
@@ -77,8 +81,8 @@
 		</div>
 		<input
 			type="number"
-			step="2"
-			min="2"
+			step="1"
+			min="1"
 			max="100"
 			name="problemsPerPage"
 			bind:value={$problemsPerPage}

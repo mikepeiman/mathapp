@@ -52,15 +52,15 @@
 			let [key, value] = hash.split('=');
 			key = key.replace('#', '');
 			let obj = { key, value };
-			console.log(`🚀 ~ file: index.svelte ~ line 10 ~ load ~ key`, key);
-			console.log(`🚀 ~ file: index.svelte ~ line 11 ~ load ~ value`, value);
-			console.log(`🚀 ~ file: index.svelte ~ line 41 ~ parsedHash.forEach ~ obj`, obj);
+			// console.log(`🚀 ~ file: index.svelte ~ line 10 ~ load ~ key`, key);
+			// console.log(`🚀 ~ file: index.svelte ~ line 11 ~ load ~ value`, value);
+			// console.log(`🚀 ~ file: index.svelte ~ line 41 ~ parsedHash.forEach ~ obj`, obj);
 			key && value ? (urlHashObject[key] = value) : null;
 		});
-		console.log(
-			`🚀 ~ file: index.svelte ~ line 44 ~ parsedHash.forEach ~ urlHashObject`,
-			urlHashObject
-		);
+		// console.log(
+		// 	`🚀 ~ file: index.svelte ~ line 44 ~ parsedHash.forEach ~ urlHashObject`,
+		// 	urlHashObject
+		// );
 		if (urlHashObject.hasOwnProperty('type')) {
 			// urlHashObject['type'] === 'recovery')
 			console.log(

@@ -68,11 +68,18 @@
 		{#each Array($pageColumns) as column, i}
 			<div class="flex flex-col justify-start h-full">
 				{#each Array(Math.ceil($problemsPerPage / $pageColumns)) as problem, j}
+				<div class="flex">
+					<div class="bg-red-900 p-1 rounded">{Math.ceil($problemsPerPage / $pageColumns) * j + i + 1}</div>
+					<div class="bg-green-900 p-1 rounded">{Math.ceil($problemsPerPage / $pageColumns) * i +  j + 1}</div>
+					<div class="bg-blue-900 p-1 rounded">{$problemsPerPage}</div>
+				</div>
 					<!-- {Math.ceil($problemsPerPage / $pageColumns) * i + j + 1} -->
+					<!-- {#if sheet.problems[Math.ceil($problemsPerPage / $pageColumns) * i + j]} -->
 					<MathProblem
 						problem={sheet.problems[Math.ceil($problemsPerPage / $pageColumns) * i + j]}
 						i={Math.ceil($problemsPerPage / $pageColumns) * i + j}
 					/>
+					<!-- {/if} -->
 				{/each}
 			</div>
 		{/each}

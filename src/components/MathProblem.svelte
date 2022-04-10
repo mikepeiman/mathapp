@@ -52,7 +52,7 @@
 		return problem.op.iconname;
 	}
 </script>
-
+{#if problem?.op}
 <div class="flex flex-col justify-center items-start text-4xl">
 	<div class="math-problem flex" on:change={calculate}>
 		<input
@@ -85,7 +85,7 @@
 		/>
 	</div>
 </div>
-
+{/if}
 <style lang="scss">
 	input[type='number'] {
 		-moz-appearance: textfield;

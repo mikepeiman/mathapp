@@ -5,20 +5,18 @@
 	import { selectedOperation, worksheet, LSgetWorksheet } from '$stores/math.js';
 	const dispatch = createEventDispatcher();
 	// $: selectedOperation = '';
-	let sheet = {}
-	$: current = sheet['operation'] ? sheet['operation']  : operations[3];
-	selectedOperation.subscribe(operation => {
-    console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 11 ~ operation`, operation)
+	let sheet = {};
+	$: current = sheet['operation'] ? sheet['operation'] : operations[3];
+	selectedOperation.subscribe((operation) => {
+		// console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 11 ~ operation`, operation)
 		current = operation;
 	});
 	onMount(() => {
 		// sheet = LSgetWorksheet("current")
-        // console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 13 ~ onMount ~ sheet`, sheet)
-        console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 15 ~ onMount ~ current`, current)
+		// console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 13 ~ onMount ~ sheet`, sheet)
+		console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 15 ~ onMount ~ current`, current);
 		dispatch('operationSelect', current);
 	});
-
-
 
 	export const operations = [
 		{
@@ -50,7 +48,7 @@
 			name: 'equals',
 			symbol: '=',
 			iconname: 'fa-solid:equals'
-		},
+		}
 		// {
 		// 	name: 'Random',
 		// 	symbol: '?',
@@ -76,11 +74,13 @@
 		// 	symbol: '?',
 		// 	iconname: 'emojione-monotone:question-mark'
 		// },
-
 	];
 
 	function operationSelect(operation) {
-        console.log(`🚀 ~ file: OperationsMenu.svelte ~ line 48 ~ operationSelect ~ operation`, operation)
+		console.log(
+			`🚀 ~ file: OperationsMenu.svelte ~ line 48 ~ operationSelect ~ operation`,
+			operation
+		);
 		operation.symbol !== '=' ? selectedOperation.set(operation) : false;
 		operation.symbol !== '=' ? (current = operation) : false;
 		operation ? dispatch('operationSelect', operation) : dispatch('operationSelect', current);

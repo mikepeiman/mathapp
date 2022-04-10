@@ -61,6 +61,7 @@
 * UPSERT: the worksheets collection is getting updated incorrectly; I need to check if a worksheet exists by ID and then upsert if it does, and only push new entry to array if ID is not found
 * allow user to either "update worksheet" or "save as new worksheet" (upsert or add to db)
 * when a new worksheet is saved to DB, it needs to be reflected immediately in UI - currently in SideNav, using worksheets store, it is not
+* looks like I should add a 'settings' object to localStorage, allowing more flexibility to work with settings in cases of reload, before DOM & stores are available
   
   ## Auth
   * signing in a new email with magic link creates a user. If that user wants to use the same email/account in future to log in with password, they must first be logged in and then conduct an "update password" operation as per https://supabase.com/docs/reference/javascript/auth-update

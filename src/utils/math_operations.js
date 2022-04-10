@@ -121,9 +121,9 @@ export function setDivisionPrecision(res) {
 }
 
 export function newProblemWithRandomValues() {
-    dA = get(digitsA)
-    dB = get(digitsB)
-    sO = get(selectedOperation)
+    dA = get(digitsA) || 2
+    dB = get(digitsB) || 2
+    sO = get(selectedOperation) || operations[Math.floor(Math.random() * operations.length)]
     let randomize = get(randomizeOperations)
     // get random operation
     let randomOperation = operations[Math.floor(Math.random() * operations.length)];
