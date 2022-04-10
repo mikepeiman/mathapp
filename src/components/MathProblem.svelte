@@ -2,7 +2,7 @@
 	import Icon from '@iconify/svelte';
 	import { processCalculation } from '$utils/math_operations';
 	import { resizeInput, resizeAllInputs } from '$utils/dom_operations';
-	import { selectedOperation, randomizeOperations, worksheet, saveWorksheetLS } from '$stores/math';
+	import { selectedOperation, randomizeOperations, worksheet, saveWorksheetLS, problemsPerPage } from '$stores/math';
 	import { onMount } from 'svelte';
 	const icons = {
 		times: 'fa-solid:times',
@@ -52,7 +52,7 @@
 		return problem.op.iconname;
 	}
 </script>
-{#if problem?.op}
+{#if i < $problemsPerPage}
 <div class="flex flex-col justify-center items-start text-4xl">
 	<div class="math-problem flex" on:change={calculate}>
 		<input
