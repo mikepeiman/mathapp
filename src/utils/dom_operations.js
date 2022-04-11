@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 let longest = 0
 
 export function setWorksheetValuesToDOM(sheet) {
-    console.log(`🚀 ~ file: math_operations.js ~ line 79 ~ setWorksheetValuesToDOM ~ sheet`, sheet)
+    console.log(`🚀 ~ file: math_operations.js ~ line 79 ~ setWorksheetValuesToDOM ~ sheet`, sheet.problems)
     let problemsElements = document.getElementsByClassName('math-problem');
     Object.keys(problemsElements).forEach((i) => {
         let problemEl = problemsElements[i];
@@ -14,10 +14,12 @@ export function setWorksheetValuesToDOM(sheet) {
         inputs = Array.from(inputs);
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
         let problem = sheet.problems[i];
+        // console.log(`🚀 ~ file: dom_operations.js ~ line 17 ~ Object.keys ~ i`, i)
         // console.log(`🚀 ~ file: dom_operations.js ~ line 17 ~ Object.keys ~ problem`, problem)
         if(!problem){
             console.log(`🚀 ~ file: dom_operations.js ~ line 19 ~ Object.keys ~ !problem`, !problem)
             problem = newProblemWithRandomValues('client')
+            console.log(`🚀 ~ file: dom_operations.js ~ line 21 ~ Object.keys ~ problem`, problem)
             sheet.problems[i] = problem
         }
         let values = []
@@ -30,6 +32,7 @@ export function setWorksheetValuesToDOM(sheet) {
             input.value = values[j]
             // console.log(`🚀 ~ file: dom_operations.js ~ line 24 ~ Array.from ~ values`, values)
             input.setAttribute("data-value", values[j])
+            // resizeInput.call(input);
         });
     });
     // saveWorksheetLS()
@@ -64,8 +67,8 @@ export function LSgetWorksheetValuesFromDOM() {
 }
 
 
-export function resizeAllInputs() {
-    let problemsElements = document.getElementsByClassName('math-problem');
+export async function resizeAllInputs() {
+    let problemsElements = await document.getElementsByClassName('math-problem');
     Object.keys(problemsElements).forEach((i) => {
         let problemEl = problemsElements[i];
         let inputs = problemEl.children;

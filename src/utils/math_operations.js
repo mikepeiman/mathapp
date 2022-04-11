@@ -152,7 +152,7 @@ export function newProblemWithRandomValues(env) {
     let answer = eval(`${vA} ${operation['symbol']} ${vB}`);
     operation.symbol === '/' ? (answer = setDivisionPrecision(answer)) : answer;
     result.set(answer);
-    return [vA, vB, answer, operation];
+    return {valueA: vA,  valueB: vB, result: answer, op: operation};
 }
 
 function randomIntegerRange(min, max, digits) {
@@ -164,13 +164,13 @@ export function generateNewWorksheet() {
     let problem = {}, problems = [], sheet = {}, numProblems = get(problemsPerPage)
     console.log(`🚀 ~ file: math_operations.js ~ line 114 ~ generateNewWorksheet ~ numProblems`, numProblems)
     for (let i = 0; i < numProblems; i++) {
-        let values = newProblemWithRandomValues();
-        problem = {
-            valueA: values[0],
-            valueB: values[1],
-            result: values[2],
-            op: values[3],
-        }
+        let problem = newProblemWithRandomValues();
+        // problem = {
+        //     valueA: values[0],
+        //     valueB: values[1],
+        //     result: values[2],
+        //     op: values[3],
+        // }
         problems.push(problem);
     }
     let columns = get(pageColumns)

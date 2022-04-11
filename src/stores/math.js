@@ -23,7 +23,7 @@ export const worksheetSaved = writable(false);
 export const saveWorksheetLS = async () => {
     // let sheet = await updateWorksheet()
     let sheet = get(worksheet);
-    console.log(`🚀 ~ file: math.js ~ line 26 ~ saveWorksheetLS ~ sheet`, sheet)
+    // console.log(`🚀 ~ file: math.js ~ line 26 ~ saveWorksheetLS ~ sheet`, sheet)
     let operation = get(selectedOperation);
     let cols = get(pageColumns);
     sheet.columns = cols;
