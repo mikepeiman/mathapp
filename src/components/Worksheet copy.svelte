@@ -80,11 +80,10 @@
 				<MathProblem {problem} i={index} />
 				{/each}
 			</div> -->
-		<div class="flex flex-col pb-40 h-full w-full">
-			{#each Array(Math.ceil($problemsPerPage / $pageColumns)) as row, i}
-			{i}
-			{#if i > 0}<div class="bg-gray-600 h-2 mx-2 w-full" />{/if}
-				<div class="flex flex-row justify-start h-full ">
+		<div class="flex pb-40 h-full">
+			{#each Array($pageColumns) as column, i}
+			{#if i > 0}<div class="bg-gray-600 w-2 mx-2 h-full" />{/if}
+				<div class="flex flex-col justify-start h-full ">
 					{#each Array(Math.ceil($problemsPerPage / $pageColumns)) as problem, j}
 						<!-- <div class="flex">
 			
