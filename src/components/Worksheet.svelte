@@ -44,14 +44,17 @@
 	});
 
 	function updateSheetProblems() {
-		if(sheet.problems.length < $problemsPerPage){
+		if (sheet.problems.length < $problemsPerPage) {
 			let diff = $problemsPerPage - sheet.problems.length;
 			for (let i = 0; i < diff; i++) {
 				let problem = newProblemWithRandomValues();
-                console.log(`🚀 ~ file: Worksheet.svelte ~ line 51 ~ updateSheetProblems ~ problem`, problem)
+				console.log(
+					`🚀 ~ file: Worksheet.svelte ~ line 51 ~ updateSheetProblems ~ problem`,
+					problem
+				);
 				sheet.problems.push(newProblemWithRandomValues());
 			}
-		} else if(sheet.problems.length > $problemsPerPage){
+		} else if (sheet.problems.length > $problemsPerPage) {
 			let diff = sheet.problems.length - $problemsPerPage;
 			for (let i = 0; i < diff; i++) {
 				sheet.problems.pop();
@@ -62,9 +65,9 @@
 
 	afterUpdate(() => {
 		if (loaded) {
-			console.log(`🚀 ~ file: Worksheet.svelte ~ line 47 ~ afterUpdate ~ loaded`, );
+			console.log(`🚀 ~ file: Worksheet.svelte ~ line 47 ~ afterUpdate ~ loaded`);
 			sheet.columns = $pageColumns;
-			updateSheetProblems()
+			updateSheetProblems();
 			saveWorksheetLS();
 			setWorksheetValuesToDOM(sheet);
 			resizeAllInputs();
@@ -88,7 +91,7 @@
 				<!-- {#if i > 0}<div class="bg-gray-600 h-2 mx-2 w-full" />{/if} -->
 				<div class="flex flex-row justify-start h-full ">
 					{#each Array(Math.ceil($problemsPerPage / Math.ceil($problemsPerPage / $pageColumns))) as column, j}
-						{#if j > 0}<div class="bg-sky-600 w-2 mx-2 h-16 self-center rounded" />{/if}
+						{#if j > 0}<div class="bg-sky-600 w-2 mx-2 h-16 self-center rounded-t" />{/if}
 						<MathProblem
 							problem={sheet.problems[
 								Math.ceil($problemsPerPage / Math.ceil($problemsPerPage / $pageColumns)) * i + j

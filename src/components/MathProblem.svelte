@@ -86,8 +86,8 @@
 </script>
 
 {#if problem && i < $problemsPerPage}
-	<div class="flex flex-col justify-center items-start text-4xl">
-		<div class="math-problem flex" bind:this={problemEl} on:change={calculate}>
+	<div class="flex flex-col justify-center items-start text-4xl ">
+		<div class="math-problem flex border-b-4 border-sky-600" bind:this={problemEl} on:change={calculate}>
 			<input
 				type="number"
 				name="valueA"
