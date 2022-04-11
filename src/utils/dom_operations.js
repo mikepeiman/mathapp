@@ -1,5 +1,5 @@
 import { currentWorksheetID, showAnswers, digitsA, digitsB, saveWorksheetLS, worksheet } from '$stores/math'
-// import { newProblemWithRandomValues } from './math_operations';
+import { newProblemWithRandomValues } from './math_operations';
 import { get } from 'svelte/store'
 import { v4 as uuidv4 } from 'uuid';
 let longest = 0
@@ -15,11 +15,11 @@ export function setWorksheetValuesToDOM(sheet) {
         inputs = inputs.filter((input) => input.tagName === 'INPUT');
         let problem = sheet.problems[i];
         // console.log(`🚀 ~ file: dom_operations.js ~ line 17 ~ Object.keys ~ problem`, problem)
-        // if(!problem){
+        if(!problem){
             console.log(`🚀 ~ file: dom_operations.js ~ line 19 ~ Object.keys ~ !problem`, !problem)
-            // problem = newProblemWithRandomValues()
-            // sheet.problems[i] = problem
-        // }
+            problem = newProblemWithRandomValues()
+            sheet.problems[i] = problem
+        }
         let values = []
         Object.values(problem).forEach((value, i) => {
             // console.log(`🚀 ~ file: math_operations.js ~ line 89 ~ Object.problems ~ value, i`, value, i)

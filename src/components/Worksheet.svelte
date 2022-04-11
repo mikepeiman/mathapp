@@ -45,9 +45,9 @@
 
 	afterUpdate(() => {
 		if (loaded) {
-            console.log(`🚀 ~ file: Worksheet.svelte ~ line 47 ~ afterUpdate ~ loaded`, loaded)
-			sheet.columns = $pageColumns
-			saveWorksheetLS()
+			console.log(`🚀 ~ file: Worksheet.svelte ~ line 47 ~ afterUpdate ~ loaded`, loaded);
+			sheet.columns = $pageColumns;
+			saveWorksheetLS();
 			setWorksheetValuesToDOM(sheet);
 			resizeAllInputs();
 		}
@@ -65,23 +65,39 @@
 {/if}
 <div id="worksheet" class="flex mx-2 px-4 items-start justify-around h-full">
 	{#if loaded}
+		{#each sheet.problems as problem, index}
 		{#each Array($pageColumns) as column, i}
+		<div class="flex flex-col justify-start h-full">
+					<MathProblem {problem} i={index} />
+					<!-- <div class="flex">
+						<div class="bg-fuchsia-700 p-1 rounded">{i}:{index}={(i + 1) * (index + 1)}</div>
+						<div class="bg-red-900 p-1 rounded">{i}</div>
+						<div class="bg-green-900 p-1 rounded">{(index + 1) % (i+1) === index + 1}</div>
+					</div> -->
+
+					<!-- <MathProblem {problem} i={index} /> -->
+				</div>
+			{/each}
+
+			<!-- {#each Array($pageColumns) as column, i}
 			<div class="flex flex-col justify-start h-full">
 				{#each Array(Math.ceil($problemsPerPage / $pageColumns)) as problem, j}
 				<div class="flex">
+			
+					<div class="bg-fuchsia-700 p-1 rounded">		{i+1}:{j+1}</div>
 					<div class="bg-red-900 p-1 rounded">{Math.ceil($problemsPerPage / $pageColumns) * j + i + 1}</div>
 					<div class="bg-green-900 p-1 rounded">{Math.ceil($problemsPerPage / $pageColumns) * i +  j + 1}</div>
 					<div class="bg-blue-900 p-1 rounded">{$problemsPerPage}</div>
 				</div>
 					<!-- {Math.ceil($problemsPerPage / $pageColumns) * i + j + 1} -->
-					<!-- {#if sheet.problems[Math.ceil($problemsPerPage / $pageColumns) * i + j]} -->
-					<MathProblem
+			<!-- {#if sheet.problems[Math.ceil($problemsPerPage / $pageColumns) * i + j]} -->
+			<!-- <MathProblem
 						problem={sheet.problems[Math.ceil($problemsPerPage / $pageColumns) * i + j]}
 						i={Math.ceil($problemsPerPage / $pageColumns) * i + j}
-					/>
-					<!-- {/if} -->
-				{/each}
-			</div>
+					/> -->
+			<!-- {/if} -->
+			<!-- {/each}
+			</div> -->
 		{/each}
 	{/if}
 </div>

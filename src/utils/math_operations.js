@@ -1,13 +1,8 @@
-import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns, problemsPerPage, worksheet, randomizeOperations, saveWorksheetLS} from '$stores/math.js'
+import { digitsA, digitsB, result, selectedOperation, valueA, valueB, showAnswers, pageColumns, problemsPerPage, worksheet, randomizeOperations, saveWorksheetLS } from '$stores/math.js'
 import { setWorksheetValuesToDOM, resizeAllInputs, resizeInput } from './dom_operations';
 import { get } from 'svelte/store'
 import { v4 as uuidv4 } from 'uuid';
-let dA = get(digitsA)
-let dB = get(digitsB)
-let vA = get(valueA)
-let vB = get(valueB)
-let sO = get(selectedOperation)
-let res = get(result)
+let dA,dB ,vA ,vB , sO ,res 
 let longest = 0
 let operations = [
     {
@@ -34,7 +29,7 @@ let operations = [
 
 export function processCalculation(a, b, operation, singleOperation) {
     res = eval(`${a} ${operation.symbol} ${b}`);
-    operation.symbol === '/'  ? (res = setDivisionPrecision(res)) : res;
+    operation.symbol === '/' ? (res = setDivisionPrecision(res)) : res;
     result.set(res);
     // singleOperation ? saveWorksheetLS() : null;
     return res;
@@ -44,7 +39,7 @@ export function processCalculationFromAttributes(inputs) {
     vB = inputs[1].getAttribute('data-value')
     sO = get(selectedOperation)
     res = eval(`${vA} ${sO.symbol} ${vB}`);
-    sO.symbol === '/'  ? (res = setDivisionPrecision(res)) : res;
+    sO.symbol === '/' ? (res = setDivisionPrecision(res)) : res;
     result.set(res);
     return res;
 }
@@ -61,28 +56,28 @@ export function processCalculationFromValues(inputs) {
 export function recalculateProblems() {
     let sheet = get(worksheet)
     let problems = sheet.problems
-    if(problems){
+    if (problems) {
 
         let op = get(selectedOperation)
         console.log(`🚀 ~ file: math_operations.js ~ line 67 ~ recalculateProblems ~ op`, op)
         let thisop = op
-        
+
         // console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ op.symbol === '?'`, op.symbol === '?')
-        
-    // console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ recalculateProblems ~ problems`, problems)
-    problems?.forEach(problem => {
-        // console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ problem`, problem)
-        if(op.symbol === '?'){
-            thisop = operations[Math.floor(Math.random() * operations.length)]
-            // console.log(`🚀 ~ file: math_operations.js ~ line 67 ~ recalculateProblems ~ thisop`, thisop)
-            // selectedOperation.set(op)
-        }
-        problem.op = thisop
-        problem.result = processCalculation(problem.valueA, problem.valueB, thisop)
-    })
-    sheet.problems = problems
-    saveWorksheetLS()
-}
+
+        // console.log(`🚀 ~ file: math_operations.js ~ line 63 ~ recalculateProblems ~ problems`, problems)
+        problems?.forEach(problem => {
+            // console.log(`🚀 ~ file: math_operations.js ~ line 65 ~ recalculateProblems ~ problem`, problem)
+            if (op.symbol === '?') {
+                thisop = operations[Math.floor(Math.random() * operations.length)]
+                // console.log(`🚀 ~ file: math_operations.js ~ line 67 ~ recalculateProblems ~ thisop`, thisop)
+                // selectedOperation.set(op)
+            }
+            problem.op = thisop
+            problem.result = processCalculation(problem.valueA, problem.valueB, thisop)
+        })
+        sheet.problems = problems
+        saveWorksheetLS()
+    }
 
 }
 
@@ -120,10 +115,19 @@ export function setDivisionPrecision(res) {
     return res;
 }
 
-export function newProblemWithRandomValues() {
-    dA = get(digitsA) || 2
-    dB = get(digitsB) || 2
-    sO = get(selectedOperation) || operations[Math.floor(Math.random() * operations.length)]
+export function newProblemWithRandomValues(env) {
+    console.log(`🚀 ~ file: math_operations.js ~ line 124 ~ newProblemWithRandomValues ~ env`, env)
+    if (env == 'client') {
+
+        dA = 2
+        dB = 2
+        sO = operations[Math.floor(Math.random() * operations.length)]
+    } else {
+        dA = get(digitsA) || 2
+        dB = get(digitsB) || 2
+        sO = get(selectedOperation) || operations[Math.floor(Math.random() * operations.length)]
+
+    }
     let randomize = get(randomizeOperations)
     // get random operation
     let randomOperation = operations[Math.floor(Math.random() * operations.length)];
@@ -134,10 +138,10 @@ export function newProblemWithRandomValues() {
     //     // console.log(`🚀 ~ file: math_operations.js ~ line 100 ~ newProblemWithRandomValues ~ sO`, sO)
     //     selectedOperation.set(sO);
     // } 
-     if (operation.symbol === '?') {
-       operation = randomOperation
+    if (operation.symbol === '?') {
+        operation = randomOperation
     }
-    
+
     randomize ? operation = randomOperation : false;
     vA = randomIntegerRange(Math.pow(10, dA - 1), Math.pow(10, dA), dA)
     vB = randomIntegerRange(Math.pow(10, dB - 1), Math.pow(10, dB), dB)
