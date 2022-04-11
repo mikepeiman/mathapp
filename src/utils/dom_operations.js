@@ -17,7 +17,7 @@ export function setWorksheetValuesToDOM(sheet) {
         // console.log(`🚀 ~ file: dom_operations.js ~ line 17 ~ Object.keys ~ problem`, problem)
         if(!problem){
             console.log(`🚀 ~ file: dom_operations.js ~ line 19 ~ Object.keys ~ !problem`, !problem)
-            problem = newProblemWithRandomValues()
+            problem = newProblemWithRandomValues('client')
             sheet.problems[i] = problem
         }
         let values = []

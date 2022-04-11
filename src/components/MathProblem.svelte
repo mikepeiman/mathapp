@@ -52,7 +52,7 @@
 		return problem.op.iconname;
 	}
 </script>
-{#if i < $problemsPerPage}
+{#if problem && i < $problemsPerPage}
 <div class="flex flex-col justify-center items-start text-4xl">
 	<div class="math-problem flex" on:change={calculate}>
 		<input
