@@ -117,7 +117,7 @@
 				name="result"
 				bind:value={problem.result}
 				data-value={problem.result}
-				class="basic-underline-text-input"
+				class="basic-underline-text-input text-right"
 			/>
 		</div>
 	</div>

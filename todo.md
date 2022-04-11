@@ -23,7 +23,7 @@
 ## UI
 * use range sliders for number of digits and precision inputs
 * user will be able to set number of problems they want, each one is a draggable target, they can drag and drop into, and rearrange within each math problem. Each problem is saved, and can be edited without access control, EXCEPT it will have a lock icon button that will lock it from being edited
-* num of problems is a property of generating new sheet, as are digits for each value fiekd; these should be set and confirmed. num of columns is a view property and can be changed on the fly, regardless of how many problems are in current worksheet
+* num of problems is a property of generating new sheet, as are digits for each value field; these should be set and confirmed. num of columns is a view property and can be changed on the fly, regardless of how many problems are in current worksheet
 * make the sidenav wider to accomodate labels, and enable it to collapse to icons
 * add a question mark symbol to operations menu to denote mixed operations, and to trigger random operations on click
 * give user layout options - fit problems to page, or stack them with adjustable margins; allow problems to overflow to additional pages; column gap/margin
@@ -33,6 +33,7 @@
 * when dragging a bracket into place, if eg. left bracket is dragged directly in front of an operation, it will automatically insert a new value field between bracket and operation
 * give user the option to "update current worksheet OR save as new worksheet" (which generates and assigns a new XID)
 * consider a fancy animated landing page that morphs a background gradient image between giant 'X + - %' symbols.
+* PROBLEMS LAYOUT: consider checking all first inputs for length, and assigning longest length to all; etc for second input and result, for consistent columns
 
 ## Features
 * rather than "generate random values" make it a random problem, ie. randomize operation also

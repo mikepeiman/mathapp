@@ -3,6 +3,7 @@ import { newProblemWithRandomValues } from './math_operations';
 import { get } from 'svelte/store'
 import { v4 as uuidv4 } from 'uuid';
 let longest = 0
+let longestA = 0, longestB = 0, longestResult = 0;
 
 export function setWorksheetValuesToDOM(sheet) {
     console.log(`🚀 ~ file: math_operations.js ~ line 79 ~ setWorksheetValuesToDOM ~ sheet`, sheet.problems)
@@ -16,7 +17,7 @@ export function setWorksheetValuesToDOM(sheet) {
         let problem = sheet.problems[i];
         // console.log(`🚀 ~ file: dom_operations.js ~ line 17 ~ Object.keys ~ i`, i)
         // console.log(`🚀 ~ file: dom_operations.js ~ line 17 ~ Object.keys ~ problem`, problem)
-        if(!problem){
+        if (!problem) {
             console.log(`🚀 ~ file: dom_operations.js ~ line 19 ~ Object.keys ~ !problem`, !problem)
             problem = newProblemWithRandomValues('client')
             console.log(`🚀 ~ file: dom_operations.js ~ line 21 ~ Object.keys ~ problem`, problem)
@@ -50,7 +51,7 @@ export function LSgetWorksheetValuesFromDOM() {
         // console.log(`🚀 ~ file: math_operations.js ~ line 83 ~ Object.keys ~ problemEl`, problemEl)
         let children = problemEl.children;
         children = Array.from(children);
-       let  inputs = children.filter((input) => input.tagName === 'INPUT');
+        let inputs = children.filter((input) => input.tagName === 'INPUT');
         let operationEl = children.filter((input) => input.name === 'operation-icon');
         console.log(`🚀 ~ file: dom_operations.js ~ line 43 ~ Object.keys ~ operationEl`, operationEl)
         let problem = {}
@@ -68,7 +69,10 @@ export function LSgetWorksheetValuesFromDOM() {
 
 
 export async function resizeAllInputs() {
+    console.log(`🚀 ~ file: dom_operations.js ~ line 72 ~ resizeAllInputs ~ resizeAllInputs`)
+    
     let problemsElements = await document.getElementsByClassName('math-problem');
+    
     Object.keys(problemsElements).forEach((i) => {
         let problemEl = problemsElements[i];
         let inputs = problemEl.children;
@@ -80,10 +84,41 @@ export async function resizeAllInputs() {
             resizeInput.call(input);
         });
     });
+    console.log(`🚀 ~ file: dom_operations.js ~ line 7 ~ longestA, longestB, longestResult`, longestA, longestB, longestResult)
+    Object.keys(problemsElements).forEach((i) => {
+        let problemEl = problemsElements[i];
+        let inputs = problemEl.children;
+        inputs = Array.from(inputs);
+        inputs = inputs.filter((input) => input.tagName === 'INPUT');
+        Array.from(inputs).forEach((input, i) => {
+            let name = input.getAttribute('name');
+            name === 'valueA' ? input.style.width = longestA + 2 + 'ch' : false
+            name === 'valueB' ? input.style.width = longestB + 2 + 'ch': false
+            name === 'result' ? input.style.width = longestResult + 2 + 'ch': false
+            // resizeInput.call(input);
+        });
+    });
 }
 
 export function resizeInput(input) {
-    
+    let name = this.getAttribute('name');
+    let val = this.getAttribute('data-value')
+    if (name === 'valueA') {
+        // console.log(`🚀 ~ file: dom_operations.js ~ line 107 ~ resizeInput ~ name === 'valueA'`, name === 'valueA')
+        longestA = val.length > longestA ? val.length : longestA;
+        // console.log(`🚀 ~ file: dom_operations.js ~ line 109 ~ resizeInput ~ val`, val)
+        typeof val
+        // console.log(`🚀 ~ file: dom_operations.js ~ line 112 ~ resizeInput ~ typeof val`, typeof val)
+        // console.log(`🚀 ~ file: dom_operations.js ~ line 109 ~ resizeInput ~ val.length`, val.length)
+    }
+    if (name === 'valueB') {
+        // console.log(`🚀 ~ file: dom_operations.js ~ line 111 ~ resizeInput ~ name === 'valueB'`, name === 'valueB')
+        longestB = val.length > longestB ? val.length : longestB;
+    }
+    if (name === 'result') {
+        // console.log(`🚀 ~ file: dom_operations.js ~ line 115 ~ resizeInput ~ name === 'result'`, name === 'result')
+        longestResult = val.length > longestResult ? val.length : longestResult;
+    }
     let show = get(showAnswers)
     let sheet = get(worksheet)
     // console.log(`🚀 ~ file: math_operations.js ~ line 109 ~ thissArray.forEach ~ this`, this)
@@ -91,7 +126,6 @@ export function resizeInput(input) {
     this.style.width = this.value.length + 2 + 'ch'
     let thisLength = this.value.length;
     thisLength > longest ? longest = thisLength : longest;
-    let val = this.getAttribute('data-value')
     if (this.name === "result") {
         this.setAttribute('data-value', val);
         show ? this.value = val : this.value = '';
