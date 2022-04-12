@@ -101,9 +101,9 @@ export async function resizeAllInputs() {
     return {longestA, longestB, longestResult}
 }
 
-export function resizeInput(input) {
-    let name = this.getAttribute('name');
-    let val = this.getAttribute('data-value')
+export async function resizeInput() {
+    let name =  this.getAttribute('name');
+    let val =  this.getAttribute('data-value')
     if (name === 'valueA') {
         // console.log(`🚀 ~ file: dom_operations.js ~ line 107 ~ resizeInput ~ name === 'valueA'`, name === 'valueA')
         longestA = val.length > longestA ? val.length : longestA;

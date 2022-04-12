@@ -32,10 +32,11 @@
 			let resultInput = inputs.find((input) => input.name === 'result');
 			resultInput.value = problem.result;
 			resultInput.setAttribute('data-value', problem.result);
-			inputs.forEach((input) => {
-				resizeInput.call(input);
-			});
+			// inputs.forEach((input) => {
+			// 	resizeInput.call(input);
+			// });
 		}
+		// resizeAllInputs()
 	});
 
 	function calculate() {
@@ -56,8 +57,8 @@
 		worksheet.set(sheet);
 		saveWorksheetLS();
 	}
-	afterUpdate(() => {
-		console.log(`🚀 ~ file: MathProblem.svelte ~ line 73 ~ afterUpdate ~ .`, )
+	afterUpdate(async () => {
+
 		// resizeAllInputs()
 		if (problem && problemEl) {
 			// console.log(`🚀 ~ file: MathProblem.svelte ~ line 20 ~ problem`, problem)
@@ -66,10 +67,9 @@
 			let resultInput = inputs.find((input) => input.name === 'result');
 			resultInput.value = problem.result;
 			resultInput.setAttribute('data-value', problem.result);
-			inputs.forEach((input) => {
-				resizeInput.call(input);
-			});
+
 		}
+		let lengths = await resizeAllInputs()
 	});
 
 	function updateDataAttributes() {}
@@ -87,7 +87,7 @@
 
 {#if problem && i < $problemsPerPage}
 	<div class="flex flex-col justify-center items-start text-4xl ">
-		<div class="math-problem flex border-b-4 border-sky-600" bind:this={problemEl} on:change={calculate}>
+		<div class="math-problem flex border-b-none border-winterblues-800" bind:this={problemEl} on:change={calculate}>
 			<input
 				type="number"
 				name="valueA"
