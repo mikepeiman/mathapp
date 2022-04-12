@@ -17,6 +17,9 @@
 	let loaded = false;
 	$: sheet = $worksheet || {};
 	$: saved = $worksheet.saved || false;
+	let inputLengths = { longestA: 0, longestB: 0, longestResult: 0 };
+	let longestProblemLengthInChars = Object.values(inputLengths).reduce((a, b) => a + b);
+	$: console.log(`🚀 ~ file: Worksheet.svelte ~ line 22 ~ longestProblemLengthInChars`, longestProblemLengthInChars);
 	// $: console.log(`🚀 ~ file: Worksheet.svelte ~ line 15 ~ $: sheet`, sheet);
 	// $: console.log(`🚀 ~ file: Worksheet.svelte ~ line 33 ~ $: saved`, saved);
 	onMount(async () => {
@@ -63,14 +66,23 @@
 		worksheet.set(sheet);
 	}
 
-	afterUpdate(() => {
+	afterUpdate(async () => {
 		if (loaded) {
 			console.log(`🚀 ~ file: Worksheet.svelte ~ line 47 ~ afterUpdate ~ loaded`);
 			sheet.columns = $pageColumns;
 			updateSheetProblems();
 			saveWorksheetLS();
 			setWorksheetValuesToDOM(sheet);
-			resizeAllInputs();
+			inputLengths = await resizeAllInputs();
+			longestProblemLengthInChars = Object.values(inputLengths).reduce((a, b) => a + b);
+			// console.log(
+			// 	`🚀 ~ file: Worksheet.svelte ~ line 75 ~ afterUpdate ~ inputLengths`,
+			// 	inputLengths
+			// );
+			// console.log(
+			// 	`🚀 ~ file: Worksheet.svelte ~ line 78 ~ afterUpdate ~ longestProblemLengthInChars`,
+			// 	longestProblemLengthInChars
+			// );
 		}
 	});
 </script>
@@ -91,7 +103,7 @@
 				<!-- {#if i > 0}<div class="bg-gray-600 h-2 mx-2 w-full" />{/if} -->
 				<div class="flex flex-row w-full justify-start items-center h-full ">
 					{#each Array(Math.ceil($problemsPerPage / Math.ceil($problemsPerPage / $pageColumns))) as column, j}
-						{#if j > 0}<div class="bg-sky-600 w-2 mx-2 h-16 self-center rounded-t" />{/if}
+						{#if j > 0 && sheet.problems[Math.ceil($problemsPerPage / Math.ceil($problemsPerPage / $pageColumns)) * i + j - 1]}<div class="bg-sky-600 w-2 mx-2 h-full self-center " />{/if}
 						<MathProblem
 							problem={sheet.problems[
 								Math.ceil($problemsPerPage / Math.ceil($problemsPerPage / $pageColumns)) * i + j

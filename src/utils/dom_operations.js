@@ -98,6 +98,7 @@ export async function resizeAllInputs() {
             // resizeInput.call(input);
         });
     });
+    return {longestA, longestB, longestResult}
 }
 
 export function resizeInput(input) {
