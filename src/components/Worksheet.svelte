@@ -89,7 +89,7 @@
 		<div class="flex flex-col pb-40 h-full w-full">
 			{#each Array(Math.ceil($problemsPerPage / $pageColumns)) as row, i}
 				<!-- {#if i > 0}<div class="bg-gray-600 h-2 mx-2 w-full" />{/if} -->
-				<div class="flex flex-row justify-start h-full ">
+				<div class="flex flex-row justify-center h-full ">
 					{#each Array(Math.ceil($problemsPerPage / Math.ceil($problemsPerPage / $pageColumns))) as column, j}
 						{#if j > 0}<div class="bg-sky-600 w-2 mx-2 h-16 self-center rounded-t" />{/if}
 						<MathProblem
