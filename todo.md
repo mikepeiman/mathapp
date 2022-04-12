@@ -55,6 +55,7 @@
 * on # of problems change, update worksheet.problems, adding new or deleting problems - OR eliminate this by UI design, only render whole worksheets, no adjusting # of problems on an existing sheet unless it is a direct per-problem action (like a delete icon on a problem)
 * updating individual problem not resizing result properly again
 * "worksheet saved"/"not saved" indication not accurate - loaded sheets indicate not saved
+* QUESTION is there a way to display a notification in UI when there is a client error (ie. console log)?
 
 ## logic & data
 * STORES should be single source of truth. DOM and LS should reflect stores immediately & reactively; calculations should occur entirely with store values; DB should be updated or called on user action only (or eventually, auto-save features possibly)

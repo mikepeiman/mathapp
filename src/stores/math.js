@@ -96,7 +96,7 @@ export const saveWorksheetSupabase = async () => {
     let sheet = get(worksheet);
     let storeSheets = get(worksheets);
     sheet.saved = true
-    let activeUser = get(user)
+    let activeUser = get(currentUser)
     console.log(`🚀 ~ file: math.js ~ line 87 ~ saveWorksheetSupabase ~ user`, activeUser)
     if (activeUser) {
         let user_id = activeUser.id
