@@ -97,7 +97,7 @@
 				placeholder="value A"
 			/>
 			<div class="flex flex-col items-center justify-center text-lime-500 mx-2">
-				<Icon icon={problem.op?.iconname} name="operation-icon" class="text-2xl" />
+				<Icon icon={problem.op?.iconname} name="operation-icon" class="text-2xl w-5" />
 				<!-- <Icon icon={$selectedOperation.iconname || icons.times} class="text-2xl" /> -->
 			</div>
 			<input
