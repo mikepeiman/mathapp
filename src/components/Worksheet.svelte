@@ -84,12 +84,12 @@
 		Worksheet not saved, Supabase ID: {sheet.id} - LS XID: {sheet.xid}
 	</h2>
 {/if} -->
-<div id="worksheet" class="flex mx-2 px-4 items-start justify-around h-full">
+<div id="worksheet" class="flex mx-2 px-4 items-center justify-around h-full">
 	{#if loaded}
-		<div class="flex flex-col pb-40 h-full w-full">
+		<div class="flex flex-col pb-40 h-full w-auto justify-center items-center">
 			{#each Array(Math.ceil($problemsPerPage / $pageColumns)) as row, i}
 				<!-- {#if i > 0}<div class="bg-gray-600 h-2 mx-2 w-full" />{/if} -->
-				<div class="flex flex-row justify-center h-full ">
+				<div class="flex flex-row w-full justify-start items-center h-full ">
 					{#each Array(Math.ceil($problemsPerPage / Math.ceil($problemsPerPage / $pageColumns))) as column, j}
 						{#if j > 0}<div class="bg-sky-600 w-2 mx-2 h-16 self-center rounded-t" />{/if}
 						<MathProblem
