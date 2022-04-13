@@ -42,6 +42,9 @@
 * allow user to create math patterns; sequences of numbers that progress by ~n integers. Eg. the numbers 1-10 inclusive, or skip-count by 2's, 3's, etc.
 * devise a useful difficulty rating for problems and for worksheets overall (avg of problems). Give a weight of difficulty to each operation, multiplied by digits per value, by number of values, and compounded by brackets and mixed operations
 * user can add custom problems using keyboard with maximum efficiency - they can select a default operator, or enter the operator symbol as they go; set the number of values for each problem and tabbing from final value begins new problem on a new line; or allow indefinite fields and mark a problem as ready. This would be the easiest way to implement brackets as well. BLANK SHEET: one good way to provide this feature is the option to create a blank worksheet to specs; and then as described, the user can enter values, results are auto-calculated, and tab moves from one problem to the next
+* Option to provide only whole-number answers for division
+* make sure user can change any operation of any problem freely
+* ensure user can set decimal precision per-sheet or per-problem; remove decimal for integer results; and present fractional results as fractions, reduced
 
 ## Production
 * will need to look at printing and saving to .pdf. Will need to work on styling for standard A4 paper size
