@@ -104,7 +104,9 @@ export const modal = {
         console.log(`🚀 ~ file: modal.js ~ line 103 ~ content`, content)
         let currentModalContent = content.cloneNode(true);
         currentModalContent.classList.add("current-modal");
-        currentModalContent.classList.add("modal");
+        // currentModalContent.classList.add("modal-visible");
+        // currentModalContent.classList.add("modal");
+        currentModalContent.classList.remove("modal-hidden");
         currentModalContent.style = "";
         document.getElementById("modal-content").appendChild(currentModalContent);
 
@@ -115,8 +117,6 @@ export const modal = {
             }
         }
         vanillaModal.classList.add("modal-visible");
-        currentModalContent.classList.remove("modal-hidden");
-        console.log(`🚀 ~ file: modal.js ~ line 117 ~ vanillaModal`, vanillaModal)
         document.addEventListener("click", outsideClick, true);
         document.addEventListener("keydown", escKey);
         document.addEventListener("keydown", trapTabKey);

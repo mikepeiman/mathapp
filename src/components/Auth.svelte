@@ -43,8 +43,7 @@
 	}
 
 	onMount(() => {
-		let mod = modal.init();
-		console.log(`🚀 ~ file: Auth.svelte ~ line 47 ~ onMount ~ mod`, mod);
+
 	});
 
 	
@@ -91,7 +90,7 @@
 	</div>
 
 	<div id="openModal" class="modal-hidden" >
-		<div class="text-4xl text-cyan-400 bg-deepreds-200 p-24 z-99">Test content</div>
+		<div class="text-4xl text-cyan-400 bg-winterblues-700 p-24 z-99">Test content</div>
 	</div>
 
 
@@ -106,7 +105,7 @@
 	</button>
 {/if}
 
-<style lang="scss">
+<style lang="scss" global>
 	.modal {
 		display: block;
 		position: fixed;
@@ -118,10 +117,12 @@
 		background: rgba(0, 0, 0, 0.6);
 		z-index: -1;
 		opacity: 0;
+		visibility: visible;
 		transition: opacity 0.2s, z-index 0s 0.2s;
 		text-align: center;
 		white-space: nowrap;
 		-webkit-overflow-scrolling: touch;
+		transition: all .25s;
 	}
 
 	.modal > * {
@@ -144,7 +145,7 @@
 		display: none;
 	}
 
-	.modal-visible .modal {
+	.modal-visible.modal, .modal-visible .modal {
 		z-index: 9999;
 		opacity: 1;
 		transition: opacity 0.2s;
@@ -166,6 +167,7 @@
 	.modal-visible .modal-inner {
 		z-index: 100;
 		opacity: 1;
+		visibility: visible;
 		transform: scale(1);
 		transition: opacity 0.2s, transform 0.2s;
 	}
