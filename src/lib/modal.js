@@ -67,10 +67,14 @@ function trapTabKey(e) {
 
 function closeModal() {
     const vanillaModal = document.querySelector(".vanilla-modal");
+    let trigger = document.getElementById('modal-trigger');
+    trigger.disabled = false
     if (vanillaModal) {
         vanillaModal.classList.remove("modal-visible");
-        document.getElementById("modal-content").innerHTML = "";
-        document.getElementById("modal-content").style = "";
+        setTimeout(() => {
+            document.getElementById("modal-content").innerHTML = "";
+            document.getElementById("modal-content").style = "";
+        }, 500);
     }
 
     document.removeEventListener("keydown", escKey);
@@ -79,8 +83,8 @@ function closeModal() {
     document.removeEventListener("keydown", trapTabKey);
 }
 
-export const modal = {
-    init: function () {
+const modal = {
+    init: async function () {
         const prerendredModal = document.createElement("div");
         prerendredModal.classList.add("vanilla-modal");
         const htmlModal = `         
@@ -91,17 +95,19 @@ export const modal = {
         document.body.appendChild(prerendredModal);
         return prerendredModal;
     },
-    open: function (idContent, option = { default: null }) {
+    open: async function (idContent, triggerSource, option = { default: null }) {
+        console.log(`🚀 ~ file: modal.js ~ line 97 ~ triggerSource`, triggerSource)
+        let trigger = document.getElementById(triggerSource);
+        trigger.disabled = true
         let vanillaModal = document.querySelector(".vanilla-modal");
         console.log(`🚀 ~ file: modal.js ~ line 95 ~ vanillaModal`, vanillaModal)
         if (!vanillaModal) {
             console.log("there is no vanilla modal class");
-            modal.init();
+            await modal.init();
             vanillaModal = document.querySelector(".vanilla-modal");
         }
 
         const content = document.getElementById(idContent);
-        console.log(`🚀 ~ file: modal.js ~ line 103 ~ content`, content)
         let currentModalContent = content.cloneNode(true);
         currentModalContent.classList.add("current-modal");
         // currentModalContent.classList.add("modal-visible");
@@ -132,4 +138,4 @@ export const modal = {
 };
 
   // for webpack es6 use uncomment the next line
-  // export default modal;
+  export default modal;
