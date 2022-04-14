@@ -17,7 +17,7 @@
 	import tooltip from '$utils/tooltip';
 	import { onMount } from 'svelte';
 	let loading = false;
-	let email;
+	let email, password;
 
 	async function signInWithEmail() {
 		try {
@@ -43,7 +43,7 @@
 	}
 
 	onMount(() => {
-		modal.init()
+		modal.init();
 	});
 </script>
 
@@ -88,9 +88,156 @@
 		</button>
 	</div>
 
-	<div id="openModal" class="modal-hidden">
-		<div class="text-4xl text-cyan-400 bg-winterblues-700 p-24 z-99">Test content</div>
-	</div>
+	<!-- MODAL -->
+	<div id="openModal" class="modal-hidden w-[50vw] h-auto">
+
+			<div
+				class="flex flex-col items-center justify-center bg-black bg-opacity-50  md:w-[70%] lg:w-[50%] lg:h-auto lg:rounded-b-lg "
+			>
+				{$currentUser ? $currentUser.email : 'not signed in'}
+				{#if $currentUser}
+					<button
+						class="p-2 bg-winterblues-700"
+						type="submit"
+						on:click={() => handleSubmit('user', 'signout')}>Sign out</button
+					>
+				{:else}
+					<h1
+						class="text-3xl w-full md:w-[70%] lg:w-[50%] text-center  py-3 bg-black bg-opacity-80 lg:py-4 lg:rounded-t-lg border-lightBlue-300"
+					>
+						Log In
+					</h1>
+				{/if}
+				<div class="tabs-wrapper flex w-full items-center justify-center">
+					<div class="flex flex-col items-center justify-center p-2">
+						<div class="flex flex-col">
+							<form>
+								<div class="formset mb-1 grid tooltip items-center justify-between">
+									<label
+										for="email"
+										use:tooltip
+										title="Sign in via magic link with just your email address."
+										><input
+											type="text"
+											name="email"
+											bind:value={email}
+											autocomplete="on"
+											placeholder="email address"
+											class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
+										/>
+									</label>
+									<button
+										class="w-full p-2 bg-winterblues-700"
+										type="submit"
+										on:click|preventDefault={() => handleSubmit('magic')}>Get magic link</button
+									>
+								</div>
+							</form>
+							<form>
+								<div class="formset grid items-center justify-between">
+									<label
+										for="password"
+										use:tooltip
+										title="Sign in with password if you created your acount that way."
+										><input
+											type="text"
+											name="password"
+											bind:value={password}
+											autocomplete="on"
+											placeholder="password"
+											class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
+										/>
+									</label>
+									<button
+										class="p-2 bg-winterblues-700"
+										type="submit"
+										on:click|preventDefault={() => handleSubmit('password', 'signin')}
+										>Sign in with password</button
+									>
+								</div>
+							</form>
+							<form>
+								<div class="formset grid items-center justify-between">
+									<label
+										for="password"
+										use:tooltip
+										title="Sign in with password if you created your acount that way."
+										><input
+											type="text"
+											name="password"
+											bind:value={password}
+											autocomplete="on"
+											placeholder="password"
+											class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
+										/>
+									</label>
+									<button
+										class="p-2 bg-winterblues-700"
+										type="submit"
+										on:click|preventDefault={() => handleSubmit('password', 'signup')}
+										>Sign up with password</button
+									>
+								</div>
+							</form>
+							<form>
+								<div class="formset grid items-center justify-between">
+									<label
+										for="password"
+										use:tooltip
+										title="Sign in with password if you created your acount that way."
+										><input
+											type="text"
+											name="password"
+											bind:value={password}
+											autocomplete="on"
+											placeholder="password"
+											class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
+										/>
+									</label>
+									<button
+										class="p-2 bg-winterblues-700"
+										type="submit"
+										on:click={() => handleSubmit('password', 'update')}>Update password</button
+									>
+								</div>
+							</form>
+						</div>
+
+						<div
+							class="flex flex-col items-center justify-center bg-gradient-to-l to-lightBlue-400 via-winterblues-800 bg-opacity-50 w-full h-4 my-10 rounded-xl"
+						/>
+						<div class="flex flex-col bg-gray-900 rounded-lg text-center">
+							<p class="p-3 ">Change password, or create one for your account</p>
+							<form>
+								<div class="formset grid">
+									<label
+										for="password"
+										use:tooltip
+										title="Sign in with password if you created your acount that way."
+										><input
+											type="text"
+											name="email"
+											bind:value={email}
+											autocomplete="on"
+											placeholder="email address"
+											class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
+										/>
+									</label>
+									<button
+										class="p-0 bg-greenge-700"
+										type="submit"
+										on:click|preventDefault={() => handleSubmit('password', 'reset')}
+										>Reset Password</button
+									>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<!-- //MODAL -->
 {:else}
 	{$currentUser.email}
 	<button
@@ -110,15 +257,31 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background: rgba(0, 0, 0, 0.6);
-		z-index: -1;
+		// background: rgba(0, 0, 0, 0.6);
+		background: linear-gradient(
+			45deg,
+			var(--color-winterblues-500) 0%,
+			var(--color-winterblues-900) 50%,
+			var(--color-fuchsia-500) 100%
+		);
+		opacity: 0.5;
+		z-index: 11;
 		opacity: 0;
 		visibility: visible;
 		transition: opacity 0.35s, z-index 0s 0.35s;
 		text-align: center;
 		white-space: nowrap;
 		-webkit-overflow-scrolling: touch;
-		transition: all .35s;
+		transition: all 0.35s;
+	}
+	.vanilla-modal {
+		background: rgba(0, 0, 0, 0.6);
+		z-index: 9999;
+	}
+	.current-modal {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.modal > * {
@@ -155,9 +318,9 @@
 		overflow: hidden;
 		max-width: 90%;
 		max-height: 90%;
-		background: #fff;
+		// background: #fff;
 		z-index: -1;
-		opacity: 0;
+		opacity: 1;
 		transform: scale(0);
 		transition: opacity 0.35s, transform 0.35s, z-index 0s 0.35s;
 		min-width: 500px;
