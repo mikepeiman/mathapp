@@ -1,129 +1,135 @@
 function outsideClick(e) {
     if (e.target.closest(".modal-inner")) {
-      return;
+        return;
     }
     const modalVisible = document.querySelector(".modal-visible");
     if (modalVisible) {
-      closeModal();
+        closeModal();
     }
-  }
-  function escKey(e) {
+}
+function escKey(e) {
     if (e.keyCode == 27) {
-      closeModal();
+        closeModal();
     }
-  }
-  
-  function closeClick(e) {
+}
+
+function closeClick(e) {
     if (e.target.classList.contains("closeModal")) {
-      closeModal();
+        closeModal();
     }
-  }
-  function trapTabKey(e) {
+}
+function trapTabKey(e) {
     const vanillaModal = document.querySelector(".vanilla-modal");
     const FOCUSABLE_ELEMENTS = [
-      "a[href]",
-      "area[href]",
-      'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',
-      "select:not([disabled]):not([aria-hidden])",
-      "textarea:not([disabled]):not([aria-hidden])",
-      "button:not([disabled]):not([aria-hidden])",
-      "iframe",
-      "object",
-      "embed",
-      "[contenteditable]",
-      '[tabindex]:not([tabindex^="-"])',
+        "a[href]",
+        "area[href]",
+        'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',
+        "select:not([disabled]):not([aria-hidden])",
+        "textarea:not([disabled]):not([aria-hidden])",
+        "button:not([disabled]):not([aria-hidden])",
+        "iframe",
+        "object",
+        "embed",
+        "[contenteditable]",
+        '[tabindex]:not([tabindex^="-"])',
     ];
-  
+
     const nodes = vanillaModal.querySelectorAll(FOCUSABLE_ELEMENTS);
     let focusableNodes = Array(...nodes);
-  
+
     if (focusableNodes.length === 0) return;
-  
+
     focusableNodes = focusableNodes.filter((node) => {
-      return node.offsetParent !== null;
+        return node.offsetParent !== null;
     });
-  
+
     // if disableFocus is true
     if (!vanillaModal.contains(document.activeElement)) {
-      focusableNodes[0].focus();
-    } else {
-      const focusedItemIndex = focusableNodes.indexOf(document.activeElement);
-  
-      if (e.shiftKey && focusedItemIndex === 0) {
-        focusableNodes[focusableNodes.length - 1].focus();
-        e.preventDefault();
-      }
-  
-      if (
-        !e.shiftKey &&
-        focusableNodes.length > 0 &&
-        focusedItemIndex === focusableNodes.length - 1
-      ) {
         focusableNodes[0].focus();
-        e.preventDefault();
-      }
+    } else {
+        const focusedItemIndex = focusableNodes.indexOf(document.activeElement);
+
+        if (e.shiftKey && focusedItemIndex === 0) {
+            focusableNodes[focusableNodes.length - 1].focus();
+            e.preventDefault();
+        }
+
+        if (
+            !e.shiftKey &&
+            focusableNodes.length > 0 &&
+            focusedItemIndex === focusableNodes.length - 1
+        ) {
+            focusableNodes[0].focus();
+            e.preventDefault();
+        }
     }
-  }
-  
-  function closeModal() {
+}
+
+function closeModal() {
     const vanillaModal = document.querySelector(".vanilla-modal");
     if (vanillaModal) {
-      vanillaModal.classList.remove("modal-visible");
-      document.getElementById("modal-content").innerHTML = "";
-      document.getElementById("modal-content").style = "";
+        vanillaModal.classList.remove("modal-visible");
+        document.getElementById("modal-content").innerHTML = "";
+        document.getElementById("modal-content").style = "";
     }
-  
+
     document.removeEventListener("keydown", escKey);
     document.removeEventListener("click", outsideClick, true);
     document.removeEventListener("click", closeClick);
     document.removeEventListener("keydown", trapTabKey);
-  }
-  
-  export const modal = {
+}
+
+export const modal = {
     init: function () {
-      const prerendredModal = document.createElement("div");
-      prerendredModal.classList.add("vanilla-modal");
-      const htmlModal = `         
+        const prerendredModal = document.createElement("div");
+        prerendredModal.classList.add("vanilla-modal");
+        const htmlModal = `         
          <div class="modal">
          <div class="modal-inner"
          ><div id="modal-content"></div></div></div>`;
-      prerendredModal.innerHTML = htmlModal;
-      document.body.appendChild(prerendredModal);
+        prerendredModal.innerHTML = htmlModal;
+        document.body.appendChild(prerendredModal);
+        return prerendredModal;
     },
     open: function (idContent, option = { default: null }) {
-      let vanillaModal = document.querySelector(".vanilla-modal");
-      if (!vanillaModal) {
-        console.log("there is no vanilla modal class");
-        modal.init();
-        vanillaModal = document.querySelector(".vanilla-modal");
-      }
-  
-      const content = document.getElementById(idContent);
-      let currentModalContent = content.cloneNode(true);
-      currentModalContent.classList.add("current-modal");
-      currentModalContent.style = "";
-      document.getElementById("modal-content").appendChild(currentModalContent);
-  
-      if (!option.default) {
-        if (option.width && option.height) {
-          document.getElementById("modal-content").style.width = option.width;
-          document.getElementById("modal-content").style.height = option.height;
+        let vanillaModal = document.querySelector(".vanilla-modal");
+        console.log(`🚀 ~ file: modal.js ~ line 95 ~ vanillaModal`, vanillaModal)
+        if (!vanillaModal) {
+            console.log("there is no vanilla modal class");
+            modal.init();
+            vanillaModal = document.querySelector(".vanilla-modal");
         }
-      }
-      vanillaModal.classList.add("modal-visible");
-      document.addEventListener("click", outsideClick, true);
-      document.addEventListener("keydown", escKey);
-      document.addEventListener("keydown", trapTabKey);
-      document
-        .getElementById("modal-content")
-        .addEventListener("click", closeClick);
+
+        const content = document.getElementById(idContent);
+        console.log(`🚀 ~ file: modal.js ~ line 103 ~ content`, content)
+        let currentModalContent = content.cloneNode(true);
+        currentModalContent.classList.add("current-modal");
+        currentModalContent.classList.add("modal");
+        currentModalContent.style = "";
+        document.getElementById("modal-content").appendChild(currentModalContent);
+
+        if (!option.default) {
+            if (option.width && option.height) {
+                document.getElementById("modal-content").style.width = option.width;
+                document.getElementById("modal-content").style.height = option.height;
+            }
+        }
+        vanillaModal.classList.add("modal-visible");
+        currentModalContent.classList.remove("modal-hidden");
+        console.log(`🚀 ~ file: modal.js ~ line 117 ~ vanillaModal`, vanillaModal)
+        document.addEventListener("click", outsideClick, true);
+        document.addEventListener("keydown", escKey);
+        document.addEventListener("keydown", trapTabKey);
+        document
+            .getElementById("modal-content")
+            .addEventListener("click", closeClick);
     },
-  
+
     close: function () {
-      closeModal();
+        console.log(`🚀 ~ file: modal.js ~ line 129 ~ 'closing modal'`, 'closing modal')
+        closeModal();
     },
-  };
-  
+};
+
   // for webpack es6 use uncomment the next line
   // export default modal;
-  

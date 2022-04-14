@@ -15,7 +15,7 @@
 		}
 	});
 	import tooltip from '$utils/tooltip';
-import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	let loading = false;
 	let email;
 
@@ -43,8 +43,11 @@ import { onMount } from 'svelte';
 	}
 
 	onMount(() => {
-		modal.init()
+		let mod = modal.init();
+		console.log(`🚀 ~ file: Auth.svelte ~ line 47 ~ onMount ~ mod`, mod);
 	});
+
+	
 </script>
 
 {#if !$currentUser}
@@ -81,15 +84,18 @@ import { onMount } from 'svelte';
 		</button>
 		<button
 			class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-fuchsia-700 hover:bg-fuchsia-500 cursor-pointer"
-			on:click={() => modal.open('modalContent')}
+			on:click={() => modal.open('openModal')}
 		>
 			Modal
 		</button>
 	</div>
 
-	<div id="modalContent" class="vanilla-modal modal" style="display:none;">
-		<div id="modal-content"  class="vanilla-modal modal">Test content</div>
+	<div id="openModal" class="modal-hidden" >
+		<div class="text-4xl text-cyan-400 bg-deepreds-200 p-24 z-99">Test content</div>
 	</div>
+
+
+
 {:else}
 	{$currentUser.email}
 	<button
@@ -132,6 +138,10 @@ import { onMount } from 'svelte';
 		height: 100%;
 		vertical-align: middle;
 		content: '';
+	}
+
+	.modal-hidden {
+		display: none;
 	}
 
 	.modal-visible .modal {
