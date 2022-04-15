@@ -43,7 +43,7 @@
 	}
 
 	onMount(() => {
-		modal.init();
+		// modal.init();
 	});
 </script>
 
@@ -89,10 +89,10 @@
 	</div>
 
 	<!-- MODAL -->
-	<div id="openModal" class="modal-hidden w-[50vw] h-auto">
+	<div id="openModal" class="modal-hidden md:w-[60vw] lg:w-[50vw] h-auto">
 
 			<div
-				class="flex flex-col items-center justify-center bg-black bg-opacity-50  md:w-[70%] lg:w-[50%] lg:h-auto lg:rounded-b-lg "
+				class="flex flex-col items-center justify-center bg-black bg-opacity-50  lg:h-auto lg:rounded-b-lg "
 			>
 				{$currentUser ? $currentUser.email : 'not signed in'}
 				{#if $currentUser}
@@ -108,7 +108,7 @@
 						Log In
 					</h1>
 				{/if}
-				<div class="tabs-wrapper flex w-full items-center justify-center">
+
 					<div class="flex flex-col items-center justify-center p-2">
 						<div class="flex flex-col">
 							<form>
@@ -232,7 +232,7 @@
 								</div>
 							</form>
 						</div>
-					</div>
+
 				</div>
 			</div>
 		</div>
@@ -275,13 +275,18 @@
 		transition: all 0.35s;
 	}
 	.vanilla-modal {
-		background: rgba(0, 0, 0, 0.6);
-		z-index: 9999;
+		// position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
 	}
 	.current-modal {
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		z-index: 9999;
 	}
 
 	.modal > * {
@@ -306,7 +311,7 @@
 
 	.modal-visible.modal,
 	.modal-visible .modal {
-		z-index: 9999;
+		z-index: 1;
 		opacity: 1;
 		transition: opacity 0.35s;
 		transform: scale(1);
@@ -327,7 +332,7 @@
 		border-radius: 6px;
 	}
 	.modal-visible .modal-inner {
-		z-index: 100;
+		z-index: 999;
 		opacity: 1;
 		visibility: visible;
 		transform: scale(1);
@@ -336,5 +341,7 @@
 
 	#modal-content {
 		padding: 50px 70px;
+		z-index: 9998;
+		cursor: pointer;
 	}
 </style>

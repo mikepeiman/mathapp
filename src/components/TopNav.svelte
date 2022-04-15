@@ -5,7 +5,7 @@
 	import { get } from 'svelte/store';
 	import { page } from '$app/stores';
 	import { currentUser } from '$stores/auth.js';
-	import Auth from './Auth.svelte';
+	import LoginModal from './LoginModal.svelte';
 	import DialogComp from './Dialog.svelte';
 	import {
 		Dialog,
@@ -82,7 +82,7 @@
 	</div>
 
 	<div class="auth flex h-full justify-end items-center">
-		<Auth />
+		<LoginModal />
 	</div>
 </div>
 

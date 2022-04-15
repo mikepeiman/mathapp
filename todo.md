@@ -44,7 +44,7 @@
 * user can add custom problems using keyboard with maximum efficiency - they can select a default operator, or enter the operator symbol as they go; set the number of values for each problem and tabbing from final value begins new problem on a new line; or allow indefinite fields and mark a problem as ready. This would be the easiest way to implement brackets as well. BLANK SHEET: one good way to provide this feature is the option to create a blank worksheet to specs; and then as described, the user can enter values, results are auto-calculated, and tab moves from one problem to the next
 * Option to provide only whole-number answers for division
 * make sure user can change any operation of any problem freely
-* ensure user can set decimal precision per-sheet or per-problem; remove decimal for integer results; and present fractional results as fractions, reduced
+* ensure user can set decimal precision per-sheet or per-problem; remove decimal for integer results; and present fractional results as fractions, reduced.
 
 ## Production
 * will need to look at printing and saving to .pdf. Will need to work on styling for standard A4 paper size
@@ -59,6 +59,7 @@
 * updating individual problem not resizing result properly again
 * "worksheet saved"/"not saved" indication not accurate - loaded sheets indicate not saved
 * QUESTION is there a way to display a notification in UI when there is a client error (ie. console log)?
+* when changing column and # problems, changes are not always reflected without page reload
 
 ## logic & data
 * STORES should be single source of truth. DOM and LS should reflect stores immediately & reactively; calculations should occur entirely with store values; DB should be updated or called on user action only (or eventually, auto-save features possibly)
@@ -71,3 +72,4 @@
   ## Auth
   * signing in a new email with magic link creates a user. If that user wants to use the same email/account in future to log in with password, they must first be logged in and then conduct an "update password" operation as per https://supabase.com/docs/reference/javascript/auth-update
   * when user wants to change password, I need to capture the token returned in the header and redirect to a form for this purpose
+  * put all auth options on one modal page, offer user option to "remember my preference" and put that in localStorage, changing the subsequent display as a result

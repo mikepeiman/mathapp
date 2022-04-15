@@ -1,21 +1,27 @@
 function outsideClick(e) {
+    console.log(`🚀 ~ file: modal.js ~ line 2 ~ outsideClick ~ e.target: `, e.target)
+    // console.log(`🚀 ~ file: modal.js ~ line 4 ~ outsideClick ~ e.target.closest`, e.target.closest())
+    console.log(`🚀 ~ file: modal.js ~ line 3 ~ outsideClick ~ e.target.closest(".modal-inner")`, e.target.closest(".modal"))
     if (e.target.closest(".modal-inner")) {
         return;
     }
     const modalVisible = document.querySelector(".modal-visible");
+    let focusableNodes = trapTabKey(e)
+    console.log(`🚀 ~ file: modal.js ~ line 10 ~ outsideClick ~ focusableNodes`, focusableNodes)
     if (modalVisible) {
-        closeModal();
+        console.log(`🚀 ~ file: modal.js ~ line 10 ~ outsideClick ~ modalVisible`, modalVisible)
+        closeModal('modalvisible');
     }
 }
 function escKey(e) {
     if (e.keyCode == 27) {
-        closeModal();
+        closeModal('esckey');
     }
 }
 
 function closeClick(e) {
     if (e.target.classList.contains("closeModal")) {
-        closeModal();
+        closeModal('closeclick');
     }
 }
 function trapTabKey(e) {
@@ -36,6 +42,7 @@ function trapTabKey(e) {
 
     const nodes = vanillaModal.querySelectorAll(FOCUSABLE_ELEMENTS);
     let focusableNodes = Array(...nodes);
+    // console.log(`🚀 ~ file: modal.js ~ line 39 ~ trapTabKey ~ focusableNodes`, focusableNodes)
 
     if (focusableNodes.length === 0) return;
 
@@ -45,6 +52,7 @@ function trapTabKey(e) {
 
     // if disableFocus is true
     if (!vanillaModal.contains(document.activeElement)) {
+        console.log(`🚀 ~ file: modal.js ~ line 52 ~ trapTabKey ~ !vanillaModal.contains(document.activeElement)`, !vanillaModal.contains(document.activeElement))
         focusableNodes[0].focus();
     } else {
         const focusedItemIndex = focusableNodes.indexOf(document.activeElement);
@@ -63,9 +71,11 @@ function trapTabKey(e) {
             e.preventDefault();
         }
     }
+    return focusableNodes
 }
 
-function closeModal() {
+function closeModal(msg) {
+    console.log(`🚀 ~ file: modal.js ~ line 71 ~ closeModal ~ msg`, msg)
     const vanillaModal = document.querySelector(".vanilla-modal");
     let trigger = document.getElementById('modal-trigger');
     trigger.disabled = false
@@ -76,6 +86,9 @@ function closeModal() {
             document.getElementById("modal-content").style = "";
         }, 500);
     }
+    setTimeout(() => {
+        vanillaModal.remove()
+    }, 500);
 
     document.removeEventListener("keydown", escKey);
     document.removeEventListener("click", outsideClick, true);
@@ -125,7 +138,7 @@ const modal = {
         vanillaModal.classList.add("modal-visible");
         document.addEventListener("click", outsideClick, true);
         document.addEventListener("keydown", escKey);
-        document.addEventListener("keydown", trapTabKey);
+        // document.addEventListener("keydown", trapTabKey);
         document
             .getElementById("modal-content")
             .addEventListener("click", closeClick);
@@ -137,5 +150,5 @@ const modal = {
     },
 };
 
-  // for webpack es6 use uncomment the next line
-  export default modal;
+// for webpack es6 use uncomment the next line
+export default modal;

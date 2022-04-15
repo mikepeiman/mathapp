@@ -6,7 +6,7 @@ let longest = 0
 let longestA = 0, longestB = 0, longestResult = 0;
 
 export function setWorksheetValuesToDOM(sheet) {
-    console.log(`🚀 ~ file: math_operations.js ~ line 79 ~ setWorksheetValuesToDOM ~ sheet`, sheet.problems)
+    // console.log(`🚀 ~ file: math_operations.js ~ line 79 ~ setWorksheetValuesToDOM ~ sheet`, sheet.problems)
     let problemsElements = document.getElementsByClassName('math-problem');
     Object.keys(problemsElements).forEach((i) => {
         let problemEl = problemsElements[i];
@@ -18,9 +18,9 @@ export function setWorksheetValuesToDOM(sheet) {
         // console.log(`🚀 ~ file: dom_operations.js ~ line 17 ~ Object.keys ~ i`, i)
         // console.log(`🚀 ~ file: dom_operations.js ~ line 17 ~ Object.keys ~ problem`, problem)
         if (!problem) {
-            console.log(`🚀 ~ file: dom_operations.js ~ line 19 ~ Object.keys ~ !problem`, !problem)
+            // console.log(`🚀 ~ file: dom_operations.js ~ line 19 ~ Object.keys ~ !problem`, !problem)
             problem = newProblemWithRandomValues('client')
-            console.log(`🚀 ~ file: dom_operations.js ~ line 21 ~ Object.keys ~ problem`, problem)
+            // console.log(`🚀 ~ file: dom_operations.js ~ line 21 ~ Object.keys ~ problem`, problem)
             sheet.problems[i] = problem
         }
         let values = []
@@ -69,7 +69,7 @@ export function LSgetWorksheetValuesFromDOM() {
 
 
 export async function resizeAllInputs() {
-    console.log(`🚀 ~ file: dom_operations.js ~ line 72 ~ resizeAllInputs ~ resizeAllInputs`)
+    // console.log(`🚀 ~ file: dom_operations.js ~ line 72 ~ resizeAllInputs ~ resizeAllInputs`)
     
     let problemsElements = await document.getElementsByClassName('math-problem');
     
@@ -84,7 +84,7 @@ export async function resizeAllInputs() {
             resizeInput.call(input);
         });
     });
-    console.log(`🚀 ~ file: dom_operations.js ~ line 7 ~ longestA, longestB, longestResult`, longestA, longestB, longestResult)
+    // console.log(`🚀 ~ file: dom_operations.js ~ line 7 ~ longestA, longestB, longestResult`, longestA, longestB, longestResult)
     Object.keys(problemsElements).forEach((i) => {
         let problemEl = problemsElements[i];
         let inputs = problemEl.children;
