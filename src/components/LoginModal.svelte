@@ -43,7 +43,7 @@
 	}
 
 	onMount(() => {
-		// modal.init();
+		modal.init();
 	});
 </script>
 
@@ -249,9 +249,15 @@
 {/if}
 
 <style lang="scss" global>
+	#svelte {
+		position: relative;
+		z-index: 0;
+	}
 	.modal {
-		display: block;
-		position: fixed;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
 		content: '';
 		top: 0;
 		left: 0;
@@ -265,7 +271,7 @@
 			var(--color-fuchsia-500) 100%
 		);
 		opacity: 0.5;
-		z-index: 11;
+		z-index: 101;
 		opacity: 0;
 		visibility: visible;
 		transition: opacity 0.35s, z-index 0s 0.35s;
@@ -280,17 +286,17 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		z-index: 0;
+		z-index: 100;
 	}
 	.current-modal {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		z-index: 9999;
+		z-index: 99;
 	}
 
 	.modal > * {
-		display: inline-block;
+		// display: inline-block;
 		white-space: normal;
 		vertical-align: middle;
 		text-align: left;
@@ -311,7 +317,7 @@
 
 	.modal-visible.modal,
 	.modal-visible .modal {
-		z-index: 1;
+		z-index: 111;
 		opacity: 1;
 		transition: opacity 0.35s;
 		transform: scale(1);
@@ -332,7 +338,7 @@
 		border-radius: 6px;
 	}
 	.modal-visible .modal-inner {
-		z-index: 999;
+		z-index: 99;
 		opacity: 1;
 		visibility: visible;
 		transform: scale(1);
@@ -341,7 +347,7 @@
 
 	#modal-content {
 		padding: 50px 70px;
-		z-index: 9998;
+		z-index: 99;
 		cursor: pointer;
 	}
 </style>

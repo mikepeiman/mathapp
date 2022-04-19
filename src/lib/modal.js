@@ -6,10 +6,11 @@ function outsideClick(e) {
         return;
     }
     const modalVisible = document.querySelector(".modal-visible");
-    let focusableNodes = trapTabKey(e)
-    console.log(`🚀 ~ file: modal.js ~ line 10 ~ outsideClick ~ focusableNodes`, focusableNodes)
-    if (modalVisible) {
+    // let focusableNodes = trapTabKey(e)
+    // console.log(`🚀 ~ file: modal.js ~ line 10 ~ outsideClick ~ focusableNodes`, focusableNodes)
+    if (modalVisible &&  e.target === modalVisible) {
         console.log(`🚀 ~ file: modal.js ~ line 10 ~ outsideClick ~ modalVisible`, modalVisible)
+
         closeModal('modalvisible');
     }
 }
@@ -86,10 +87,14 @@ function closeModal(msg) {
             document.getElementById("modal-content").style = "";
         }, 500);
     }
-    setTimeout(() => {
-        vanillaModal.remove()
-    }, 500);
+    if (vanillaModal.length) {
+    console.log(`🚀 ~ file: modal.js ~ line 90 ~ closeModal ~ vanillaModal.length`, vanillaModal.length)
 
+        setTimeout(() => {
+            vanillaModal.remove()
+        }, 500);
+    }
+        
     document.removeEventListener("keydown", escKey);
     document.removeEventListener("click", outsideClick, true);
     document.removeEventListener("click", closeClick);
@@ -136,6 +141,7 @@ const modal = {
             }
         }
         vanillaModal.classList.add("modal-visible");
+        vanillaModal.classList.add("modal");
         document.addEventListener("click", outsideClick, true);
         document.addEventListener("keydown", escKey);
         // document.addEventListener("keydown", trapTabKey);
