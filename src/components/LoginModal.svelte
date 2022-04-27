@@ -1,8 +1,7 @@
 <script>
 	import { supabase } from '$lib/supabaseClient.js';
 	import { currentUser } from '$stores/auth.js';
-	import modal from '$lib/modal.js';
-	console.log(`🚀 ~ file: Auth.svelte ~ line 5 ~ modal`, modal);
+	import jsmodal from '$lib/modal.js';
 	currentUser.set(supabase.auth.user());
 	$: console.log(`🚀 ~ file: Auth.svelte ~ line 5 ~ currentUser`, currentUser);
 	supabase.auth.onAuthStateChange((_, session) => {
@@ -43,7 +42,7 @@
 	}
 
 	onMount(() => {
-		modal.init();
+		jsmodal.init();
 	});
 </script>
 
@@ -82,7 +81,7 @@
 		<button
 			id="modal-trigger"
 			class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-fuchsia-700 hover:bg-fuchsia-500 cursor-pointer"
-			on:click={() => modal.open('openModal', 'modal-trigger')}
+			on:click={() => jsmodal.open('openModal', 'modal-trigger')}
 		>
 			Modal
 		</button>

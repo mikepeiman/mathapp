@@ -27,11 +27,13 @@
 			</div>
 			<Footer />
 		{:else}
-		<div class="layout-main flex flex-col items-center jutify-center w-screen h-screen">
-			<slot />
-		</div>
+			<div class="layout-main flex flex-col items-center jutify-center w-screen h-screen">
+				<slot />
+			</div>
 		{/if}
 	</div>
+<!-- {:else if mounted && !$currentUser}
+	Not logged in -->
 {/if}
 
 <style global lang="scss">

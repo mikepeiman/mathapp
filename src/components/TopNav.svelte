@@ -1,12 +1,14 @@
 <script>
 	import Icon from '@iconify/svelte';
 	import tooltip from '$utils/tooltip';
-	import { currentView } from '$stores/stores';
+	import { currentView, showModal } from '$stores/stores';
 	import { get } from 'svelte/store';
 	import { page } from '$app/stores';
 	import { currentUser } from '$stores/auth.js';
 	import LoginModal from './LoginModal.svelte';
+	import ModalContent from './ModalContent.svelte';
 	import DialogComp from './Dialog.svelte';
+	import Modal from 'svelte-simple-modal'
 	import {
 		Dialog,
 		DialogOverlay,
@@ -80,10 +82,20 @@
 			</a>
 		{/each}
 	</div>
-
+	<button
+	id="modal-trigger"
+	class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-fuchsia-700 hover:bg-fuchsia-500 cursor-pointer"
+	on:click={showModal.set(!$showModal)}
+>
+	ShowModal
+</button>
 	<div class="auth flex h-full justify-end items-center">
 		<LoginModal />
 	</div>
+
+	<Modal show={$showModal}>
+		<ModalContent />
+	</Modal>
 </div>
 
 <style lang="scss">

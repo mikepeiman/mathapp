@@ -3,7 +3,7 @@ import { writable } from "svelte/store"
 const settingsChange = writable({})
 
 export const currentView = writable('home')
-
+export const showModal = writable(false);
 export const storedSettingsChange = {
     subscribe: settingsChange.subscribe,
     set: val => {

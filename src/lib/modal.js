@@ -101,16 +101,17 @@ function closeModal(msg) {
     document.removeEventListener("keydown", trapTabKey);
 }
 
-const modal = {
+const jsmodal = {
     init: async function () {
         const prerendredModal = document.createElement("div");
+        const app = document.querySelector("#svelte");
         prerendredModal.classList.add("vanilla-modal");
         const htmlModal = `         
          <div class="modal">
          <div class="modal-inner"
          ><div id="modal-content"></div></div></div>`;
         prerendredModal.innerHTML = htmlModal;
-        document.body.appendChild(prerendredModal);
+        app.appendChild(prerendredModal);
         return prerendredModal;
     },
     open: async function (idContent, triggerSource, option = { default: null }) {
@@ -157,4 +158,4 @@ const modal = {
 };
 
 // for webpack es6 use uncomment the next line
-export default modal;
+export default jsmodal;

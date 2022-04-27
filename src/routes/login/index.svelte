@@ -145,10 +145,10 @@
 </script>
 
 <div
-	class="flex flex-col font-montserrat items-center justify-center bg-gradient-to-br from-winterblues-500 via-winterblues-900 to-fuchsia-400 w-full h-full"
+	class="flex flex-col font-montserrat items-center justify-start bg-gradient-to-br from-winterblues-500 via-winterblues-900 to-fuchsia-400 w-full h-full"
 >
 	<h1
-		class="text-3xl w-full md:w-[70%] lg:w-[50%] text-center  py-3 bg-black bg-opacity-80 lg:py-4 lg:rounded-t-lg border-lightBlue-300"
+		class="text-3xl w-full text-center  py-3 bg-black bg-opacity-80 lg:py-4 lg:rounded-t-lg border-lightBlue-300"
 	>
 		Math App
 	</h1>
