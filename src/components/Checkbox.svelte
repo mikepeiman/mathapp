@@ -147,8 +147,8 @@
     style="width: {size};height: {size};">
     <input id={labelId} type="checkbox" on:change={handleChange} {name} />
     <svg class="checkbox__svg" preserveAspectRatio="none" viewBox="0 0 100 100">
-      <rect class="checkbox__border" rx="15%" />
-      <rect class="checkbox__border -active" style={borderStyle} rx="15%" />
+      <rect class="checkbox__border" rx="0%" />
+      <rect class="checkbox__border -active" style={borderStyle} rx="0%" />
       <path
         style={checkStyle}
         class="checkbox__check"

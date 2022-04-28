@@ -169,15 +169,15 @@ import Checkbox from '$components/Checkbox.svelte';
 				on:click={() => handleSubmit('user', 'signout')}>Sign out</button
 			>
 		{/if} -->
-		<div class="flex flex-col w-full items-center justify-center">
+		<div class="tabs-wrapper flex w-full items-center justify-center">
 			<div class="flex flex-col items-center justify-center p-2">
-				<!-- <div class="flex flex-col"> -->
+				<div class="flex flex-col">
 					<form >
-						<div class=" w-80 mb-1 flex flex-col tooltip items-center justify-between">
+						<div class=" w-full mb-1 flex flex-col tooltip items-center justify-between">
 							<label
 								for="email"
 								use:tooltip
-								class="w-full border-[1px] m-2 border-fuchsia-500"
+								class="w-full border-2 border-fuchsia-500"
 								title="Sign in via magic link with just your email address."
 								><input
 									type="text"
@@ -188,46 +188,145 @@ import Checkbox from '$components/Checkbox.svelte';
 									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
 								/>
 							</label>
-							<ul class="w-full">
-								<li>	<label for="showAnswers" class="flex items-center w-full justify-start"
-									>
+							<ul>
+								<li>	<label for="showAnswers" class="flex items-center"
+									>Option One: 
 									
 									<Checkbox
 										name="showAnswers"
-										size="1.75rem"
 										bind:checked={option1}
-										class="  bg-winterblues-500 rounded-none m-1 ml-0"
-									/>Option One: {option1}
+										class=" m-4 bg-winterblues-500 bg-opacity-50"
+									/>{option1}
 								</label></li>
 								<li>	<label for="showAnswers" class="flex items-center"
-									>
+									>Option One: 
 									
 									<Checkbox
 										name="showAnswers"
-										size="1.75rem"
 										bind:checked={option1}
-										class=" bg-winterblues-500 rounded-none m-1 ml-0 "
-									/>Option Two: {option1}
+										class=" m-4 bg-winterblues-500 bg-opacity-50"
+									/>{option1}
 								</label></li>
-							</ul>
 							<button
-								class="w-full p-2 m-2 bg-winterblues-700"
+								class="w-full p-2 bg-winterblues-700"
 								type="submit"
 								on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
 							>
 						</div>
 					</form>
+					<form >
+						<div class="formset mb-1 grid tooltip items-center justify-between">
+							<label
+								for="email"
+								use:tooltip
+								title="Sign in via magic link with just your email address."
+								><input
+									type="text"
+									name="email"
+									bind:value={email}
+									autocomplete="on"
+									placeholder="email address"
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
+								/>
+							</label>
+							<button
+								class="w-full p-2 bg-winterblues-700"
+								type="submit"
+								on:click|preventDefault={() => handleSubmit('magic')}>Get magic link</button
+							>
+						</div>
+					</form>
+					<form >
+						<div class="formset grid items-center justify-between">
+							<label
+								for="password"
+								use:tooltip
+								title="Sign in with password if you created your acount that way."
+								><input
+									type="text"
+									name="password"
+									bind:value={password}
+									autocomplete="on"
+									placeholder="password"
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
+								/>
+							</label>
+							<button class="p-2 bg-winterblues-700" type="submit" on:click|preventDefault={() => handleSubmit('password', 'signin')}
+								>Sign in with password</button
+							>
+						</div>
+					</form>
+					<form >
+						<div class="formset grid items-center justify-between">
+							<label
+								for="password"
+								use:tooltip
+								title="Sign in with password if you created your acount that way."
+								><input
+									type="text"
+									name="password"
+									bind:value={password}
+									autocomplete="on"
+									placeholder="password"
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
+								/>
+							</label>
+							<button class="p-2 bg-winterblues-700" type="submit" on:click|preventDefault={() => handleSubmit('password', 'signup')}
+								>Sign up with password</button
+							>
+						</div>
+					</form>
+					<form >
+						<div class="formset grid items-center justify-between">
+							<label
+								for="password"
+								use:tooltip
+								title="Sign in with password if you created your acount that way."
+								><input
+									type="text"
+									name="password"
+									bind:value={password}
+									autocomplete="on"
+									placeholder="password"
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
+								/>
+							</label>
+							<button
+								class="p-2 bg-winterblues-700"
+								type="submit"
+								on:click={() => handleSubmit('password', 'update')}>Update password</button
+							>
+						</div>
+					</form>
 				</div>
-				<div class="flex items-center justify-between w-80">
-					<div
-						class="flex flex-col items-center justify-center bg-gradient-to-l from-lightBlue-400 to-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl"
-					/>
-					<div class="flex text-lightBlue-400">or</div>
-					<div
-						class="flex flex-col items-center justify-center bg-gradient-to-l to-lightBlue-400 from-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl"
-					/>
+
+				<div
+					class="flex flex-col items-center justify-center bg-gradient-to-l to-lightBlue-400 via-winterblues-800 bg-opacity-50 w-full h-4 my-10 rounded-xl"
+				/>
+				<div class="flex flex-col bg-gray-900 rounded-lg text-center">
+					<p class="p-3 ">Change password, or create one for your account</p>
+					<form>
+						<div class="formset grid">
+							<label
+								for="password"
+								use:tooltip
+								title="Sign in with password if you created your acount that way."
+								><input
+									type="text"
+									name="email"
+									bind:value={email}
+									autocomplete="on"
+									placeholder="email address"
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
+								/>
+							</label>
+							<button class="p-0 bg-greenge-700" type="submit" on:click|preventDefault={() => handleSubmit('password', 'reset')}
+								>Reset Password</button
+							>
+						</div>
+					</form>
 				</div>
-			<!-- </div> -->
+			</div>
 		</div>
 	</div>
 </div>
