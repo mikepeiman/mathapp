@@ -170,14 +170,15 @@
 >
 	<!-- <div class="bg-fuchsia-500 absolute top-0 left-0 w-full h-full bg-opacity-50 z-2"></div> -->
 	<!-- <div class="bg-white absolute top-0 left-0 w-full h-full bg-opacity-50 z-1"></div> -->
-	<!-- <div class="bg-black absolute top-0 left-0 w-full h-full bg-opacity-50 z-1"></div> -->
-	<h1
-		class="text-3xl w-full text-center absolute top-0 left-0 z-2 py-3 bg-black bg-opacity-80 lg:py-4 lg:rounded-t-lg border-lightBlue-300"
-	>
-		Math App
-	</h1>
+	<div class="bg-black absolute top-0 left-0 w-full h-full bg-opacity-50 z-1"></div>
 	<div
-		class="flex flex-col absolute top-28 z-0 items-center justify-start bg-black bg-opacity-50 w-96 rounded-lg  "
+		class="text-3xl  w-full text-center absolute top-0 left-0 z-2 py-3 bg-gradient-to-r from-winterblues-800 via-winterblues-900 to-fuchsia-800 bg-opacity-40 lg:py-4 lg:rounded-t-lg border-b-[1px] border-lightBlue-300"
+	>
+		<h1>Math App</h1>
+		<h2 class="text-lg text-gray-400">Curriculum For Life</h2>
+</div>
+	<div
+		class="flex flex-col absolute top-28 z-0 items-center justify-start  bg-opacity-50 w-96 rounded-lg  "
 	>
 		<h1 class="text-3xl text-white font-serif mt-8 font-light">Sign up</h1>
 		<!-- {$currentUser ? $currentUser.email : 'not signed in'}
@@ -196,7 +197,7 @@
 						<label
 							for="email"
 							use:tooltip
-							class="w-full border-[1px] m-4 border-white"
+							class="w-full border-[1px] m-4 mb-6 border-white"
 							title="Sign in via magic link with just your email address."
 							><input
 								type="text"
@@ -222,7 +223,7 @@
 									<a href="/privacy" class="underline">Privacy Policy</a>.
 								</label>
 							</li>
-							<li class="flex items-start justify-start mt-2">
+							<li class="flex items-start justify-start mt-2 mb-1">
 								<Checkbox
 									name="showAnswers"
 									size="1.25rem"
