@@ -19,7 +19,7 @@
 		TransitionChild
 	} from '@rgossiaux/svelte-headlessui';
 	import { fade } from 'svelte/transition';
-import UserAuth from './UserAuth.svelte';
+	import UserAuth from './UserAuth.svelte';
 	console.log(`🚀 ~ file: TopNav.svelte ~ line 7 ~ page`, $page.url);
 	currentUser.set(supabase.auth.user());
 	$: current = get(currentView);
@@ -34,8 +34,8 @@ import UserAuth from './UserAuth.svelte';
 	];
 
 	const iconify = {
-		user: 'bxs:user',
-	}
+		user: 'bxs:user'
+	};
 
 	function navigate(icon) {
 		console.log(`🚀 ~ file: TopNav.svelte ~ line 24 ~ navigate ~ icon`, icon);
@@ -91,10 +91,8 @@ import UserAuth from './UserAuth.svelte';
 	</div>
 
 	<div class="auth flex h-full justify-end items-center">
-<UserAuth />
+		<UserAuth />
 	</div>
-
-
 </div>
 
 <style lang="scss">

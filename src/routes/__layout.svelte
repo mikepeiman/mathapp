@@ -21,7 +21,7 @@
 	>
 		{#if url !== '/login' && url !== '/password_reset'}
 			<TopNav />
-			<!-- <SideNav /> -->
+			<SideNav />
 			<div class="layout-main flex flex-col items-center jutify-center">
 				<slot />
 			</div>
@@ -49,7 +49,7 @@
 		// width: 100%;
 		// width: 100vw;
 		grid-template-rows: 80px auto 80px;
-		grid-template-columns: auto;
+		grid-template-columns: 12em auto;
 		grid-template-areas:
 			'header header'
 			'sidenav  layout-main '
@@ -68,14 +68,10 @@
 		grid-area: footer;
 	}
 
-	#default-layout {
+	#default-layout, .layout-main {
 		grid-area: layout-main;
 		// max-width: 100vw;
 		// height: calc(100% - 80px);
-	}
-
-	.layout-main {
-		grid-area: layout-main;
 	}
 	// :root {
 	// 	background-color: red;
