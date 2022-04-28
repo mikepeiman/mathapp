@@ -45,6 +45,8 @@
 * Option to provide only whole-number answers for division
 * make sure user can change any operation of any problem freely
 * ensure user can set decimal precision per-sheet or per-problem; remove decimal for integer results; and present fractional results as fractions, reduced.
+* create a "curriculum" of various types of worksheets at levels of difficulty; provide an option (for paid users) to generate x # of pages of a given type with random values, and optionally to print those immediately
+* for printing, provide option to "also print answers sheet" yes/no
 
 ## Production
 * will need to look at printing and saving to .pdf. Will need to work on styling for standard A4 paper size
@@ -60,6 +62,7 @@
 * "worksheet saved"/"not saved" indication not accurate - loaded sheets indicate not saved
 * QUESTION is there a way to display a notification in UI when there is a client error (ie. console log)?
 * when changing column and # problems, changes are not always reflected without page reload
+* after logout, "savged worksheets" needs refresh
 
 ## logic & data
 * STORES should be single source of truth. DOM and LS should reflect stores immediately & reactively; calculations should occur entirely with store values; DB should be updated or called on user action only (or eventually, auto-save features possibly)
