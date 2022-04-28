@@ -32,7 +32,10 @@
 		passwordError = false;
 
 	const icons = {
-		google: 'flat-color-icons:google'
+		google: 'flat-color-icons:google',
+		twitter: 'logos:twitter',
+		facebook: 'simple-icons:facebook',
+		github: 'ant-design:github-filled'
 	};
 
 	onMount(() => {});
@@ -131,8 +134,10 @@
 		}
 	}
 
-	function handleSubmit(msg, event) {
-		console.log(`🚀 ~ file: Auth.svelte ~ line 21 ~ handleSubmit ~ msg ${msg}, event ${event}`);
+	function handleSubmit(msg, provider) {
+		console.log(
+			`🚀 ~ file: Auth.svelte ~ line 21 ~ handleSubmit ~ msg ${msg}, provider ${provider}`
+		);
 		if (msg === 'magic') {
 			signInWithEmail();
 		} else if (msg === 'password') {
@@ -142,7 +147,15 @@
 			event === 'reset' ? resetPassword() : false;
 		} else if (msg === 'user') {
 			event === 'signout' ? signOut() : false;
+		} else if (msg === 'social') {
+			signInWithSocial(provider);
 		}
+	}
+
+	async function signInWithSocial(provider) {
+		const { user, session, error } = await supabase.auth.signIn({
+			provider: provider
+		});
 	}
 
 	async function signOut() {
@@ -234,31 +247,43 @@
 				/>
 			</div>
 			<button
-				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700  border-[1px] border-winterblues-500 rounded-xl"
+				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
 				type="submit"
-				on:click|preventDefault={() => handleSubmit('magic')}
+				on:click|preventDefault={() => handleSubmit('social', 'google')}
 			>
+				
 				<Icon icon={icons.google} class="w-6 h-6 mr-2" />
 				<div class="flex">Sign in with Google</div></button
 			>
 			<button
-				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700  border-[1px] border-winterblues-500 rounded-xl"
+				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
 				type="submit"
-				on:click|preventDefault={() => handleSubmit('magic')}
+				on:click|preventDefault={() => handleSubmit('social', 'twitter')}
 			>
-				<Icon icon={icons.google} class="w-6 h-6 mr-2" />
-				<div class="flex">Sign in with Google</div></button
+				
+				<Icon icon={icons.twitter} class="w-6 h-6 mr-2" />
+				<div class="flex">Sign in with Twitter</div></button
 			>
 			<button
-				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700  border-[1px] border-winterblues-500 rounded-xl"
+				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
 				type="submit"
-				on:click|preventDefault={() => handleSubmit('magic')}
+				on:click|preventDefault={() => handleSubmit('social', 'facebook')}
 			>
-				<Icon icon={icons.google} class="w-6 h-6 mr-2" />
-				<div class="flex">Sign in with Google</div></button
+				
+				<Icon icon={icons.facebook} class="w-6 h-6 mr-2" />
+				<div class="flex">Sign in with Facebook</div></button
+			>
+			<button
+				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
+				type="submit"
+				on:click|preventDefault={() => handleSubmit('social', 'github')}
+			>
+				
+				<Icon icon={icons.github} class="w-6 h-6 mr-2" />
+				<div class="flex">Sign in with Github</div></button
 			>
 			<p class="text-sm m-4">Already have an account? <a href="/" class="underline">Sign in</a></p>
-			<div class="mb-4"></div>
+			<div class="mb-4" />
 		</div>
 	</div>
 </div>
