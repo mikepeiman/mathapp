@@ -9,7 +9,7 @@
 			currentUser.set(session?.user);
 			console.log(
 				`🚀 ~ file: Auth.svelte ~ line 11 ~ supabase.auth.onAuthStateChange ~ user`,
-				user
+				$currentUser
 			);
 		}
 	});
