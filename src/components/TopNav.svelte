@@ -5,6 +5,7 @@
 	import { get } from 'svelte/store';
 	import { page } from '$app/stores';
 	import { currentUser } from '$stores/auth.js';
+	import { supabase } from '$lib/supabaseClient.js';
 	import LoginModal from './LoginModal.svelte';
 	import ModalContent from './ModalContent.svelte';
 	import DialogComp from './Dialog.svelte';
@@ -18,7 +19,9 @@
 		TransitionChild
 	} from '@rgossiaux/svelte-headlessui';
 	import { fade } from 'svelte/transition';
+import UserAuth from './UserAuth.svelte';
 	console.log(`🚀 ~ file: TopNav.svelte ~ line 7 ~ page`, $page.url);
+	currentUser.set(supabase.auth.user());
 	$: current = get(currentView);
 	$: isOpen = false;
 	const navicons = [
@@ -88,14 +91,7 @@
 	</div>
 
 	<div class="auth flex h-full justify-end items-center">
-		<!-- <LoginModal /> -->
-		<a
-		href="/login"
-		class="flex group items-center justify-center text-lg xl:text-xl text-center p-2 mx-2 rounded bg-winterblues-700 hover:bg-winterblues-600 hover:text-white cursor-pointer transition-all duration-100"
-	>
-		<span>Log In</span>
-		<Icon icon={iconify.user} class="ml-1 mr-2 text-winterblues-100  transition-all" />
-	</a>
+<UserAuth />
 	</div>
 
 
