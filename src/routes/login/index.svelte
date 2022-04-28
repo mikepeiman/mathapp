@@ -12,9 +12,9 @@
 		TransitionChild
 	} from '@rgossiaux/svelte-headlessui';
 	let loggedIn = false;
-	let option1 = false;
+	let option1, option2 = false;
 	$: currentUser.set(supabase.auth.user());
-	$: $currentUser ? loggedIn = true : loggedIn = false;
+	$: $currentUser ? (loggedIn = true) : (loggedIn = false);
 	$: console.log(`🚀 ~ file: index.svelte ~ line 16 ~ currentUser`, $currentUser);
 	supabase.auth.onAuthStateChange((_, session) => {
 		if (session?.user) {
@@ -23,7 +23,7 @@
 	});
 	import tooltip from '$utils/tooltip';
 	import { onMount } from 'svelte';
-import Checkbox from '$components/Checkbox.svelte';
+	import Checkbox from '$components/Checkbox.svelte';
 	let loading = false;
 	let email,
 		password,
@@ -142,25 +142,25 @@ import Checkbox from '$components/Checkbox.svelte';
 	async function signOut() {
 		const { error } = await supabase.auth.signOut();
 		error ? console.error(error) : (loggedIn = false);
-        currentUser.set(supabase.auth.user())
+		currentUser.set(supabase.auth.user());
 	}
 </script>
 
 <div
 	class="flex flex-col z-0 relative font-montserrat items-center justify-start bg-gradient-to-br from-winterblues-500 via-winterblues-900 to-fuchsia-400 w-full h-full"
 >
-<!-- <div class="bg-fuchsia-500 absolute top-0 left-0 w-full h-full bg-opacity-50 z-2"></div> -->
-<!-- <div class="bg-white absolute top-0 left-0 w-full h-full bg-opacity-50 z-1"></div> -->
-<!-- <div class="bg-black absolute top-0 left-0 w-full h-full bg-opacity-50 z-1"></div> -->
+	<!-- <div class="bg-fuchsia-500 absolute top-0 left-0 w-full h-full bg-opacity-50 z-2"></div> -->
+	<!-- <div class="bg-white absolute top-0 left-0 w-full h-full bg-opacity-50 z-1"></div> -->
+	<!-- <div class="bg-black absolute top-0 left-0 w-full h-full bg-opacity-50 z-1"></div> -->
 	<h1
 		class="text-3xl w-full text-center absolute top-0 left-0 z-2 py-3 bg-black bg-opacity-80 lg:py-4 lg:rounded-t-lg border-lightBlue-300"
 	>
 		Math App
 	</h1>
 	<div
-		class="flex flex-col absolute top-28 z-0 items-center justify-start bg-black bg-opacity-50  md:w-[70%] lg:w-[50%] lg:h-auto lg:rounded-b-lg "
+		class="flex flex-col absolute top-28 z-0 items-center justify-start bg-black bg-opacity-50 w-96 rounded-lg  "
 	>
-		<h1 class="text-2xl font-serif m-8">Sign up</h1>
+		<h1 class="text-3xl text-fuchsia-300 font-serif mt-8">Sign up</h1>
 		<!-- {$currentUser ? $currentUser.email : 'not signed in'}
 		{#if $currentUser}
 			<button
@@ -172,61 +172,62 @@ import Checkbox from '$components/Checkbox.svelte';
 		<div class="flex flex-col w-full items-center justify-center">
 			<div class="flex flex-col items-center justify-center p-2">
 				<!-- <div class="flex flex-col"> -->
-					<form >
-						<div class=" w-80 mb-1 flex flex-col tooltip items-center justify-between">
-							<label
-								for="email"
-								use:tooltip
-								class="w-full border-[1px] m-2 border-fuchsia-500"
-								title="Sign in via magic link with just your email address."
-								><input
-									type="text"
-									name="email"
-									bind:value={email}
-									autocomplete="on"
-									placeholder="Email address"
-									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
-								/>
-							</label>
-							<ul class="w-full">
-								<li>	<label for="showAnswers" class="flex items-center w-full justify-start"
-									>
-									
+				<form>
+					<div class=" w-80 mb-1 flex flex-col tooltip items-center justify-between">
+						<label
+							for="email"
+							use:tooltip
+							class="w-full border-[1px] m-4 border-fuchsia-500"
+							title="Sign in via magic link with just your email address."
+							><input
+								type="text"
+								name="email"
+								bind:value={email}
+								autocomplete="on"
+								placeholder="Email address"
+								class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
+							/>
+						</label>
+						<ul class="w-full">
+							<li>
+								<label for="showAnswers" class="flex items-center w-full text-sm">
 									<Checkbox
 										name="showAnswers"
-										size="1.75rem"
+										size="1.5rem"
 										bind:checked={option1}
-										class="  bg-winterblues-500 rounded-none m-1 ml-0"
+										class="  rounded-none m-2 ml-0"
 									/>Option One: {option1}
-								</label></li>
-								<li>	<label for="showAnswers" class="flex items-center"
-									>
-									
+								</label>
+							</li>
+							<li>
+								<label for="showAnswers" class="flex items-center text-sm">
 									<Checkbox
 										name="showAnswers"
-										size="1.75rem"
-										bind:checked={option1}
-										class=" bg-winterblues-500 rounded-none m-1 ml-0 "
-									/>Option Two: {option1}
-								</label></li>
-							</ul>
-							<button
-								class="w-full p-2 m-2 bg-winterblues-700"
-								type="submit"
-								on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
-							>
-						</div>
-					</form>
-				</div>
-				<div class="flex items-center justify-between w-80">
-					<div
-						class="flex flex-col items-center justify-center bg-gradient-to-l from-lightBlue-400 to-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl"
-					/>
-					<div class="flex text-lightBlue-400">or</div>
-					<div
-						class="flex flex-col items-center justify-center bg-gradient-to-l to-lightBlue-400 from-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl"
-					/>
-				</div>
+										size="1.5rem"
+
+										bind:checked={option2}
+										class="  rounded-none m-2 ml-0 "
+									/>Option Two: {option2}
+								</label>
+							</li>
+						</ul>
+						<button
+							class="w-full p-2 m-4 bg-winterblues-700 rounded-xl"
+							type="submit"
+							on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
+						>
+					</div>
+				</form>
+			</div>
+			<div class="flex items-center justify-between w-80">
+				<div
+					class="flex flex-col items-center justify-center bg-gradient-to-l from-lightBlue-400 to-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl"
+				/>
+				<div class="flex text-lightBlue-400">or</div>
+				<div
+					class="flex flex-col items-center justify-center bg-gradient-to-l to-lightBlue-400 from-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl"
+				/>
+			</div>
 			<!-- </div> -->
 		</div>
 	</div>

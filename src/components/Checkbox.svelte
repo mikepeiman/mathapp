@@ -14,8 +14,11 @@
       borderStyle,
       checkStyle,
       duration = 400,
-      primaryColor = "#24ffac",
-      secondaryColor = "#1828ea";
+      // primaryColor = "#00b4d8", // 24ffac
+      primaryColor = "#ffffff", // 24ffac
+      // primaryColor = "#24ffac", // 24ffac
+      // secondaryColor = "#e879f9"; // 1828ea
+      secondaryColor = "#1828ea"; // 1828ea
     const dispatch = createEventDispatcher();
     const animationOptions = {
       to: 100,
@@ -81,8 +84,8 @@
   
   <style>
     .checkbox {
-      --checkbox-color-primary: #242432;
-      --checkbox-color-secondary: #d8d8ea;
+      /* --checkbox-color-primary: #242432; */
+      /* --checkbox-color-secondary: #d8d8ea; */
       --checkbox-border-width: 4%;
       --checkbox-border-width-active: 7%;
       position: relative;
