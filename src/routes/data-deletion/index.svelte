@@ -1,0 +1,1 @@
+<h1>This is a required URL for basic Facebook authentication (login). We do not collect any user data from social accounts used for login, hence there is nothing to delete.</h1>
