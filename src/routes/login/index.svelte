@@ -208,24 +208,29 @@
 							/>
 						</label>
 						<ul class="w-full">
-							<li>
-								<label for="showAnswers" class="flex items-center w-full text-sm">
-									<Checkbox
-										name="showAnswers"
-										size="1.5rem"
-										bind:checked={option1}
-										class="  rounded-none m-2 ml-0"
-									/>Option One: {option1}
+							<li class="flex items-start justify-start">
+								<Checkbox
+									name="showAnswers"
+									size="1.25rem"
+									bind:checked={option1}
+									class="  rounded-none m-2 ml-0 mt-0"
+								/>
+								<label for="showAnswers" class=" items-center w-full text-sm text-left"
+									>I agree to Math App & Curriculum For Life's
+									<a href="/terms-of-service" class="underline">Terms Of Service</a>
+									and
+									<a href="/privacy" class="underline">Privacy Policy</a>.
 								</label>
 							</li>
-							<li>
-								<label for="showAnswers" class="flex items-center text-sm">
-									<Checkbox
-										name="showAnswers"
-										size="1.5rem"
-										bind:checked={option2}
-										class="  rounded-none m-2 ml-0 "
-									/>Option Two: {option2}
+							<li class="flex items-start justify-start mt-2">
+								<Checkbox
+									name="showAnswers"
+									size="1.25rem"
+									bind:checked={option2}
+									class="  rounded-none m-2 ml-0 mt-0"
+								/>
+								<label for="showAnswers" class=" items-center w-full text-sm text-left"
+									>Curriculum For Life may use my email address to provide me with occasional updates on our apps. I can opt out at any time.
 								</label>
 							</li>
 						</ul>
@@ -251,7 +256,6 @@
 				type="submit"
 				on:click|preventDefault={() => handleSubmit('social', 'google')}
 			>
-				
 				<Icon icon={icons.google} class="w-6 h-6 mr-2" />
 				<div class="flex">Sign in with Google</div></button
 			>
@@ -260,7 +264,6 @@
 				type="submit"
 				on:click|preventDefault={() => handleSubmit('social', 'twitter')}
 			>
-				
 				<Icon icon={icons.twitter} class="w-6 h-6 mr-2" />
 				<div class="flex">Sign in with Twitter</div></button
 			>
@@ -269,7 +272,6 @@
 				type="submit"
 				on:click|preventDefault={() => handleSubmit('social', 'facebook')}
 			>
-				
 				<Icon icon={icons.facebook} class="w-6 h-6 mr-2" />
 				<div class="flex">Sign in with Facebook</div></button
 			>
@@ -278,7 +280,6 @@
 				type="submit"
 				on:click|preventDefault={() => handleSubmit('social', 'github')}
 			>
-				
 				<Icon icon={icons.github} class="w-6 h-6 mr-2" />
 				<div class="flex">Sign in with Github</div></button
 			>
