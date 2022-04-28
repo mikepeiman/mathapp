@@ -8,7 +8,7 @@
 	import LoginModal from './LoginModal.svelte';
 	import ModalContent from './ModalContent.svelte';
 	import DialogComp from './Dialog.svelte';
-	import Modal from 'svelte-simple-modal'
+	import Modal from 'svelte-simple-modal';
 	import {
 		Dialog,
 		DialogOverlay,
@@ -21,7 +21,7 @@
 	console.log(`🚀 ~ file: TopNav.svelte ~ line 7 ~ page`, $page.url);
 	$: current = get(currentView);
 	$: isOpen = false;
-	const icons = [
+	const navicons = [
 		{
 			icon: 'ic:baseline-view-comfy',
 			url: '/',
@@ -29,6 +29,10 @@
 		},
 		{ icon: 'ant-design:calculator-filled', url: '/calc', name: 'Calculator' }
 	];
+
+	const iconify = {
+		user: 'bxs:user',
+	}
 
 	function navigate(icon) {
 		console.log(`🚀 ~ file: TopNav.svelte ~ line 24 ~ navigate ~ icon`, icon);
@@ -68,7 +72,7 @@
 		{/if}
 	</div>
 	<div class="nav flex items-center justify-center">
-		{#each icons as icon}
+		{#each navicons as icon}
 			<a
 				class="tooltip flex items-center justify-center text-4xl mx-2 hover:text-winterblues-400 hover:cursor-pointer transition-all
 					{$page.url.pathname.toLowerCase() === `${icon.url.toLowerCase()}` ? 'text-winterblues-600' : ''}
@@ -82,20 +86,19 @@
 			</a>
 		{/each}
 	</div>
-	<button
-	id="modal-trigger"
-	class="text-lg xl:text-xl text-center p-2 mx-2 rounded bg-fuchsia-700 hover:bg-fuchsia-500 cursor-pointer"
-	on:click={showModal.set(!$showModal)}
->
-	ShowModal
-</button>
+
 	<div class="auth flex h-full justify-end items-center">
-		<LoginModal />
+		<!-- <LoginModal /> -->
+		<a
+		href="/login"
+		class="flex group items-center justify-center text-lg xl:text-xl text-center p-2 mx-2 rounded bg-winterblues-700 hover:bg-winterblues-600 hover:text-white cursor-pointer transition-all duration-100"
+	>
+		<span>Log In</span>
+		<Icon icon={iconify.user} class="ml-1 mr-2 text-winterblues-100  transition-all" />
+	</a>
 	</div>
 
-	<Modal show={$showModal}>
-		<ModalContent />
-	</Modal>
+
 </div>
 
 <style lang="scss">
