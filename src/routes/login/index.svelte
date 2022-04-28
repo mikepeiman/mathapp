@@ -174,7 +174,7 @@
 	<div
 		class="text-3xl  w-full text-center absolute top-0 left-0 z-2 py-3 bg-gradient-to-r from-winterblues-700 via-winterblues-900 to-fuchsia-800 bg-opacity-40 lg:py-4 lg:rounded-t-lg border-b-[1px] border-lightBlue-300"
 	>
-		<h1>Math App</h1>
+		<a href="/">Math App</a>
 		<h2 class="text-lg text-gray-400">Curriculum For Life</h2>
 </div>
 	<div
