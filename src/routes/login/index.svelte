@@ -12,7 +12,8 @@
 		TransitionChild
 	} from '@rgossiaux/svelte-headlessui';
 	let loggedIn = false;
-	let option1, option2 = false;
+	let option1,
+		option2 = false;
 	$: currentUser.set(supabase.auth.user());
 	$: $currentUser ? (loggedIn = true) : (loggedIn = false);
 	$: console.log(`🚀 ~ file: index.svelte ~ line 16 ~ currentUser`, $currentUser);
@@ -24,10 +25,15 @@
 	import tooltip from '$utils/tooltip';
 	import { onMount } from 'svelte';
 	import Checkbox from '$components/Checkbox.svelte';
+	import Icon from '@iconify/svelte';
 	let loading = false;
 	let email,
 		password,
 		passwordError = false;
+
+	const icons = {
+		google: 'flat-color-icons:google'
+	};
 
 	onMount(() => {});
 
@@ -160,7 +166,7 @@
 	<div
 		class="flex flex-col absolute top-28 z-0 items-center justify-start bg-black bg-opacity-50 w-96 rounded-lg  "
 	>
-		<h1 class="text-3xl text-fuchsia-300 font-serif mt-8">Sign up</h1>
+		<h1 class="text-3xl text-white font-serif mt-8 font-light">Sign up</h1>
 		<!-- {$currentUser ? $currentUser.email : 'not signed in'}
 		{#if $currentUser}
 			<button
@@ -177,7 +183,7 @@
 						<label
 							for="email"
 							use:tooltip
-							class="w-full border-[1px] m-4 border-fuchsia-500"
+							class="w-full border-[1px] m-4 border-white"
 							title="Sign in via magic link with just your email address."
 							><input
 								type="text"
@@ -204,7 +210,6 @@
 									<Checkbox
 										name="showAnswers"
 										size="1.5rem"
-
 										bind:checked={option2}
 										class="  rounded-none m-2 ml-0 "
 									/>Option Two: {option2}
@@ -212,7 +217,7 @@
 							</li>
 						</ul>
 						<button
-							class="w-full p-2 m-4 bg-winterblues-700 rounded-xl"
+							class="w-full p-2 m-4 bg-winterblues-700 rounded-xl hover:bg-winterblues-500 hover:text-black transition-all duration-200"
 							type="submit"
 							on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
 						>
@@ -228,7 +233,32 @@
 					class="flex flex-col items-center justify-center bg-gradient-to-l to-lightBlue-400 from-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl"
 				/>
 			</div>
-			<!-- </div> -->
+			<button
+				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700  border-[1px] border-winterblues-500 rounded-xl"
+				type="submit"
+				on:click|preventDefault={() => handleSubmit('magic')}
+			>
+				<Icon icon={icons.google} class="w-6 h-6 mr-2" />
+				<div class="flex">Sign in with Google</div></button
+			>
+			<button
+				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700  border-[1px] border-winterblues-500 rounded-xl"
+				type="submit"
+				on:click|preventDefault={() => handleSubmit('magic')}
+			>
+				<Icon icon={icons.google} class="w-6 h-6 mr-2" />
+				<div class="flex">Sign in with Google</div></button
+			>
+			<button
+				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700  border-[1px] border-winterblues-500 rounded-xl"
+				type="submit"
+				on:click|preventDefault={() => handleSubmit('magic')}
+			>
+				<Icon icon={icons.google} class="w-6 h-6 mr-2" />
+				<div class="flex">Sign in with Google</div></button
+			>
+			<p class="text-sm m-4">Already have an account? <a href="/" class="underline">Sign in</a></p>
+			<div class="mb-4"></div>
 		</div>
 	</div>
 </div>
