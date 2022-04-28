@@ -12,6 +12,7 @@
 		TransitionChild
 	} from '@rgossiaux/svelte-headlessui';
 	let loggedIn = false;
+	let option1 = false;
 	$: currentUser.set(supabase.auth.user());
 	$: $currentUser ? loggedIn = true : loggedIn = false;
 	$: console.log(`🚀 ~ file: index.svelte ~ line 16 ~ currentUser`, $currentUser);
@@ -22,6 +23,7 @@
 	});
 	import tooltip from '$utils/tooltip';
 	import { onMount } from 'svelte';
+import Checkbox from '$components/Checkbox.svelte';
 	let loading = false;
 	let email,
 		password,
@@ -145,124 +147,75 @@
 </script>
 
 <div
-	class="flex flex-col font-montserrat items-center justify-start bg-gradient-to-br from-winterblues-500 via-winterblues-900 to-fuchsia-400 w-full h-full"
+	class="flex flex-col z-0 relative font-montserrat items-center justify-start bg-gradient-to-br from-winterblues-500 via-winterblues-900 to-fuchsia-400 w-full h-full"
 >
+<!-- <div class="bg-fuchsia-500 absolute top-0 left-0 w-full h-full bg-opacity-50 z-2"></div> -->
+<!-- <div class="bg-white absolute top-0 left-0 w-full h-full bg-opacity-50 z-1"></div> -->
+<!-- <div class="bg-black absolute top-0 left-0 w-full h-full bg-opacity-50 z-1"></div> -->
 	<h1
-		class="text-3xl w-full text-center  py-3 bg-black bg-opacity-80 lg:py-4 lg:rounded-t-lg border-lightBlue-300"
+		class="text-3xl w-full text-center absolute top-0 left-0 z-2 py-3 bg-black bg-opacity-80 lg:py-4 lg:rounded-t-lg border-lightBlue-300"
 	>
 		Math App
 	</h1>
 	<div
-		class="flex flex-col items-center justify-start bg-black bg-opacity-50  md:w-[70%] lg:w-[50%] lg:h-auto lg:rounded-b-lg "
+		class="flex flex-col absolute top-28 z-0 items-center justify-start bg-black bg-opacity-50  md:w-[70%] lg:w-[50%] lg:h-auto lg:rounded-b-lg "
 	>
-		<ul class="features-list p-6 bg-winterblues-600 bg-opacity-60 mb-10">
-			<li class="feature text-left px-2 py-1">
-				The easiest way to create printable math worksheets for your students or children.
-			</li>
-			<li class="feature text-left px-2 py-1">
-				An app to help understand and solve math problems.
-			</li>
-			<li class="feature text-left px-2 py-1">
-				A curriculum and teaching aid with timed tests and scoring.
-			</li>
-		</ul>
-		{$currentUser ? $currentUser.email : 'not signed in'}
+		<h1 class="text-2xl font-serif m-8">Sign up</h1>
+		<!-- {$currentUser ? $currentUser.email : 'not signed in'}
 		{#if $currentUser}
 			<button
 				class="p-2 bg-winterblues-700"
 				type="submit"
 				on:click={() => handleSubmit('user', 'signout')}>Sign out</button
 			>
-		{/if}
+		{/if} -->
 		<div class="tabs-wrapper flex w-full items-center justify-center">
 			<div class="flex flex-col items-center justify-center p-2">
 				<div class="flex flex-col">
 					<form >
-						<div class="formset mb-1 grid tooltip items-center justify-between">
+						<div class=" w-full mb-1 flex flex-col tooltip items-center justify-between">
 							<label
 								for="email"
 								use:tooltip
+								class="w-full border-2 border-fuchsia-500"
 								title="Sign in via magic link with just your email address."
 								><input
 									type="text"
 									name="email"
 									bind:value={email}
 									autocomplete="on"
-									placeholder="email address"
+									placeholder="Email address"
 									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
 								/>
 							</label>
+							<ul>
+								<li>	<label for="showAnswers" class="flex items-center"
+									>Option One: 
+									
+									<Checkbox
+										name="showAnswers"
+										bind:checked={option1}
+										class=" m-4 bg-winterblues-500 bg-opacity-50"
+									/>{option1}
+								</label></li>
+								<li>	<label for="showAnswers" class="flex items-center"
+									>Option One: 
+									
+									<Checkbox
+										name="showAnswers"
+										bind:checked={option1}
+										class=" m-4 bg-winterblues-500 bg-opacity-50"
+									/>{option1}
+								</label></li>
+							</ul>
 							<button
 								class="w-full p-2 bg-winterblues-700"
 								type="submit"
-								on:click|preventDefault={() => handleSubmit('magic')}>Get magic link</button
-							>
-						</div>
-					</form>
-					<form >
-						<div class="formset grid items-center justify-between">
-							<label
-								for="password"
-								use:tooltip
-								title="Sign in with password if you created your acount that way."
-								><input
-									type="text"
-									name="password"
-									bind:value={password}
-									autocomplete="on"
-									placeholder="password"
-									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
-								/>
-							</label>
-							<button class="p-2 bg-winterblues-700" type="submit" on:click|preventDefault={() => handleSubmit('password', 'signin')}
-								>Sign in with password</button
-							>
-						</div>
-					</form>
-					<form >
-						<div class="formset grid items-center justify-between">
-							<label
-								for="password"
-								use:tooltip
-								title="Sign in with password if you created your acount that way."
-								><input
-									type="text"
-									name="password"
-									bind:value={password}
-									autocomplete="on"
-									placeholder="password"
-									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
-								/>
-							</label>
-							<button class="p-2 bg-winterblues-700" type="submit" on:click|preventDefault={() => handleSubmit('password', 'signup')}
-								>Sign up with password</button
-							>
-						</div>
-					</form>
-					<form >
-						<div class="formset grid items-center justify-between">
-							<label
-								for="password"
-								use:tooltip
-								title="Sign in with password if you created your acount that way."
-								><input
-									type="text"
-									name="password"
-									bind:value={password}
-									autocomplete="on"
-									placeholder="password"
-									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent active:outline-none active:border-none"
-								/>
-							</label>
-							<button
-								class="p-2 bg-winterblues-700"
-								type="submit"
-								on:click={() => handleSubmit('password', 'update')}>Update password</button
+								on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
 							>
 						</div>
 					</form>
 				</div>
-
 				<div
 					class="flex flex-col items-center justify-center bg-gradient-to-l to-lightBlue-400 via-winterblues-800 bg-opacity-50 w-full h-4 my-10 rounded-xl"
 				/>
