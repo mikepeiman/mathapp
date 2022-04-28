@@ -49,7 +49,7 @@
 		// width: 100%;
 		// width: 100vw;
 		grid-template-rows: 80px auto 80px;
-		grid-template-columns: 12em auto;
+		grid-template-columns: 12rem auto;
 		grid-template-areas:
 			'header header'
 			'sidenav  layout-main '

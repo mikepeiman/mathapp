@@ -17,7 +17,7 @@
 
 	// $: sheets = get(worksheets) || [];
 	$: open = false;
-	$: collapsed = false;
+	$: collapsed = true;
 	$: sideMenuContent = false;
 	let sheets = [];
 	worksheets.subscribe((cur) => {
@@ -63,7 +63,7 @@
 	}
 
 	function formatDate(date) {
-		console.log(`🚀 ~ file: SideNav.svelte ~ line 64 ~ formatDate ~ date`, date);
+		// console.log(`🚀 ~ file: SideNav.svelte ~ line 64 ~ formatDate ~ date`, date);
 		return format(new Date(date), 'MM/dd/yyyy');
 	}
 
@@ -88,22 +88,18 @@
 	}
 
 	function collapseMenu() {
-		console.log(`🚀 ~ file: SideNav.svelte ~ line 55 ~ collapseMenu ~ collapseMenu`);
-		if (!sideMenuContent) {
-			sideMenuContent = true;
-		} else {
-			setTimeout(() => {
-				sideMenuContent = !sideMenuContent;
-			}, 500);
-		}
-
+		// console.log(`🚀 ~ file: SideNav.svelte ~ line 55 ~ collapseMenu ~ collapseMenu`);
+		// console.log(`🚀 ~ file: SideNav.svelte ~ line 93 ~ collapseMenu ~ sideMenuContent`, sideMenuContent)
+		// console.log(`🚀 ~ file: SideNav.svelte ~ line 92 ~ collapseMenu ~ collapsed`, collapsed);
 		collapsed = !collapsed;
-		console.log(`🚀 ~ file: SideNav.svelte ~ line 92 ~ collapseMenu ~ collapsed`, collapsed);
-		let collapseIcon = document.querySelector('.collapse-icon');
-		collapseIcon.classList.toggle('collapsed');
+		setTimeout(() => {
+			sideMenuContent = !sideMenuContent;
+			// console.log(`🚀 ~ file: SideNav.svelte ~ line 93 ~ collapseMenu ~ sideMenuContent`, sideMenuContent)
+		}, 300);
+		// console.log(`🚀 ~ file: SideNav.svelte ~ line 92 ~ collapseMenu ~ collapsed`, collapsed);
+		// let collapseIcon = document.querySelector('.collapse-icon');
 	}
 </script>
-
 <div
 	id="sidenav"
 	class="flex flex-col relative w-full items-center justify-start bg-winterblues-900 transition-all duration-500
@@ -120,12 +116,13 @@
 			{collapsed ? ' scale-x-[-1]' : ''}"
 		/>
 	</div>
-	<div class="mt-12 top-12 opacity-100 transition-all duration-500">
+	<!-- <div class="mt-12 top-12 opacity-100 transition-all duration-500"> -->
+
+		{#if sideMenuContent}
 		<div
-			class="mt-12 top-12 opacity-100 transition-all duration-500
-	{!collapsed ? 'opacity-100' : ''}"
+			class="mt-12 top-12 -translate-x-[12rem] opacity-0 transition-all duration-300 flex flex-col items-center justify-center
+	{!collapsed ? 'opacity-100 w-full translate-x-0' : ''}"
 		>
-			{#if !sideMenuContent}
 				<h3 class="">Saved Worksheets</h3>
 				<hr class="w-full border-b-2 border-winterblues-500 mx-2" />
 				<div class="flex flex-col justify-between w-full">
@@ -169,9 +166,10 @@
 						{/each}
 					{/if}
 				</div>
+			</div>
 			{:else}
 				<div
-					class="opacity-0 transition-all duration-500
+					class="mt-12 top-12 opacity-0 transition-all duration-300
 	{collapsed ? 'opacity-100' : ''}"
 				>
 					<Icon icon={icons.delete} class="my-2" />
@@ -181,7 +179,6 @@
 
 				</div>
 			{/if}
-		</div>
 	</div>
 	<!-- {#each Object.keys(icons) as icon}
 		<div
@@ -192,7 +189,7 @@
 			<Icon icon={icons[icon]} />
 		</div>
 	{/each} -->
-</div>
+<!-- </div> -->
 
 <style lang="scss">
 	.collapsed {
