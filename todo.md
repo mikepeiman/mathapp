@@ -34,6 +34,7 @@
 * give user the option to "update current worksheet OR save as new worksheet" (which generates and assigns a new XID)
 * consider a fancy animated landing page that morphs a background gradient image between giant 'X + - %' symbols.
 * PROBLEMS LAYOUT: consider checking all first inputs for length, and assigning longest length to all; etc for second input and result, for consistent columns
+* add a dark/light mode
 
 ## Features
 * rather than "generate random values" make it a random problem, ie. randomize operation also

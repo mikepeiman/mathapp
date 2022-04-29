@@ -17,17 +17,20 @@
 {#if mounted}
 	<div
 		id="app-layout"
-		class="grid w-full min-h-screen  bg-black absolute top-0 left-0 z-90 transition"
+		class="grid w-full min-h-screen  bg-gray-900 absolute top-0 left-0 transition"
 	>
 		{#if url !== '/login' && url !== '/password_reset'}
 			<TopNav />
+			{#if url === '/'}
+				<SideNav />
+			{/if}
 			<SideNav />
 			<div class="layout-main flex flex-col items-center jutify-center">
 				<slot />
 			</div>
 			<Footer />
 		{:else}
-			<div class="layout-main flex flex-col items-center jutify-center w-screen h-screen">
+			<div class=" flex flex-col items-center jutify-center w-screen h-screen">
 				<slot />
 			</div>
 		{/if}

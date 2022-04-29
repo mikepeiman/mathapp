@@ -49,7 +49,7 @@
 	}
 </script>
 
-<div id="header" class="grid w-full  items-center justify-center bg-winterblues-900">
+<div id="header" class="grid w-full  items-center justify-center bg-blueGray-800 border-b-2 border-blueGray-600">
 	<div class="logo">
 		{#if isOpen}
 			<div class="flex" transition:fade>

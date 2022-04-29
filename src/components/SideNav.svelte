@@ -41,7 +41,9 @@
 		'arrow-left': 'bxs:arrow-to-left',
 		'arrow-right': 'bxs:arrow-to-right',
 		delete: 'fluent:delete-dismiss-24-filled',
-		info: 'akar-icons:info-fill'
+		info: 'akar-icons:info-fill',
+		sheets: 'material-symbols:sheets-outline',
+		addSheet: 'material-symbols:sheets-add-on'
 	};
 
 	function worksheetNavigate(cur) {
@@ -100,9 +102,10 @@
 		// let collapseIcon = document.querySelector('.collapse-icon');
 	}
 </script>
+
 <div
 	id="sidenav"
-	class="flex flex-col relative w-full items-center justify-start bg-winterblues-900 transition-all duration-500
+	class="flex flex-col relative w-full items-center justify-start bg-blueGray-800 transition-all duration-500
 {collapsed ? 'w-12' : ''}"
 >
 	<div
@@ -118,69 +121,77 @@
 	</div>
 	<!-- <div class="mt-12 top-12 opacity-100 transition-all duration-500"> -->
 
-		{#if sideMenuContent}
+	{#if sideMenuContent}
 		<div
 			class="mt-12 top-12 -translate-x-[12rem] opacity-0 transition-all duration-300 flex flex-col items-center justify-center
 	{!collapsed ? 'opacity-100 w-full translate-x-0' : ''}"
 		>
-				<h3 class="">Saved Worksheets</h3>
-				<hr class="w-full border-b-2 border-winterblues-500 mx-2" />
-				<div class="flex flex-col justify-between w-full">
-					{#if sheets && sheets.length}
-						{#each sheets as cur, i}
-							<div class="relative group">
-								<div
-									class="tooltip relative flex items-center justify-between text-2xl my-2 border-b-2 border-transparent 
+			<h3 class="">Saved Worksheets</h3>
+			<hr class="w-full border-b-2 border-winterblues-500 mx-2" />
+			<div class="flex flex-col justify-between w-full">
+				{#if sheets && sheets.length}
+					{#each sheets as cur, i}
+						<div class="relative group">
+							<div
+								class="tooltip relative flex items-center justify-between text-2xl my-2 border-b-2 border-transparent 
 												hover:bg-sky-900 hover:text-winterblues-400 hover:cursor-pointer transition-all duration-75 hover:border-b-2 hover:border-sky-500
 												{cur.xid === $currentWorksheetID ? 'text-amber-200 bg-winterblues-700' : ''}"
-									use:tooltip
-									title={tooltipData(cur)}
-									on:click={() => {
-										worksheetNavigate(cur);
-									}}
-								>
-									<div class="ml-2">{i + 1}.</div>
-									<div class="flex flex-col">
-										<div class="text-sm">{formatDate(cur.created_at)}</div>
-										<div class="text-sm">{getNumProblems(cur)} problems</div>
-									</div>
-									<div
-										class="mr-2 text-sm text-amber-600 bg-winterblues-800 w-6 h-6 rounded-3xl flex items-center justify-center"
-									>
-										<Icon icon={cur.operation.iconname} />
-									</div>
+								use:tooltip
+								title={tooltipData(cur)}
+								on:click={() => {
+									worksheetNavigate(cur);
+								}}
+							>
+								<div class="ml-2">{i + 1}.</div>
+								<div class="flex flex-col">
+									<div class="text-sm">{formatDate(cur.created_at)}</div>
+									<div class="text-sm">{getNumProblems(cur)} problems</div>
 								</div>
 								<div
-									on:click={del(cur)}
-									class="z-50 absolute -right-8 bg-deepreds-100 top-[10px] mr-2 text-xl text-amber-700  w-6 h-10 opacity-0 group-hover:opacity-100 hover:text-red-600 hover:bg-amber-300 flex items-center justify-center"
+									class="mr-2 text-sm text-amber-600 bg-winterblues-800 w-6 h-6 rounded-3xl flex items-center justify-center"
 								>
-									<Icon icon={icons.delete} />
-								</div>
-								<div
-									on:click={info(cur)}
-									class="z-50 absolute -right-14 hover:bg-winterblues-100 top-[10px] mr-2 text-xl hover:text-winterblues-700  w-6 h-10 opacity-0 group-hover:opacity-100 text-sky-600 bg-emerald-900 flex items-center justify-center"
-								>
-									<Icon icon={icons.info} />
+									<Icon icon={cur.operation.iconname} />
 								</div>
 							</div>
-						{/each}
-					{/if}
-				</div>
+							<div
+								on:click={del(cur)}
+								class="z-50 absolute -right-8 bg-deepreds-100 top-[10px] mr-2 text-xl text-amber-700  w-6 h-10 opacity-0 group-hover:opacity-100 hover:text-red-600 hover:bg-amber-300 flex items-center justify-center"
+							>
+								<Icon icon={icons.delete} />
+							</div>
+							<div
+								on:click={info(cur)}
+								class="z-50 absolute -right-14 hover:bg-winterblues-100 top-[10px] mr-2 text-xl hover:text-winterblues-700  w-6 h-10 opacity-0 group-hover:opacity-100 text-sky-600 bg-emerald-900 flex items-center justify-center"
+							>
+								<Icon icon={icons.info} />
+							</div>
+						</div>
+					{/each}
+				{/if}
 			</div>
-			{:else}
-				<div
-					class="mt-12 top-12 opacity-0 transition-all duration-300
+		</div>
+	{:else}
+		<div
+			class="mt-12 top-12 opacity-0 transition-all duration-300 text-3xl flex flex-col items-center
 	{collapsed ? 'opacity-100' : ''}"
-				>
-					<Icon icon={icons.delete} class="my-2" />
-					<Icon icon={icons.delete} class="my-2" />
-					<Icon icon={icons.delete} class="my-2" />
-					<Icon icon={icons.delete} class="my-2" />
+		>
+			<div class="tooltip my-2" use:tooltip title="Saved worksheets">
+				<Icon icon={icons.sheets} class=" " />
+			</div>
+			<div class="tooltip my-2" use:tooltip title="New worksheet">
+				<Icon icon={icons.addSheet} class=" " />
+			</div>
+			<div class="tooltip my-2" use:tooltip title="Sign in via magic link with your email below.">
+				<Icon icon={icons.sheets} class=" " />
+			</div>
+			<div class="tooltip my-2" use:tooltip title="Sign in via magic link with your email below.">
+				<Icon icon={icons.sheets} class=" " />
+			</div>
 
-				</div>
-			{/if}
-	</div>
-	<!-- {#each Object.keys(icons) as icon}
+		</div>
+	{/if}
+</div>
+<!-- {#each Object.keys(icons) as icon}
 		<div
 			class="tooltip flex items-center justify-center text-4xl my-2 hover:text-winterblues-400 hover:cursor-pointer transition-all"
 			use:tooltip
@@ -189,8 +200,8 @@
 			<Icon icon={icons[icon]} />
 		</div>
 	{/each} -->
-<!-- </div> -->
 
+<!-- </div> -->
 <style lang="scss">
 	.collapsed {
 		transform: rotate(180deg);
