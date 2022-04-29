@@ -1,6 +1,10 @@
 <script>
 	// export let digitsA, digitsB
-	import { newProblemWithRandomValues, generateNewWorksheet, showOrHideResults } from '$utils/math_operations.js';
+	import {
+		newProblemWithRandomValues,
+		generateNewWorksheet,
+		showOrHideResults
+	} from '$utils/math_operations.js';
 	import {
 		LSgetWorksheetValuesFromDOM,
 		setWorksheetValuesToDOM,
@@ -27,6 +31,8 @@
 	import { get } from 'svelte/store';
 	import Checkbox from './Checkbox.svelte';
 	import { onMount, afterUpdate } from 'svelte';
+	$: collapsed = true;
+	$: sideMenuContent = false;
 	$: sheet = {};
 	$: console.log(`🚀 ~ file: MathSettings.svelte ~ line 22 ~ sheet`, sheet);
 
@@ -36,12 +42,15 @@
 		worksheet.set(sheet);
 		resizeAllInputs();
 	}
-afterUpdate(() => {
-    console.log(`🚀 ~ file: MathSettings.svelte ~ line 42 ~ afterUpdate ~ 'afterUpdate';`, 'afterUpdate')
-})
+	afterUpdate(() => {
+		console.log(
+			`🚀 ~ file: MathSettings.svelte ~ line 42 ~ afterUpdate ~ 'afterUpdate';`,
+			'afterUpdate'
+		);
+	});
 
 	function revealAnswers() {
-		showOrHideResults()
+		showOrHideResults();
 		resizeAllInputs();
 	}
 	$: {
@@ -65,19 +74,19 @@ afterUpdate(() => {
 
 	function getWorksheetValuesFromStore() {
 		sheet = get(worksheet);
-        console.log(`🚀 ~ file: MathSettings.svelte ~ line 67 ~ getWorksheetValuesFromStore ~ sheet`, sheet)
-		
+		console.log(
+			`🚀 ~ file: MathSettings.svelte ~ line 67 ~ getWorksheetValuesFromStore ~ sheet`,
+			sheet
+		);
 	}
 </script>
 
-<div
-	id="settings"
-	class="flex flex-col items-center justify-start pt-10 bg-blueGray-800"
->
+<div id="settings" class="flex flex-col items-center justify-start pt-10 bg-blueGray-800
+{collapsed ? 'hidden' : ''}">
 	<!-- <h1>Selected Operation: {$selectedOperation.name}</h1> -->
 	<div class="grid digits-grid gap-2 align-baseline w-full p-6">
 		<div class="relative flex items-end">
-			<label for="problemsPerPage" class=" bottom-0 p-2 inline-flex" >Number of problems</label>
+			<label for="problemsPerPage" class=" bottom-0 p-2 inline-flex">Number of problems</label>
 		</div>
 		<input
 			type="number"

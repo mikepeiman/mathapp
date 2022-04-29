@@ -28,6 +28,7 @@
 
 	import { onMount, beforeUpdate } from 'svelte';
 	import { get } from 'svelte/store';
+import RighMenu from '$components/RighMenu.svelte';
 	// $page
 	$: console.log(`🚀 ~ file: index.svelte ~ line 30 ~ $page`, $page);
 	let parsedHash,
@@ -85,15 +86,20 @@
 <div id="worksheet-layout" class="layout-main w-full h-full">
 	<OperationsMenu on:operationSelect={(msg) => handleOperationSelect(msg)} />
 	<MathSettings />
+	<RighMenu />
 	<Worksheet />
 </div>
 
 <!-- hash: "#access_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjQ5MjkwNjY3LCJzdWIiOiIyYWU0MzhiYS1mMjgxLTQzMzAtOGUxMy1iZGU4ZDU2ZWY4YTEiLCJlbWFpbCI6ImhlbGxvQG1pa2VwZWltYW4uY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6e30sInJvbGUiOiJhdXRoZW50aWNhdGVkIn0.ewZXI642tNOy27cQOO8-Cv0yhJJ6qXkmHYIsb6czX0w&expires_in=3600&refresh_token=JGgiunFjcu3cZo1t9GWdfw&token_type=bearer&type=recovery" -->
 <style lang="scss" global>
+	// #worksheet-layout {
+	// 	display: flex;
+	// 	flex-direction: column;
+	// }
 	#worksheet-layout {
 		display: grid;
 		grid-area: layout-main;
-		grid-template-columns: 1fr 18rem;
+		grid-template-columns: 1fr auto;
 		grid-template-rows: 15% 1fr;
 		grid-template-areas:
 			'operations-menu settings'

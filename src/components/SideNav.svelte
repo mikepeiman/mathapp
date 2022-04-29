@@ -43,7 +43,8 @@
 		delete: 'fluent:delete-dismiss-24-filled',
 		info: 'akar-icons:info-fill',
 		sheets: 'material-symbols:sheets-outline',
-		addSheet: 'material-symbols:sheets-add-on'
+		addSheet: 'material-symbols:sheets-add-on',
+		settings: 'ci:settings-filled',
 	};
 
 	function worksheetNavigate(cur) {
@@ -172,7 +173,7 @@
 		</div>
 	{:else}
 		<div
-			class="mt-12 top-12 opacity-0 transition-all duration-300 text-3xl flex flex-col items-center
+			class="mt-12 top-12 opacity-0 transition-all duration-300 text-3xl flex flex-col items-center justify-start
 	{collapsed ? 'opacity-100' : ''}"
 		>
 			<div class="tooltip my-2" use:tooltip title="Saved worksheets">
@@ -181,12 +182,10 @@
 			<div class="tooltip my-2" use:tooltip title="New worksheet">
 				<Icon icon={icons.addSheet} class=" " />
 			</div>
-			<div class="tooltip my-2" use:tooltip title="Sign in via magic link with your email below.">
-				<Icon icon={icons.sheets} class=" " />
+			<div class="tooltip my-2 self-end justify-self-end" use:tooltip title="Worksheet settings">
+				<Icon icon={icons.settings} class=" " />
 			</div>
-			<div class="tooltip my-2" use:tooltip title="Sign in via magic link with your email below.">
-				<Icon icon={icons.sheets} class=" " />
-			</div>
+
 
 		</div>
 	{/if}

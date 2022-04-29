@@ -48,6 +48,7 @@
 * ensure user can set decimal precision per-sheet or per-problem; remove decimal for integer results; and present fractional results as fractions, reduced.
 * create a "curriculum" of various types of worksheets at levels of difficulty; provide an option (for paid users) to generate x # of pages of a given type with random values, and optionally to print those immediately
 * for printing, provide option to "also print answers sheet" yes/no
+* app can present complex problems (BEDMAS/PEMDAS) solved line-by-line
 
 ## Production
 * will need to look at printing and saving to .pdf. Will need to work on styling for standard A4 paper size
