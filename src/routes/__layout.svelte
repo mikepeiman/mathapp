@@ -3,7 +3,7 @@
 	import Footer from '$components/Footer.svelte';
 	import { onMount } from 'svelte';
 	import TopNav from '$components/TopNav.svelte';
-	import SideNav from '$components/SideNav.svelte';
+	import LeftMenu from '$components/LeftMenu.svelte';
 	import { supabase } from '$lib/supabaseClient.js';
 	import { currentUser } from '$stores/auth.js';
 	import { page } from '$app/stores';
@@ -22,9 +22,9 @@
 		{#if url !== '/login' && url !== '/password_reset'}
 			<TopNav />
 			{#if url === '/'}
-				<SideNav />
+				<LeftMenu />
 			{/if}
-			<SideNav />
+			<!-- <LeftMenu /> -->
 			<div class="layout-main flex flex-col items-center jutify-center">
 				<slot />
 			</div>
@@ -55,7 +55,7 @@
 		grid-template-columns: 12rem auto;
 		grid-template-areas:
 			'header header'
-			'sidenav  layout-main '
+			'leftmenu  layout-main '
 			'footer footer';
 	}
 
@@ -63,8 +63,8 @@
 		grid-area: header;
 	}
 
-	#sidenav {
-		grid-area: sidenav;
+	#leftmenu {
+		grid-area: leftmenu;
 	}
 
 	#footer {
