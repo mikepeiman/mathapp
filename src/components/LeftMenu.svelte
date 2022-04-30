@@ -16,11 +16,11 @@
 	import { page } from '$app/stores';
 	import { onMount, afterUpdate } from 'svelte';
 
-	// $: sheets = get(worksheets) || [];
-	$: open = false;
+	$: sheets = get(worksheets) || [];
+	$: user = get(currentUser);
 	$: collapsed = true;
 	$: sideMenuContent = false;
-	let sheets = [];
+	// let sheets = [];
 	worksheets.subscribe((cur) => {
 		sheets = cur;
 	});
@@ -46,7 +46,7 @@
 		sheets: 'material-symbols:sheets-outline',
 		pages: 'iconoir:multiple-pages-empty',
 		addSheet: 'material-symbols:sheets-add-on',
-		settings: 'ci:settings-filled',
+		settings: 'ci:settings-filled'
 	};
 
 	function worksheetNavigate(cur) {
@@ -116,7 +116,6 @@
 			{collapsed ? ' scale-x-[-1]' : ''}"
 		/>
 	</div>
-	<!-- <div class="mt-12 top-12 opacity-100 transition-all duration-500"> -->
 
 	{#if sideMenuContent}
 		<div
@@ -125,8 +124,14 @@
 		>
 			<h3 class="border-b-[1px] border-winterblues-400 text-base">Saved Worksheets</h3>
 			{#if !$currentUser}
-				<div class="m-4 text-center text-base text-amber-300 transition-all opacity-0
-				{sideMenuContent ? 'opacity-100' : ''}">You must be logged in to save and load worksheets.</div>
+				<div
+					class="m-4 text-center text-base text-amber-300 transition-all opacity-0
+				{sideMenuContent ? 'opacity-100' : ''}"
+				>
+					You must be logged in to save and load worksheets.
+				</div>
+			{:else if !sheets.length}
+				{getWorksheetsFromSupabase()}
 			{/if}
 			<div class="flex flex-col justify-between w-full">
 				{#if sheets && sheets.length}
@@ -184,8 +189,6 @@
 			<div class="tooltip my-2 group" use:tooltip title="Worksheet settings">
 				<Icon icon={icons.settings} class="group-hover:text-winterblues-500" />
 			</div>
-
-
 		</div>
 	{/if}
 </div>

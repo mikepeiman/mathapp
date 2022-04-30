@@ -65,7 +65,8 @@
 * "worksheet saved"/"not saved" indication not accurate - loaded sheets indicate not saved
 * QUESTION is there a way to display a notification in UI when there is a client error (ie. console log)?
 * when changing column and # problems, changes are not always reflected without page reload
-* after logout, "savged worksheets" needs refresh
+* after logout, "saved worksheets" needs refresh to disappear
+* after login, "saved worksheets" needs refresh to be visible
 
 ## logic & data
 * STORES should be single source of truth. DOM and LS should reflect stores immediately & reactively; calculations should occur entirely with store values; DB should be updated or called on user action only (or eventually, auto-save features possibly)

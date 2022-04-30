@@ -26,6 +26,7 @@
 	import { onMount } from 'svelte';
 	import Checkbox from '$components/Checkbox.svelte';
 	import Icon from '@iconify/svelte';
+import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 	let loading = false;
 	let email,
 		password,
@@ -153,15 +154,30 @@
 	}
 
 	async function signInWithSocial(provider) {
-		const { user, session, error } = await supabase.auth.signIn({
-			provider: provider
-		});
+		try {
+			loading = true;
+			const { user, session, error } = await supabase.auth.signIn({
+				provider: provider
+			});
+			console.log(`🚀 ~ file: index.svelte ~ line 138 ~ signInWithSocial ~ user`, user);
+			currentUser.set(user);
+			getWorksheetsFromSupabase()
+			console.log(`🚀 ~ file: index.svelte ~ line 159 ~ signInWithSocial ~ session`, session)
+			// if (error) throw error;
+			// return user
+		} catch (error) {
+			console.error(error);
+			alert(error.error_description || error.message);
+		} finally {
+			loading = false;
+		}
 	}
 
 	async function signOut() {
 		const { error } = await supabase.auth.signOut();
 		error ? console.error(error) : (loggedIn = false);
-		currentUser.set(supabase.auth.user());
+		currentUser.set({email: "logged out"});
+		worksheets.set([]);
 	}
 </script>
 
@@ -170,13 +186,13 @@
 >
 	<!-- <div class="bg-fuchsia-500 absolute top-0 left-0 w-full h-full bg-opacity-50 z-2"></div> -->
 	<!-- <div class="bg-white absolute top-0 left-0 w-full h-full bg-opacity-50 z-1"></div> -->
-	<div class="bg-black absolute top-0 left-0 w-full h-full bg-opacity-50 z-1"></div>
+	<div class="bg-black absolute top-0 left-0 w-full h-full bg-opacity-50 z-1" />
 	<div
 		class="text-3xl  w-full text-center absolute top-0 left-0 z-2 py-3 bg-gradient-to-r from-winterblues-700 via-winterblues-900 to-fuchsia-800 bg-opacity-40 lg:py-4 lg:rounded-t-lg border-b-[1px] border-lightBlue-300"
 	>
 		<a href="/">Math App</a>
 		<h2 class="text-lg text-gray-400">Curriculum For Life</h2>
-</div>
+	</div>
 	<div
 		class="flex flex-col absolute top-28 z-0 items-center justify-start  bg-opacity-50 w-96 rounded-lg  "
 	>
@@ -231,7 +247,8 @@
 									class="  rounded-none m-2 ml-0 mt-0"
 								/>
 								<label for="showAnswers" class=" items-center w-full text-sm text-left"
-									>Curriculum For Life may use my email address to provide me with occasional updates on our apps. I can opt out at any time.
+									>Curriculum For Life may use my email address to provide me with occasional
+									updates on our apps. I can opt out at any time.
 								</label>
 							</li>
 						</ul>

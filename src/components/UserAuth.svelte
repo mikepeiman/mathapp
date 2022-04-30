@@ -1,6 +1,7 @@
 <script>
 	import { supabase } from '$lib/supabaseClient.js';
 	import { currentUser } from '$stores/auth.js';
+	import { worksheets } from '$stores/math.js';
 	import Icon from '@iconify/svelte';
 	currentUser.set(supabase.auth.user());
 	supabase.auth.onAuthStateChange((_, session) => {
@@ -28,6 +29,8 @@
 		const { error } = await supabase.auth.signOut();
 		error ? console.error(error) : console.log('signed out');
 		currentUser.set(supabase.auth.user());
+		// currentUser.set({email: "logged out"});
+		worksheets.set([]);
 	}
 </script>
 
