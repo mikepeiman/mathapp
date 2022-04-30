@@ -35,13 +35,13 @@
 {!collapsed ? 'w-48' : ''}"
 >
 	<div
-		class="collapse-icon absolute top-0 right-0 flex items-end justify-end cursor-pointer group w-full transition-all group"
+		class="collapse-icon absolute top-0 right-0 flex items-end justify-end cursor-pointer bg-cyan-900  h-8 hover:bg-cyan-600 group w-full transition-all group"
 		on:click={collapseMenu}
 	>
 		<!-- <hr class="w-full border-b-2 border-winterblues-500 mx-2"> -->
 		<Icon
 			icon={icons['arrow-left']}
-			class="absolute w-8 h-8 self-end mr-1 top-1 group-hover:text-sky-500 transition-all duration-500 bg-amber-800  group-hover:bg-greenge-300 
+			class="absolute w-8 h-8 self-end  group-hover:text-sky-500 transition-all duration-500  group-hover:text-white
 {!collapsed ? ' scale-x-[-1] w-full' : ''}"
 		/>
 	</div>
