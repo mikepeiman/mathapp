@@ -36,6 +36,8 @@
 * PROBLEMS LAYOUT: consider checking all first inputs for length, and assigning longest length to all; etc for second input and result, for consistent columns
 * add a dark/light mode
 * make a proper "worksheets" icon by stacking several page icons
+* make a delete confirmation dialog to avoid accidental deletions
+* need to implement a toast notification widget for various purposes - eg. when a function is in development, when a user tries to save a sheet that's already saved (option to save as new worksheet) etc
 
 ## Features
 * rather than "generate random values" make it a random problem, ie. randomize operation also
@@ -50,6 +52,7 @@
 * create a "curriculum" of various types of worksheets at levels of difficulty; provide an option (for paid users) to generate x # of pages of a given type with random values, and optionally to print those immediately
 * for printing, provide option to "also print answers sheet" yes/no
 * app can present complex problems (BEDMAS/PEMDAS) solved line-by-line
+* provide option for division with remainders rather than decimals
 
 ## Production
 * will need to look at printing and saving to .pdf. Will need to work on styling for standard A4 paper size

@@ -1,6 +1,7 @@
 <script>
 	import Icon from '@iconify/svelte';
 	import tooltip from '$utils/tooltip';
+import { saveWorksheetSupabase } from '$stores/math';
 	$: collapsed = true;
 	$: sideMenuContent = false;
 	const icons = {
@@ -19,13 +20,19 @@
 		addSheet: 'material-symbols:sheets-add-on',
 		settings: 'ci:settings-filled',
 		settings2: 'akar-icons:settings-horizontal',
-		reload: 'ic:outline-settings-backup-restore'
+		reload: 'ic:outline-settings-backup-restore',
+		save: 'bxs:save'
 	};
 	function collapseMenu() {
 		collapsed = !collapsed;
 		setTimeout(() => {
 			sideMenuContent = !sideMenuContent;
 		}, 200);
+	}
+	function saveWorksheet() {
+		console.log(`saveworksheet`);
+        saveWorksheetSupabase()
+        
 	}
 </script>
 
@@ -49,15 +56,18 @@
 	<div
 		class="tooltip py-2 pr-2 relative mt-12 group flex items-center justify-end transition-all hover:bg-trueGray-900"
 		use:tooltip
-		title="Saved worksheets"
+		title="Save worksheet"
+		on:click={() => {
+			saveWorksheet();
+		}}
 	>
 		<label
 			class="text-sm transition-all pr-2 group-hover:text-winterblues-300 w-[20ch] text-right 
          {collapsed ? 'hidden' : ''} 
          {sideMenuContent ? 'opacity-100 visible scale-100' : 'opacity-0  scale-0'}"
-			>Saved worksheets</label
+			>Save worksheet</label
 		>
-		<Icon icon={icons.sheets} class="group-hover:text-winterblues-500 transition-all" />
+		<Icon icon={icons.save} class="group-hover:text-winterblues-500 transition-all" />
 	</div>
 	<div
 		class="tooltip py-2 pr-2 relative group flex items-center justify-end transition-all hover:bg-trueGray-900"
@@ -67,7 +77,8 @@
 		<label
 			class="text-sm transition-all pr-2 group-hover:text-winterblues-300 w-[20ch] text-right
          {collapsed ? 'hidden' : ''} 
-         {sideMenuContent ? 'opacity-100 visible text-right' : 'opacity-0  scale-0'}">New worksheet</label
+         {sideMenuContent ? 'opacity-100 visible text-right' : 'opacity-0  scale-0'}"
+			>New worksheet</label
 		>
 		<Icon icon={icons.addSheet} class="group-hover:text-winterblues-500  transition-all" />
 	</div>
