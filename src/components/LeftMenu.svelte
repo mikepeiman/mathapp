@@ -102,17 +102,17 @@
 
 <div
 	id="sidenav"
-	class="flex flex-col relative w-full items-center justify-start bg-blueGray-800 transition-all duration-500
+	class="flex flex-col relative w-full items-center justify-start bg-blueGray-800 transition-all duration-300 
 {collapsed ? 'w-12' : ''}"
 >
 	<div
-		class="collapse-icon absolute top-1 flex items-center justify-end cursor-pointer group w-full transition-all"
+		class="collapse-icon absolute top-1 flex items-center justify-end cursor-pointer bg-cyan-900  h-8 hover:bg-cyan-600 group w-full transition-all"
 		on:click={collapseMenu}
 	>
 		<!-- <hr class="w-full border-b-2 border-winterblues-500 mx-2"> -->
 		<Icon
 			icon={icons['arrow-left']}
-			class="absolute w-8 h-8 self-end mr-2 top-0 group-hover:text-sky-500 transition-all duration-500
+			class="absolute w-8 h-8 self-end mr-2 top-0 group-hover:text-white transition-all duration-300
 			{collapsed ? ' scale-x-[-1]' : ''}"
 		/>
 	</div>
@@ -120,12 +120,13 @@
 
 	{#if sideMenuContent}
 		<div
-			class="mt-12 top-12 -translate-x-[12rem] opacity-0 transition-all duration-300 flex flex-col items-center justify-center
+			class="mt-12 top-12 -translate-x-[12rem] opacity-0 transition-all duration-100 flex flex-col items-center justify-center
 	{!collapsed ? 'opacity-100 w-full translate-x-0' : ''}"
 		>
 			<h3 class="border-b-[1px] border-winterblues-400 text-base">Saved Worksheets</h3>
 			{#if !$currentUser}
-				<div class="m-4 text-center text-base text-amber-300">You must be logged in to save and load worksheets.</div>
+				<div class="m-4 text-center text-base text-amber-300 transition-all opacity-0
+				{sideMenuContent ? 'opacity-100' : ''}">You must be logged in to save and load worksheets.</div>
 			{/if}
 			<div class="flex flex-col justify-between w-full">
 				{#if sheets && sheets.length}
