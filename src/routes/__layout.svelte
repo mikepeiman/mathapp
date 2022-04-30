@@ -21,10 +21,6 @@
 	>
 		{#if url !== '/login' && url !== '/password_reset'}
 			<TopNav />
-			{#if url === '/'}
-				<LeftMenu />
-			{/if}
-			<!-- <LeftMenu /> -->
 			<div class="layout-main flex flex-col items-center jutify-center">
 				<slot />
 			</div>
@@ -35,7 +31,7 @@
 			</div>
 		{/if}
 	</div>
-<!-- {:else if mounted && !$currentUser}
+	<!-- {:else if mounted && !$currentUser}
 	Not logged in -->
 {/if}
 
@@ -52,11 +48,11 @@
 		// width: 100%;
 		// width: 100vw;
 		grid-template-rows: 80px auto 80px;
-		grid-template-columns: 12rem auto;
+		grid-template-columns: auto;
 		grid-template-areas:
-			'header header'
-			'leftmenu  layout-main '
-			'footer footer';
+			' header'
+			'  layout-main '
+			' footer';
 	}
 
 	#header {
@@ -71,7 +67,8 @@
 		grid-area: footer;
 	}
 
-	#default-layout, .layout-main {
+	#default-layout,
+	.layout-main {
 		grid-area: layout-main;
 		// max-width: 100vw;
 		// height: calc(100% - 80px);

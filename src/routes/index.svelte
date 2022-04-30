@@ -29,6 +29,7 @@
 	import { onMount, beforeUpdate } from 'svelte';
 	import { get } from 'svelte/store';
 	import RighMenu from '$components/RighMenu.svelte';
+import LeftMenu from '$components/LeftMenu.svelte';
 	// $page
 	$: console.log(`🚀 ~ file: index.svelte ~ line 30 ~ $page`, $page);
 	let parsedHash,
@@ -85,7 +86,7 @@
 
 <div id="worksheet-layout" class="layout-main w-full h-full">
 	<OperationsMenu on:operationSelect={(msg) => handleOperationSelect(msg)} />
-	<!-- <MathSettings /> -->
+	<LeftMenu />
 	<RighMenu />
 	<Worksheet />
 </div>
@@ -99,14 +100,17 @@
 	#worksheet-layout {
 		display: grid;
 		grid-area: layout-main;
-		grid-template-columns: 1fr auto;
+		grid-template-columns: auto 1fr auto;
 		grid-template-rows: 15% 1fr;
 		grid-template-areas:
-			'operations-menu settings'
-			'worksheet settings';
+			'leftmenu operations-menu rightmenu'
+			'leftmenu worksheet rightmenu';
 	}
 	#right-menu {
-		grid-area: settings;
+		grid-area: rightmenu;
+	}
+	#left-menu {
+		grid-area: leftmenu;
 	}
 	#settings {
 		grid-area: settings;

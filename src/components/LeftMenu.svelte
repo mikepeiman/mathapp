@@ -101,12 +101,12 @@
 </script>
 
 <div
-	id="sidenav"
-	class="flex flex-col relative w-full items-center justify-start bg-blueGray-800 transition-all duration-300 
-{collapsed ? 'w-12' : ''}"
+	id="left-menu"
+	class="top-0 right-0 w-12 relative h-full bg-blueGray-800 opacity-100 transition-all duration-300 text-3xl flex flex-col items-center justify-start
+{!collapsed ? 'w-48' : ''}"
 >
 	<div
-		class="collapse-icon absolute top-1 flex items-center justify-end cursor-pointer bg-cyan-900  h-8 hover:bg-cyan-600 group w-full transition-all"
+		class="collapse-icon absolute flex items-center justify-end cursor-pointer bg-cyan-900  h-8 hover:bg-cyan-600 group w-full transition-all"
 		on:click={collapseMenu}
 	>
 		<!-- <hr class="w-full border-b-2 border-winterblues-500 mx-2"> -->
