@@ -106,7 +106,7 @@
 {collapsed ? 'w-12' : ''}"
 >
 	<div
-		class="collapse-icon absolute top-0 flex items-center justify-end cursor-pointer group w-full transition-all"
+		class="collapse-icon absolute top-1 flex items-center justify-end cursor-pointer group w-full transition-all"
 		on:click={collapseMenu}
 	>
 		<!-- <hr class="w-full border-b-2 border-winterblues-500 mx-2"> -->
