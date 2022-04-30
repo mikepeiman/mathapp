@@ -81,8 +81,7 @@
 	}
 </script>
 
-<div id="settings" class="flex flex-col items-center justify-start pt-10 bg-blueGray-800
-{collapsed ? 'hidden' : ''}">
+<div id="settings" class="flex flex-col items-center justify-start pt-10 bg-blueGray-800">
 	<!-- <h1>Selected Operation: {$selectedOperation.name}</h1> -->
 	<div class="grid digits-grid gap-2 align-baseline w-full p-6">
 		<div class="relative flex items-end">

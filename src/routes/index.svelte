@@ -28,7 +28,7 @@
 
 	import { onMount, beforeUpdate } from 'svelte';
 	import { get } from 'svelte/store';
-import RighMenu from '$components/RighMenu.svelte';
+	import RighMenu from '$components/RighMenu.svelte';
 	// $page
 	$: console.log(`🚀 ~ file: index.svelte ~ line 30 ~ $page`, $page);
 	let parsedHash,
@@ -68,8 +68,8 @@ import RighMenu from '$components/RighMenu.svelte';
 				`🚀 ~ file: index.svelte ~ line 48 ~ onMount ~ urlHashObject['type'] === 'recovery')`,
 				urlHashObject['type'] === 'recovery'
 			);
-			let access_token = urlHashObject['access_token']
-            console.log(`🚀 ~ file: index.svelte ~ line 71 ~ handleUrlHash ~ token`, access_token)
+			let access_token = urlHashObject['access_token'];
+			console.log(`🚀 ~ file: index.svelte ~ line 71 ~ handleUrlHash ~ token`, access_token);
 			tokenStore.set(access_token);
 			goto('/password_reset');
 		}
@@ -85,7 +85,7 @@ import RighMenu from '$components/RighMenu.svelte';
 
 <div id="worksheet-layout" class="layout-main w-full h-full">
 	<OperationsMenu on:operationSelect={(msg) => handleOperationSelect(msg)} />
-	<MathSettings />
+	<!-- <MathSettings /> -->
 	<RighMenu />
 	<Worksheet />
 </div>
@@ -105,7 +105,9 @@ import RighMenu from '$components/RighMenu.svelte';
 			'operations-menu settings'
 			'worksheet settings';
 	}
-
+	#right-menu {
+		grid-area: settings;
+	}
 	#settings {
 		grid-area: settings;
 	}

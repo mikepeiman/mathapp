@@ -3,6 +3,7 @@
 	import tooltip from '$utils/tooltip';
 	import { format, compareAsc } from 'date-fns';
 	import { get } from 'svelte/store';
+	import { currentUser } from '$stores/auth.js';
 	import {
 		worksheet,
 		worksheets,
@@ -43,6 +44,7 @@
 		delete: 'fluent:delete-dismiss-24-filled',
 		info: 'akar-icons:info-fill',
 		sheets: 'material-symbols:sheets-outline',
+		pages: 'iconoir:multiple-pages-empty',
 		addSheet: 'material-symbols:sheets-add-on',
 		settings: 'ci:settings-filled',
 	};
@@ -91,16 +93,10 @@
 	}
 
 	function collapseMenu() {
-		// console.log(`🚀 ~ file: SideNav.svelte ~ line 55 ~ collapseMenu ~ collapseMenu`);
-		// console.log(`🚀 ~ file: SideNav.svelte ~ line 93 ~ collapseMenu ~ sideMenuContent`, sideMenuContent)
-		// console.log(`🚀 ~ file: SideNav.svelte ~ line 92 ~ collapseMenu ~ collapsed`, collapsed);
 		collapsed = !collapsed;
 		setTimeout(() => {
 			sideMenuContent = !sideMenuContent;
-			// console.log(`🚀 ~ file: SideNav.svelte ~ line 93 ~ collapseMenu ~ sideMenuContent`, sideMenuContent)
 		}, 300);
-		// console.log(`🚀 ~ file: SideNav.svelte ~ line 92 ~ collapseMenu ~ collapsed`, collapsed);
-		// let collapseIcon = document.querySelector('.collapse-icon');
 	}
 </script>
 
@@ -127,8 +123,10 @@
 			class="mt-12 top-12 -translate-x-[12rem] opacity-0 transition-all duration-300 flex flex-col items-center justify-center
 	{!collapsed ? 'opacity-100 w-full translate-x-0' : ''}"
 		>
-			<h3 class="">Saved Worksheets</h3>
-			<hr class="w-full border-b-2 border-winterblues-500 mx-2" />
+			<h3 class="border-b-[1px] border-winterblues-400 text-base">Saved Worksheets</h3>
+			{#if !$currentUser}
+				<div class="m-4 text-center text-base text-amber-300">You must be logged in to save and load worksheets.</div>
+			{/if}
 			<div class="flex flex-col justify-between w-full">
 				{#if sheets && sheets.length}
 					{#each sheets as cur, i}
@@ -176,14 +174,14 @@
 			class="mt-12 top-12 opacity-0 transition-all duration-300 text-3xl flex flex-col items-center justify-start
 	{collapsed ? 'opacity-100' : ''}"
 		>
-			<div class="tooltip my-2" use:tooltip title="Saved worksheets">
-				<Icon icon={icons.sheets} class=" " />
+			<div class="tooltip my-2 group" use:tooltip title="Saved worksheets">
+				<Icon icon={icons.pages} class="group-hover:text-winterblues-500" />
 			</div>
-			<div class="tooltip my-2" use:tooltip title="New worksheet">
-				<Icon icon={icons.addSheet} class=" " />
+			<div class="tooltip my-2 group" use:tooltip title="New worksheet">
+				<Icon icon={icons.addSheet} class="group-hover:text-winterblues-500" />
 			</div>
-			<div class="tooltip my-2 self-end justify-self-end" use:tooltip title="Worksheet settings">
-				<Icon icon={icons.settings} class=" " />
+			<div class="tooltip my-2 group" use:tooltip title="Worksheet settings">
+				<Icon icon={icons.settings} class="group-hover:text-winterblues-500" />
 			</div>
 
 

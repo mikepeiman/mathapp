@@ -35,6 +35,7 @@
 * consider a fancy animated landing page that morphs a background gradient image between giant 'X + - %' symbols.
 * PROBLEMS LAYOUT: consider checking all first inputs for length, and assigning longest length to all; etc for second input and result, for consistent columns
 * add a dark/light mode
+* make a proper "worksheets" icon by stacking several page icons
 
 ## Features
 * rather than "generate random values" make it a random problem, ie. randomize operation also
