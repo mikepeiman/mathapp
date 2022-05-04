@@ -11,18 +11,22 @@
 		deleteWorksheet,
 		currentWorksheetID,
 		supabaseWorksheets,
-		getAllLSWorksheets
+		getAllLSWorksheets,
+		getWorksheetsFromSupabase
 	} from '$stores/math';
 	import { page } from '$app/stores';
 	import { onMount, afterUpdate } from 'svelte';
 
 	$: sheets = get(worksheets) || [];
-	$: user = get(currentUser);
+	$: user = get(currentUser) || null
 	$: collapsed = true;
 	$: sideMenuContent = false;
 	// let sheets = [];
 	worksheets.subscribe((cur) => {
 		sheets = cur;
+	});
+	currentUser.subscribe((cur) => {
+		user = cur;
 	});
 	onMount(async () => {
 		// console.log(`🚀 ~ file: SideNav.svelte ~ line 14 ~ page`, $page);
