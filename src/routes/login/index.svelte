@@ -198,7 +198,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 		<h2 class="text-lg text-gray-400">Curriculum For Life</h2>
 	</div>
 	<div
-		class="flex flex-col absolute top-28 z-0 items-center justify-start  bg-opacity-50 w-96 rounded-lg  "
+		class="flex flex-col absolute top-28 z-0 items-center justify-start  bg-opacity-50 w-[22rem] rounded-lg  "
 	>
 		<h1 class="text-3xl text-white font-serif mt-8 font-light">Sign up</h1>
 		<!-- {$currentUser ? $currentUser.email : 'not signed in'}
@@ -270,7 +270,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 					</div>
 				</form>
 			</div>
-			<div class="flex items-center justify-between w-80">
+			<div class="flex items-center justify-between w-auto">
 				<div
 					class="flex flex-col items-center justify-center bg-gradient-to-l from-lightBlue-400 to-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl"
 				/>
@@ -280,7 +280,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 				/>
 			</div>
 			<button
-				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
+				class="w-full flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
 				type="submit"
 				on:click|preventDefault={() => handleSubmit('social', 'google')}
 			>
@@ -288,7 +288,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 				<div class="flex">Sign in with Google</div></button
 			>
 			<button
-				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
+				class="w-full flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
 				type="submit"
 				on:click|preventDefault={() => handleSubmit('social', 'twitter')}
 			>
@@ -296,7 +296,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 				<div class="flex">Sign in with Twitter</div></button
 			>
 			<button
-				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
+				class="w-full flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
 				type="submit"
 				on:click|preventDefault={() => handleSubmit('social', 'facebook')}
 			>
@@ -304,7 +304,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 				<div class="flex">Sign in with Facebook</div></button
 			>
 			<button
-				class="w-80 flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
+				class="w-full flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
 				type="submit"
 				on:click|preventDefault={() => handleSubmit('social', 'github')}
 			>
