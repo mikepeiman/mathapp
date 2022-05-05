@@ -137,6 +137,9 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 	}
 
 	function handleSubmit(msg, provider) {
+		if(!acceptedTerms) {
+			return;
+		}
 		console.log(
 			`🚀 ~ file: Auth.svelte ~ line 21 ~ handleSubmit ~ msg ${msg}, provider ${provider}`
 		);
@@ -259,6 +262,9 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 							class="w-full p-2 m-4  rounded-xl  transition-all duration-200
 							{acceptedTerms ? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black' : 'bg-gray-500 cursor-default'}"
 							type="submit"
+							use:tooltip
+							data-tippy-content="{acceptedTerms ? 'Sign up with your email address.' : 'You must accept the terms of service and privacy policy to continue'}"
+							
 							on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
 						>
 					</div>
