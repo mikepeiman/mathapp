@@ -1,6 +1,7 @@
 <script>
 	import { supabase } from '$lib/supabaseClient.js';
 	import { currentUser } from '$stores/auth.js';
+	import tippy from 'tippy.js';
 	import { Switch } from '@rgossiaux/svelte-headlessui';
 	import {
 		Tab,
@@ -12,8 +13,10 @@
 		TransitionChild
 	} from '@rgossiaux/svelte-headlessui';
 	let loggedIn = false;
+	let mounted = false;
 	let acceptedTerms,
 		acceptedUpdates = false;
+	$: mounted ? setTooltip(acceptedTerms) : null;
 	$: currentUser.set(supabase.auth.user());
 	$: $currentUser ? (loggedIn = true) : (loggedIn = false);
 	$: console.log(`🚀 ~ file: index.svelte ~ line 16 ~ currentUser`, $currentUser);
@@ -26,7 +29,7 @@
 	import { onMount } from 'svelte';
 	import Checkbox from '$components/Checkbox.svelte';
 	import Icon from '@iconify/svelte';
-import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
+	import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 	let loading = false;
 	let email,
 		password,
@@ -37,10 +40,24 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 		twitter: 'logos:twitter',
 		facebook: 'simple-icons:facebook',
 		github: 'ant-design:github-filled',
-		asterisk: 'el:asterisk',
+		asterisk: 'el:asterisk'
 	};
 
-	onMount(() => {});
+	onMount(() => {
+		mounted = true;
+	});
+
+	function setTooltip(e) {
+		console.log(`🚀 ~ file: index.svelte ~ line 53 ~ setTooltip ~ e`, e);
+		let btn = tippy(document.querySelector('#continue-signup'));
+		btn.setProps({
+			onShow(instance) {
+				acceptedTerms
+					? instance.setContent('Continue to select a password for your new account')
+					: instance.setContent('You must accept the terms and conditions to continue');
+			}
+		});
+	}
 
 	async function signInWithPassword() {
 		try {
@@ -137,7 +154,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 	}
 
 	function handleSubmit(msg, provider) {
-		if(!acceptedTerms) {
+		if (!acceptedTerms) {
 			return;
 		}
 		console.log(
@@ -165,8 +182,8 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 			});
 			console.log(`🚀 ~ file: index.svelte ~ line 138 ~ signInWithSocial ~ user`, user);
 			currentUser.set(user);
-			getWorksheetsFromSupabase()
-			console.log(`🚀 ~ file: index.svelte ~ line 159 ~ signInWithSocial ~ session`, session)
+			getWorksheetsFromSupabase();
+			console.log(`🚀 ~ file: index.svelte ~ line 159 ~ signInWithSocial ~ session`, session);
 			// if (error) throw error;
 			// return user
 		} catch (error) {
@@ -180,7 +197,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 	async function signOut() {
 		const { error } = await supabase.auth.signOut();
 		error ? console.error(error) : (loggedIn = false);
-		currentUser.set({email: "logged out"});
+		currentUser.set({ email: 'logged out' });
 		worksheets.set([]);
 	}
 </script>
@@ -200,7 +217,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 	<div
 		class="flex flex-col absolute top-28 z-0 items-center justify-start  bg-opacity-50 w-[22rem] rounded-lg  "
 	>
-		<h1 class="text-3xl text-white font-serif mt-8 font-light">Sign in</h1>
+		<h1 class="text-3xl text-white font-serif mt-8 font-light">Sign up</h1>
 		<!-- {$currentUser ? $currentUser.email : 'not signed in'}
 		{#if $currentUser}
 			<button
@@ -213,12 +230,8 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 			<div class="flex flex-col items-center justify-center p-2">
 				<!-- <div class="flex flex-col"> -->
 				<form>
-					<div class=" w-auto mb-1 flex flex-col tooltip items-center justify-between">
-						<label
-							for="email"
-							use:tooltip
-							class="w-full border-[1px] m-4 mb-6 border-white"
-							title="Sign in via magic link with just your email address."
+					<div class=" w-auto mb-1 flex flex-col items-center justify-between">
+						<label for="email" class="w-full border-[1px] m-4 mb-6 border-white"
 							><input
 								type="text"
 								name="email"
@@ -236,12 +249,17 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 									bind:checked={acceptedTerms}
 									class="  rounded-none m-2 ml-0 mt-0"
 								/>
-								<label for="showAnswers" class=" items-center w-full text-sm text-left inline inline-block"
+								<label
+									for="showAnswers"
+									class=" items-center w-full text-sm text-left inline inline-block"
 									>I agree to Math App & Curriculum For Life's
 									<div class="flex">
 										<a href="/terms-of-service" class="underline">Terms Of Service </a>
-										<p class="mx-1"> and </p>
-										<a href="/privacy" class="underline"> Privacy Policy.</a><Icon icon="{icons.asterisk}" class="text-red-500 text-xs mx-1" />
+										<p class="mx-1">and</p>
+										<a href="/privacy" class="underline"> Privacy Policy.</a><Icon
+											icon={icons.asterisk}
+											class="text-red-500 text-xs mx-1"
+										/>
 									</div>
 								</label>
 							</li>
@@ -259,14 +277,40 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 							</li>
 						</ul>
 						<button
+							id="continue-signup"
+							class="w-full p-2 m-4  rounded-xl  transition-all duration-200
+							{acceptedTerms
+								? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black'
+								: 'bg-gray-500 cursor-default'}"
+							type="submit"
+							use:tooltip
+							on:hover={(e) => console.log(e)}
+							on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
+						>
+						<!-- data-tippy-content={acceptedTerms
+							? 'Continue to select a password for your account.'
+							: 'You must accept the terms of service and privacy policy to continue'} -->
+						<!-- {#if acceptedTerms}
+						<button
 							class="w-full p-2 m-4  rounded-xl  transition-all duration-200
 							{acceptedTerms ? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black' : 'bg-gray-500 cursor-default'}"
 							type="submit"
 							use:tooltip
-							data-tippy-content="{acceptedTerms ? 'Sign up with your email address.' : 'You must accept the terms of service and privacy policy to continue'}"
+							data-tippy-content="Sign up with your email address."
 							
 							on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
 						>
+						{:else}
+						<button
+							class="w-full p-2 m-4  rounded-xl  transition-all duration-200
+							{acceptedTerms ? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black' : 'bg-gray-500 cursor-default'}"
+							type="submit"
+							use:tooltip
+							data-tippy-content="You must accept the terms of service and privacy policy to continue"
+							
+							on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
+						>
+						{/if} -->
 					</div>
 				</form>
 			</div>
@@ -311,7 +355,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 				<Icon icon={icons.github} class="w-6 h-6 mr-2" />
 				<div class="flex">Sign in with Github</div></button
 			>
-			<p class="text-sm m-4">Need an account? <a href="/signup" class="underline">Sign up</a></p>
+			<p class="text-sm m-4">Already have an account? <a href="/" class="underline">Sign in</a></p>
 			<div class="mb-4" />
 		</div>
 	</div>
