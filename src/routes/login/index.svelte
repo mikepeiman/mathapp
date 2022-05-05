@@ -12,8 +12,8 @@
 		TransitionChild
 	} from '@rgossiaux/svelte-headlessui';
 	let loggedIn = false;
-	let option1,
-		option2 = false;
+	let acceptedTerms,
+		acceptedUpdates = false;
 	$: currentUser.set(supabase.auth.user());
 	$: $currentUser ? (loggedIn = true) : (loggedIn = false);
 	$: console.log(`🚀 ~ file: index.svelte ~ line 16 ~ currentUser`, $currentUser);
@@ -36,7 +36,8 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 		google: 'flat-color-icons:google',
 		twitter: 'logos:twitter',
 		facebook: 'simple-icons:facebook',
-		github: 'ant-design:github-filled'
+		github: 'ant-design:github-filled',
+		asterisk: 'el:asterisk',
 	};
 
 	onMount(() => {});
@@ -209,7 +210,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 			<div class="flex flex-col items-center justify-center p-2">
 				<!-- <div class="flex flex-col"> -->
 				<form>
-					<div class=" w-80 mb-1 flex flex-col tooltip items-center justify-between">
+					<div class=" w-auto mb-1 flex flex-col tooltip items-center justify-between">
 						<label
 							for="email"
 							use:tooltip
@@ -229,21 +230,23 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 								<Checkbox
 									name="showAnswers"
 									size="1.25rem"
-									bind:checked={option1}
+									bind:checked={acceptedTerms}
 									class="  rounded-none m-2 ml-0 mt-0"
 								/>
-								<label for="showAnswers" class=" items-center w-full text-sm text-left"
+								<label for="showAnswers" class=" items-center w-full text-sm text-left inline inline-block"
 									>I agree to Math App & Curriculum For Life's
-									<a href="/terms-of-service" class="underline">Terms Of Service</a>
-									and
-									<a href="/privacy" class="underline">Privacy Policy</a>.
+									<div class="flex">
+										<a href="/terms-of-service" class="underline">Terms Of Service </a>
+										<p class="mx-1"> and </p>
+										<a href="/privacy" class="underline"> Privacy Policy.</a><Icon icon="{icons.asterisk}" class="text-red-500 text-xs mx-1" />
+									</div>
 								</label>
 							</li>
 							<li class="flex items-start justify-start mt-2 mb-1">
 								<Checkbox
 									name="showAnswers"
 									size="1.25rem"
-									bind:checked={option2}
+									bind:checked={acceptedUpdates}
 									class="  rounded-none m-2 ml-0 mt-0"
 								/>
 								<label for="showAnswers" class=" items-center w-full text-sm text-left"
@@ -253,7 +256,8 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 							</li>
 						</ul>
 						<button
-							class="w-full p-2 m-4 bg-winterblues-700 rounded-xl hover:bg-winterblues-500 hover:text-black transition-all duration-200"
+							class="w-full p-2 m-4  rounded-xl  transition-all duration-200
+							{acceptedTerms ? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black' : 'bg-gray-500 cursor-default'}"
 							type="submit"
 							on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
 						>
