@@ -17,7 +17,9 @@
 	let mounted = false;
 	let isValidEmail = true;
 	let acceptedTerms,
-		acceptedUpdates = false;
+		acceptedUpdates,
+		continueToSignup = false;
+		continueToSignup = true;
 	$: mounted ? setTooltip(acceptedTerms) : null;
 	$: currentUser.set(supabase.auth.user());
 	$: $currentUser ? (loggedIn = true) : (loggedIn = false);
@@ -43,7 +45,8 @@
 		twitter: 'logos:twitter',
 		facebook: 'simple-icons:facebook',
 		github: 'ant-design:github-filled',
-		asterisk: 'el:asterisk'
+		asterisk: 'el:asterisk',
+		checkmark: 'eva:checkmark-circle-2-fill'
 	};
 
 	onMount(() => {
@@ -54,7 +57,9 @@
 	function checkIsValidEmail() {
 		isValidEmail = EmailValidator.validate(email);
 	}
-
+function checkPasswordStrength() {
+	console.log(`Current password: ${password}`)
+}
 	function handleSubmit(msg, provider) {
 		if (!acceptedTerms) {
 			return;
@@ -68,7 +73,8 @@
 			isValidEmail = EmailValidator.validate(email);
 			console.log(`🚀 ~ file: Auth.svelte ~ line 28 ~ handleSubmit ~ email`, email);
 			console.log(`🚀 ~ file: index.svelte ~ line 63 ~ handleSubmit ~ isValidEmail`, isValidEmail);
-			if (!isValidEmail) {
+			if (isValidEmail && acceptedTerms) {
+				continueToSignup = true;
 			}
 		} else if (msg === 'password') {
 			event === 'signin' ? signInWithPassword() : false;
@@ -243,105 +249,132 @@
 			>
 		{/if} -->
 		<div class="flex flex-col w-full items-center justify-center">
-			<div class="flex flex-col items-center justify-center p-2">
-				<!-- <div class="flex flex-col"> -->
-				<form>
-					<div class=" w-auto mb-1 flex flex-col items-center justify-between">
-						<label for="email" class="w-full border-[1px] m-4 mb-6 border-white"
-							><input
-								type="email"
-								required
-								name="email"
-								bind:value={email}
-								autocomplete="on"
-								placeholder="Email address"
-								on:blur={checkIsValidEmail}
-								class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
-							/>
-							<div
-								class="flex text-xs transition-all duration-500 relative
-							{!isValidEmail ? 'h-8 p-2 bg-yellow-900 opacity-100 ' : 'bg-green-500 p-0 h-0 opacity-0 delay-1000'}"
-							>
-								{#if !isValidEmail}
-									That doesn't seem like a valid email, please try again.
-								{:else}
-									<div class="absolute top-0 left-0 bg-green-500 h-8 p-2 w-full">That looks good, thanks!</div>
-								{/if}
-							</div>
-						</label>
-						<ul class="w-full">
-							<li class="flex items-start justify-start">
-								<Checkbox
-									name="showAnswers"
-									size="1.25rem"
-									bind:checked={acceptedTerms}
-									class="  rounded-none m-2 ml-0 mt-0"
+			{#if !continueToSignup}
+				<div class="flex flex-col items-center justify-center p-2">
+					<form>
+						<div class=" w-auto mb-1 flex flex-col items-center justify-between">
+							<label for="email" class="w-full border-[1px] m-4 mb-6 border-white"
+								><input
+									type="email"
+									required
+									name="email"
+									bind:value={email}
+									autocomplete="on"
+									placeholder="Email address"
+									on:blur={checkIsValidEmail}
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
 								/>
-								<label
-									for="showAnswers"
-									class=" items-center w-full text-sm text-left inline inline-block"
-									>I agree to Math App & Curriculum For Life's
-									<div class="flex">
-										<a href="/terms-of-service" class="underline">Terms Of Service </a>
-										<p class="mx-1">and</p>
-										<a href="/privacy" class="underline"> Privacy Policy.</a><Icon
-											icon={icons.asterisk}
-											class="text-red-500 text-xs mx-1"
-										/>
-									</div>
-								</label>
-							</li>
-							<li class="flex items-start justify-start mt-2 mb-1">
-								<Checkbox
-									name="showAnswers"
-									size="1.25rem"
-									bind:checked={acceptedUpdates}
-									class="  rounded-none m-2 ml-0 mt-0"
-								/>
-								<label for="showAnswers" class=" items-center w-full text-sm text-left"
-									>Curriculum For Life may use my email address to provide me with occasional
-									updates on our apps. I can opt out at any time.
-								</label>
-							</li>
-						</ul>
-						<button
-							id="continue-signup"
-							class="w-full p-2 m-4  rounded-xl  transition-all duration-300
+								<div
+									class="flex text-xs transition-all duration-500 relative
+							{!isValidEmail
+										? 'h-8 p-2 bg-yellow-900 opacity-100 '
+										: 'bg-green-500 p-0 h-0 opacity-0 delay-1000'}"
+								>
+									{#if !isValidEmail}
+										That doesn't seem like a valid email, please try again.
+									{:else}
+										<div class="absolute top-0 left-0 bg-green-500 h-8 p-2 w-full">
+											That looks good, thanks!
+										</div>
+									{/if}
+								</div>
+							</label>
+							<ul class="w-full">
+								<li class="flex items-start justify-start">
+									<Checkbox
+										name="showAnswers"
+										size="1.25rem"
+										bind:checked={acceptedTerms}
+										class="  rounded-none m-2 ml-0 mt-0"
+									/>
+									<label
+										for="showAnswers"
+										class=" items-center w-full text-sm text-left inline inline-block"
+										>I agree to Math App & Curriculum For Life's
+										<div class="flex">
+											<a href="/terms-of-service" class="underline">Terms Of Service </a>
+											<p class="mx-1">and</p>
+											<a href="/privacy" class="underline"> Privacy Policy.</a><Icon
+												icon={icons.asterisk}
+												class="text-red-500 text-xs mx-1"
+											/>
+										</div>
+									</label>
+								</li>
+								<li class="flex items-start justify-start mt-2 mb-1">
+									<Checkbox
+										name="showAnswers"
+										size="1.25rem"
+										bind:checked={acceptedUpdates}
+										class="  rounded-none m-2 ml-0 mt-0"
+									/>
+									<label for="showAnswers" class=" items-center w-full text-sm text-left"
+										>Curriculum For Life may use my email address to provide me with occasional
+										updates on our apps. I can opt out at any time.
+									</label>
+								</li>
+							</ul>
+							<button
+								id="continue-signup"
+								class="w-full p-2 m-4  rounded-xl  transition-all duration-300
 							{acceptedTerms
-								? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black'
-								: 'bg-gray-500 cursor-default'}"
-							type="submit"
-							use:tooltip
-							on:hover={(e) => console.log(e)}
-							on:click|preventDefault={() => handleSubmit('email')}>Continue</button
-						>
-						<!-- data-tippy-content={acceptedTerms
-							? 'Continue to select a password for your account.'
-							: 'You must accept the terms of service and privacy policy to continue'} -->
-						<!-- {#if acceptedTerms}
-						<button
-							class="w-full p-2 m-4  rounded-xl  transition-all duration-200
-							{acceptedTerms ? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black' : 'bg-gray-500 cursor-default'}"
-							type="submit"
-							use:tooltip
-							data-tippy-content="Sign up with your email address."
-							
-							on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
-						>
-						{:else}
-						<button
-							class="w-full p-2 m-4  rounded-xl  transition-all duration-200
-							{acceptedTerms ? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black' : 'bg-gray-500 cursor-default'}"
-							type="submit"
-							use:tooltip
-							data-tippy-content="You must accept the terms of service and privacy policy to continue"
-							
-							on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
-						>
-						{/if} -->
-					</div>
-				</form>
-			</div>
+									? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black'
+									: 'bg-gray-500 cursor-default'}"
+								type="submit"
+								use:tooltip
+								on:hover={(e) => console.log(e)}
+								on:click|preventDefault={() => handleSubmit('email')}>Continue</button
+							>
+						</div>
+					</form>
+				</div>
+			{:else}
+				<div class="flex flex-col items-center justify-center p-2">
+					<form>
+						<div class=" w-auto mb-1 flex flex-col items-center justify-between">
+							<div class="flex items-center justify-center">
+								<div class="flex m-2">{email}</div>
+								<a href="">Change</a>
+							</div>
+							<label for="email" class="w-full border-[1px] m-4 mb-6 border-white"
+								><input
+									type="email"
+									required
+									name="email"
+									bind:value={password}
+									autocomplete="on"
+									placeholder="Email address"
+									on:input={checkPasswordStrength}
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
+								/>
+							</label>
+							<ul class="w-full items-center justify-center">
+								<p class="text-center font-bold text-sm mb-2">Password strength: weak</p>
+								<li class="flex items-center justify-start">
+									<Icon icon={icons.checkmark} class="text-gray-500 text-xs mx-1 w-4 h-4" />
+									<p class="flex text-xs">Must include at least 8 characters</p>
+								</li>
+								<li class="flex items-center justify-start  mt-2 mb-1">
+									<Icon icon={icons.checkmark} class="text-gray-500 text-xs mx-1 w-4 h-4" />
+									<p class="flex text-xs">Must include a supported symbol</p>
+								</li>
+
+							</ul>
+							<button
+								id="continue-signup"
+								class="w-full p-2 m-4  rounded-xl  transition-all duration-300
+							{acceptedTerms
+									? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black'
+									: 'bg-gray-500 cursor-default'}"
+								type="submit"
+								use:tooltip
+								on:hover={(e) => console.log(e)}
+								on:click|preventDefault={() => handleSubmit('email')}>Create account</button
+							>
+						</div>
+					</form>
+				</div>
+			{/if}
 			<div class="flex items-center justify-between w-auto">
 				<div
 					class="flex flex-col items-center justify-center bg-gradient-to-l from-lightBlue-400 to-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl"
