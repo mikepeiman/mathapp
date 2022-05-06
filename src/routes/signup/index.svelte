@@ -2,6 +2,7 @@
 	import { supabase } from '$lib/supabaseClient.js';
 	import { currentUser } from '$stores/auth.js';
 	import tippy from 'tippy.js';
+	import * as EmailValidator from 'email-validator';
 	import { Switch } from '@rgossiaux/svelte-headlessui';
 	import {
 		Tab,
@@ -14,6 +15,7 @@
 	} from '@rgossiaux/svelte-headlessui';
 	let loggedIn = false;
 	let mounted = false;
+	let isValidEmail = true;
 	let acceptedTerms,
 		acceptedUpdates = false;
 	$: mounted ? setTooltip(acceptedTerms) : null;
@@ -25,6 +27,7 @@
 			currentUser.set(session?.user);
 		}
 	});
+
 	import tooltip from '$utils/tooltip';
 	import { onMount } from 'svelte';
 	import Checkbox from '$components/Checkbox.svelte';
@@ -46,6 +49,40 @@
 	onMount(() => {
 		mounted = true;
 	});
+
+	// $: console.log(`🚀 ~ file: index.svelte ~ line 53 ~ isValidEmail`, isValidEmail);
+	function checkIsValidEmail() {
+		isValidEmail = EmailValidator.validate(email);
+	}
+
+	function handleSubmit(msg, provider) {
+		if (!acceptedTerms) {
+			return;
+		}
+		console.log(
+			`🚀 ~ file: Auth.svelte ~ line 21 ~ handleSubmit ~ msg ${msg}, provider ${provider}`
+		);
+		if (msg === 'magic') {
+			signInWithEmail();
+		} else if (msg === 'email') {
+			isValidEmail = EmailValidator.validate(email);
+			console.log(`🚀 ~ file: Auth.svelte ~ line 28 ~ handleSubmit ~ email`, email);
+			console.log(`🚀 ~ file: index.svelte ~ line 63 ~ handleSubmit ~ isValidEmail`, isValidEmail);
+			if (!isValidEmail) {
+			}
+		} else if (msg === 'password') {
+			event === 'signin' ? signInWithPassword() : false;
+			event === 'signup' ? signUpWithPassword() : false;
+			event === 'update' ? updatePassword() : false;
+			event === 'reset' ? resetPassword() : false;
+		} else if (msg === 'user') {
+			event === 'signout' ? signOut() : false;
+		} else if (msg === 'social') {
+			signInWithSocial(provider);
+		} else {
+			console.log(`🚀 ~ file: Auth.svelte ~ line 35 ~ handleSubmit ~ msg ${msg}`);
+		}
+	}
 
 	function setTooltip(e) {
 		console.log(`🚀 ~ file: index.svelte ~ line 53 ~ setTooltip ~ e`, e);
@@ -153,27 +190,6 @@
 		}
 	}
 
-	function handleSubmit(msg, provider) {
-		if (!acceptedTerms) {
-			return;
-		}
-		console.log(
-			`🚀 ~ file: Auth.svelte ~ line 21 ~ handleSubmit ~ msg ${msg}, provider ${provider}`
-		);
-		if (msg === 'magic') {
-			signInWithEmail();
-		} else if (msg === 'password') {
-			event === 'signin' ? signInWithPassword() : false;
-			event === 'signup' ? signUpWithPassword() : false;
-			event === 'update' ? updatePassword() : false;
-			event === 'reset' ? resetPassword() : false;
-		} else if (msg === 'user') {
-			event === 'signout' ? signOut() : false;
-		} else if (msg === 'social') {
-			signInWithSocial(provider);
-		}
-	}
-
 	async function signInWithSocial(provider) {
 		try {
 			loading = true;
@@ -233,13 +249,25 @@
 					<div class=" w-auto mb-1 flex flex-col items-center justify-between">
 						<label for="email" class="w-full border-[1px] m-4 mb-6 border-white"
 							><input
-								type="text"
+								type="email"
+								required
 								name="email"
 								bind:value={email}
 								autocomplete="on"
 								placeholder="Email address"
+								on:blur={checkIsValidEmail}
 								class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
 							/>
+							<div
+								class="flex text-xs transition-all duration-500 relative
+							{!isValidEmail ? 'h-8 p-2 bg-yellow-900 opacity-100 ' : 'bg-green-500 p-0 h-0 opacity-0 delay-1000'}"
+							>
+								{#if !isValidEmail}
+									That doesn't seem like a valid email, please try again.
+								{:else}
+									<div class="absolute top-0 left-0 bg-green-500 h-8 p-2 w-full">That looks good, thanks!</div>
+								{/if}
+							</div>
 						</label>
 						<ul class="w-full">
 							<li class="flex items-start justify-start">
@@ -278,14 +306,14 @@
 						</ul>
 						<button
 							id="continue-signup"
-							class="w-full p-2 m-4  rounded-xl  transition-all duration-200
+							class="w-full p-2 m-4  rounded-xl  transition-all duration-300
 							{acceptedTerms
 								? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black'
 								: 'bg-gray-500 cursor-default'}"
 							type="submit"
 							use:tooltip
 							on:hover={(e) => console.log(e)}
-							on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
+							on:click|preventDefault={() => handleSubmit('email')}>Continue</button
 						>
 						<!-- data-tippy-content={acceptedTerms
 							? 'Continue to select a password for your account.'
