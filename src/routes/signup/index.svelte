@@ -37,6 +37,7 @@
 	import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 	let loading = false;
 	let email,
+	changeEmail,
 		password,
 		passwordError = false;
 
@@ -250,8 +251,8 @@ function checkPasswordStrength() {
 		{/if} -->
 		<div class="flex flex-col w-full items-center justify-center">
 			{#if !continueToSignup}
-				<div class="flex flex-col items-center justify-center p-2">
-					<form>
+				<div class="flex flex-col w-full items-center justify-center p-2">
+					<form class="w-full">
 						<div class=" w-auto mb-1 flex flex-col items-center justify-between">
 							<label for="email" class="w-full border-[1px] m-4 mb-6 border-white"
 								><input
@@ -329,14 +330,15 @@ function checkPasswordStrength() {
 					</form>
 				</div>
 			{:else}
-				<div class="flex flex-col items-center justify-center p-2">
-					<form>
+				<div class="flex flex-col w-full items-center justify-center p-2">
+					<form class="w-full">
 						<div class=" w-auto mb-1 flex flex-col items-center justify-between">
 							<div class="flex items-center justify-center">
-								<div class="flex m-2">{email}</div>
-								<a href="">Change</a>
+								<div class="flex m-2">{email !== undefined ? email : 'Oops! We lost your email. Please re-enter it.' }</div>
+								<a href="" on:click={() => changeEmail = !changeEmail}>Change</a>
 							</div>
-							<label for="email" class="w-full border-[1px] m-4 mb-6 border-white"
+							{#if changeEmail}
+							<label for="email" class="w-full border-[1px] mt-4 border-white"
 								><input
 									type="email"
 									required
@@ -344,6 +346,19 @@ function checkPasswordStrength() {
 									bind:value={password}
 									autocomplete="on"
 									placeholder="Email address"
+									on:input={checkPasswordStrength}
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
+								/>
+							</label>
+							{/if}
+							<label for="email" class="w-full border-[1px] m-4 mb-6 border-white"
+								><input
+									type="email"
+									required
+									name="email"
+									bind:value={password}
+									autocomplete="on"
+									placeholder="Password"
 									on:input={checkPasswordStrength}
 									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
 								/>
