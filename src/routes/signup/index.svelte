@@ -23,7 +23,6 @@
 		`🚀 ~ file: index.svelte ~ line 16 ~ currentUser`,
 		$currentUser
 	);
-	$: console.log(`score password: `, scorePassword(password));
 	// $: window !== undefined ? console.log(`zxcvbn: `,zxcvbn(password)) : null;
 	supabase.auth.onAuthStateChange((_, session) => {
 		if (session?.user) {
@@ -32,18 +31,22 @@
 	});
 	let loading = false;
 	let email,
-		changeEmail,
-		password,
-		passwordError = false;
+	changeEmail,
+	passwordError = false;
 	const passwordStrengths = [
-		"Insufficient",
+		"",
 		"Weak",
 		"Fair",
 		"Good",
 		"Strong",
 		"Very Strong",
 	];
-	let passwordStrength = passwordStrengths[0];
+	$: password = "";
+	$: passwordStrength = declarePasswordStrengthRating(password);
+	$: passwordScore = scorePassword(password);
+    $: console.log(`🚀 ~ file: index.svelte ~ line 47 ~ scorePassword(password)`, scorePassword(password))
+    $: console.log(`🚀 ~ file: index.svelte ~ line 48 ~ passwordScore`, passwordScore)
+    $: console.log(`🚀 ~ file: index.svelte ~ line 49 ~ passwordStrength`, passwordStrength)
 	const icons = {
 		google: "flat-color-icons:google",
 		twitter: "logos:twitter",
@@ -63,6 +66,7 @@
 	}
 	function checkPasswordStrength() {
 		console.log(`Current password: ${password}`);
+		passwordScore = scorePassword(password);
 	}
 	function handleSubmit(msg, provider) {
 		if (!acceptedTerms) {
@@ -104,18 +108,20 @@
 
 	function setTooltip(e) {
 		console.log(`🚀 ~ file: index.svelte ~ line 53 ~ setTooltip ~ e`, e);
-		let btn = tippy(document.querySelector("#continue-signup"));
-		btn.setProps({
-			onShow(instance) {
-				acceptedTerms
-					? instance.setContent(
-							"Continue to select a password for your new account"
-					  )
-					: instance.setContent(
-							"You must accept the terms and conditions to continue"
-					  );
-			},
-		});
+		if (document.querySelector("#continue-signup")) {
+			let btn = tippy(document.querySelector("#continue-signup"));
+			btn.setProps({
+				onShow(instance) {
+					acceptedTerms
+						? instance.setContent(
+								"Continue to select a password for your new account"
+						  )
+						: instance.setContent(
+								"You must accept the terms and conditions to continue"
+						  );
+				},
+			});
+		}
 	}
 
 	async function signInWithPassword() {
@@ -288,12 +294,8 @@
 		score += (variationCount - 1) * 10;
 		// console.log(`zxcvbn: `,zxcvbn(password))
 		let s = parseInt(score);
-		s < 20 ? (passwordStrength = passwordStrengths[0]) : "";
-		s > 20 ? (passwordStrength = passwordStrengths[1]) : "";
-		s > 35 ? (passwordStrength = passwordStrengths[2]) : "";
-		s > 50 ? (passwordStrength = passwordStrengths[3]) : "";
-		s > 75 ? (passwordStrength = passwordStrengths[4]) : "";
-		s > 90 ? (passwordStrength = passwordStrengths[5]) : "";
+        console.log(`🚀 ~ file: index.svelte ~ line 295 ~ scorePassword ~ parseInt(score)`, parseInt(score))
+		declarePasswordStrengthRating(s)
 		console.log(
 			`🚀 ~ file: index.svelte ~ line 289 ~ scorePassword ~ passwordStrength`,
 			passwordStrength
@@ -302,13 +304,15 @@
 		return parseInt(score);
 	}
 
-	function checkPassStrength(pass) {
-		var score = scorePassword(pass);
-		if (score > 80) return "strong";
-		if (score > 60) return "good";
-		if (score >= 30) return "weak";
+	function declarePasswordStrengthRating(s) {
 
-		return "";
+		s < 20 ? (passwordStrength = passwordStrengths[0]) : "";
+		s >= 20 ? (passwordStrength = passwordStrengths[1]) : "";
+		s > 35 ? (passwordStrength = passwordStrengths[2]) : "";
+		s > 50 ? (passwordStrength = passwordStrengths[3]) : "";
+		s > 65 ? (passwordStrength = passwordStrengths[4]) : "";
+		s > 80 ? (passwordStrength = passwordStrengths[5]) : "";
+		return passwordStrength;
 	}
 </script>
 
@@ -459,10 +463,9 @@
 										type="email"
 										required
 										name="email"
-										bind:value={password}
+										bind:value={email}
 										autocomplete="on"
 										placeholder="Email address"
-										on:input={checkPasswordStrength}
 										class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
 								</label>
 							{/if}
@@ -476,14 +479,56 @@
 									bind:value={password}
 									autocomplete="on"
 									placeholder="Password"
-									on:input={checkPasswordStrength}
+									on:input={() => scorePassword(password)}
 									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
 							</label>
+							<div
+								class="flex w-full items-stretch mb-2 -mt-2 ">
+
+								<meter
+									value={passwordScore >= 20 ? 1 : 0}
+									class="h-1 w-full mr-2 rounded
+									{passwordScore < 20  ? 'bg-warmGray-400' : ''}
+									{passwordScore >= 20 ? 'bg-sky-400' : ''}
+
+									" />
+								<meter
+									value={passwordScore >= 40 ? 1 : 0}
+									class="h-1 w-full mr-2 rounded
+									{passwordScore < 20  ? 'bg-warmGray-400' : ''}
+									{passwordScore >= 40 ? 'bg-sky-400' : 'bg-warmGray-400'}
+
+									" />
+								<meter
+									value={passwordScore >= 60 ? 1 : 0}
+									class="h-1 w-full mr-2 rounded
+									{passwordScore < 20  ? 'bg-warmGray-400' : ''}
+									{passwordScore >= 60 ? 'bg-sky-400' : 'bg-warmGray-400'}
+
+									" />
+								<meter
+									value={passwordScore >= 80 ? 1 : 0}
+									class="h-1 w-full mr-2 rounded
+									{passwordScore < 20  ? 'bg-warmGray-400' : ''}
+									{passwordScore >= 80 ? 'bg-sky-400' : 'bg-warmGray-400'}
+
+									" />
+								<meter
+									value={passwordScore > 40 ? 1 : 0}
+									class="h-1 w-full mr-2 rounded
+									{passwordScore < 20  ? 'bg-warmGray-400' : ''}
+									{passwordScore >= 100 ? 'bg-sky-400' : 'bg-warmGray-400'}
+
+									" />
+			
+
+							</div>
 							<ul class="w-full items-center justify-center">
 								<p class="text-center font-bold text-sm mb-2">
 									Password strength: {passwordStrength}
+									{passwordScore}
 								</p>
-								<li class="flex items-center justify-start">
+								<li class="flex items-center justify-center">
 									<Icon
 										icon={icons.checkmark}
 										class="text-gray-500 text-xs mx-1 w-4 h-4" />
@@ -492,7 +537,7 @@
 									</p>
 								</li>
 								<li
-									class="flex items-center justify-start  mt-2 mb-1">
+									class="flex items-center justify-center  mt-2 mb-1">
 									<Icon
 										icon={icons.checkmark}
 										class="text-gray-500 text-xs mx-1 w-4 h-4" />
@@ -502,13 +547,12 @@
 								</li>
 							</ul>
 							<button
-								id="continue-signup"
+								id="create-account"
 								class="w-full p-2 m-4  rounded-xl  transition-all duration-300
-							{acceptedTerms
+							{passwordScore > 20
 									? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black'
 									: 'bg-gray-500 cursor-default'}"
 								type="submit"
-								use:tooltip
 								on:hover={(e) => console.log(e)}
 								on:click|preventDefault={() =>
 									handleSubmit("email")}
@@ -655,4 +699,39 @@
 		-webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.25) inset;
 		transition: background-color 5000s ease-in-out 0s;
 	}
+
+	// style meter bar
+	meter {
+		/* Reset the default appearance */
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+
+		//   margin: 0 .25rem;
+
+		//   width:100%;
+		//   height: 0.25em;
+
+		/* Applicable only to Firefox */
+		//   background: none;
+		//   background-color: var(--color-winterblues-100);
+	}
+
+	meter::-webkit-meter-bar {
+		  background: none;
+		//   background: red;
+		//   background-color: rgba(0, 0, 0, 0.1);
+		//   background-color: rgba(0, 255, 0, 1);
+	}
+	/* Webkit based browsers */
+	meter[value="0"]::-webkit-meter-optimum-value {
+		background-color: var(--color-winterblues-600);
+	}
+
+
+	/* Gecko based browsers */
+	meter[value="0"]::-moz-meter-bar {
+		background: black;
+	}
+
 </style>
