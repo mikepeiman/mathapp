@@ -31,8 +31,8 @@
 	});
 	let loading = false;
 	let email,
-	changeEmail,
-	passwordError = false;
+		changeEmail,
+		passwordError = false;
 	const passwordStrengths = [
 		"",
 		"Weak",
@@ -42,11 +42,33 @@
 		"Very Strong",
 	];
 	$: password = "";
+	$: pwCheckSymbol = /[!"\#\$%&'(\)*+,-.\/:;<=>?@[\]\^_`{|}~]/.test(password);
+
+	$: pwCheckNumber = /\d/.test(password);
+	$: pwCheckLength = password.length >= 8;
+	// $: pwCheckLength = false;
+	// $: pwCheckSymbol = false;
+	// $: pwCheckNumber = false;
+	let symbols = `/!"#$%&'()*+,-./:;<=>?@[\]^_\`{|}~/`;
 	$: passwordStrength = declarePasswordStrengthRating(password);
 	$: passwordScore = scorePassword(password);
-    $: console.log(`🚀 ~ file: index.svelte ~ line 47 ~ scorePassword(password)`, scorePassword(password))
-    $: console.log(`🚀 ~ file: index.svelte ~ line 48 ~ passwordScore`, passwordScore)
-    $: console.log(`🚀 ~ file: index.svelte ~ line 49 ~ passwordStrength`, passwordStrength)
+	$: console.log(
+		`🚀 ~ file: index.svelte ~ line 51 ~ password`,
+		password,
+		scorePassword(password)
+	);
+	// $: console.log(
+	// 	`🚀 ~ file: index.svelte ~ line 47 ~ scorePassword(password)`,
+	// 	scorePassword(password)
+	// );
+	// $: console.log(
+	// 	`🚀 ~ file: index.svelte ~ line 48 ~ passwordScore`,
+	// 	passwordScore
+	// );
+	// $: console.log(
+	// 	`🚀 ~ file: index.svelte ~ line 49 ~ passwordStrength`,
+	// 	passwordStrength
+	// );
 	const icons = {
 		google: "flat-color-icons:google",
 		twitter: "logos:twitter",
@@ -54,6 +76,7 @@
 		github: "ant-design:github-filled",
 		asterisk: "el:asterisk",
 		checkmark: "eva:checkmark-circle-2-fill",
+		xFill: "akar-icons:circle-x-fill",
 	};
 
 	onMount(() => {
@@ -286,7 +309,18 @@
 			upper: /[A-Z]/.test(pass),
 			nonWords: /\W/.test(pass),
 		};
+		// !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
 
+		// pwCheckSymbol = /!"\#\$%&'(\)*+,-.\/:;<=>?@\[\]\^_`{|}~/.test(password);
+		console.log(
+			`🚀 ~ file: index.svelte ~ line 307 ~ scorePassword ~ password`,
+			password
+		);
+
+		console.log(
+			`🚀 ~ file: index.svelte ~ line 308 ~ scorePassword ~ pwCheckNumber`,
+			pwCheckNumber
+		);
 		var variationCount = 0;
 		for (var check in variations) {
 			variationCount += variations[check] == true ? 1 : 0;
@@ -294,18 +328,11 @@
 		score += (variationCount - 1) * 10;
 		// console.log(`zxcvbn: `,zxcvbn(password))
 		let s = parseInt(score);
-        console.log(`🚀 ~ file: index.svelte ~ line 295 ~ scorePassword ~ parseInt(score)`, parseInt(score))
-		declarePasswordStrengthRating(s)
-		console.log(
-			`🚀 ~ file: index.svelte ~ line 289 ~ scorePassword ~ passwordStrength`,
-			passwordStrength
-		);
-
+		declarePasswordStrengthRating(s);
 		return parseInt(score);
 	}
 
 	function declarePasswordStrengthRating(s) {
-
 		s < 20 ? (passwordStrength = passwordStrengths[0]) : "";
 		s >= 20 ? (passwordStrength = passwordStrengths[1]) : "";
 		s > 35 ? (passwordStrength = passwordStrengths[2]) : "";
@@ -482,68 +509,76 @@
 									on:input={() => scorePassword(password)}
 									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
 							</label>
-							<div
-								class="flex w-full items-stretch mb-2 -mt-2 ">
-
+							<div class="flex w-full items-stretch mb-2 -mt-2 ">
 								<meter
 									value={passwordScore >= 20 ? 1 : 0}
 									class="h-1 w-full mr-2 rounded
-									{passwordScore < 20  ? 'bg-warmGray-400' : ''}
+									{passwordScore < 20 ? 'bg-warmGray-400' : ''}
 									{passwordScore >= 20 ? 'bg-sky-400' : ''}
 
 									" />
 								<meter
 									value={passwordScore >= 40 ? 1 : 0}
 									class="h-1 w-full mr-2 rounded
-									{passwordScore < 20  ? 'bg-warmGray-400' : ''}
+									{passwordScore < 20 ? 'bg-warmGray-400' : ''}
 									{passwordScore >= 40 ? 'bg-sky-400' : 'bg-warmGray-400'}
 
 									" />
 								<meter
 									value={passwordScore >= 60 ? 1 : 0}
 									class="h-1 w-full mr-2 rounded
-									{passwordScore < 20  ? 'bg-warmGray-400' : ''}
+									{passwordScore < 20 ? 'bg-warmGray-400' : ''}
 									{passwordScore >= 60 ? 'bg-sky-400' : 'bg-warmGray-400'}
 
 									" />
 								<meter
 									value={passwordScore >= 80 ? 1 : 0}
 									class="h-1 w-full mr-2 rounded
-									{passwordScore < 20  ? 'bg-warmGray-400' : ''}
+									{passwordScore < 20 ? 'bg-warmGray-400' : ''}
 									{passwordScore >= 80 ? 'bg-sky-400' : 'bg-warmGray-400'}
 
 									" />
 								<meter
 									value={passwordScore > 40 ? 1 : 0}
 									class="h-1 w-full mr-2 rounded
-									{passwordScore < 20  ? 'bg-warmGray-400' : ''}
+									{passwordScore < 20 ? 'bg-warmGray-400' : ''}
 									{passwordScore >= 100 ? 'bg-sky-400' : 'bg-warmGray-400'}
 
 									" />
-			
-
 							</div>
-							<ul class="w-full items-center justify-center">
+							<ul class="w-auto items-center justify-center">
 								<p class="text-center font-bold text-sm mb-2">
 									Password strength: {passwordStrength}
 									{passwordScore}
 								</p>
-								<li class="flex items-center justify-center">
+								<li class="flex items-center justify-start">
 									<Icon
-										icon={icons.checkmark}
-										class="text-gray-500 text-xs mx-1 w-4 h-4" />
+										icon={pwCheckLength
+											? icons.checkmark
+											: icons.xFill}
+										class=" text-xs mx-1 w-4 h-4
+										{pwCheckLength ? 'text-limegreen-500' : 'text-gray-500'}" />
 									<p class="flex text-xs">
-										Must include at least 8 characters
+										Must include at least 8 characters: {password.length}
 									</p>
 								</li>
 								<li
-									class="flex items-center justify-center  mt-2 mb-1">
+									class="flex items-center justify-start  mt-2 mb-1">
 									<Icon
-										icon={icons.checkmark}
-										class="text-gray-500 text-xs mx-1 w-4 h-4" />
-									<p class="flex text-xs">
-										Must include a supported symbol
-									</p>
+										icon={pwCheckSymbol || pwCheckNumber
+											? icons.checkmark
+											: icons.xFill}
+										class=" text-xs mx-1 w-4 h-4
+										{pwCheckSymbol || pwCheckNumber ? 'text-limegreen-500 ' : 'text-gray-500 '}" />
+									<div class="flex text-xs">
+										Must include a supported <div
+											class="tooltip px-1 underline cursor-pointer"
+											use:tooltip
+											title={symbols}>
+											symbol
+										</div>
+										 or a number
+									</div>
 								</li>
 							</ul>
 							<button
@@ -718,7 +753,7 @@
 	}
 
 	meter::-webkit-meter-bar {
-		  background: none;
+		background: none;
 		//   background: red;
 		//   background-color: rgba(0, 0, 0, 0.1);
 		//   background-color: rgba(0, 255, 0, 1);
@@ -728,10 +763,8 @@
 		background-color: var(--color-winterblues-600);
 	}
 
-
 	/* Gecko based browsers */
 	meter[value="0"]::-moz-meter-bar {
 		background: black;
 	}
-
 </style>
