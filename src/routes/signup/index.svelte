@@ -262,6 +262,7 @@
 		worksheets.set([]);
 	}
 
+	// from https://stackoverflow.com/questions/948172/password-strength-meter
 	function scorePassword(pass) {
 		var score = 0;
 		if (!pass) return score;
