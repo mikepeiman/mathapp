@@ -83,3 +83,5 @@
   * signing in a new email with magic link creates a user. If that user wants to use the same email/account in future to log in with password, they must first be logged in and then conduct an "update password" operation as per https://supabase.com/docs/reference/javascript/auth-update
   * when user wants to change password, I need to capture the token returned in the header and redirect to a form for this purpose
   * put all auth options on one modal page, offer user option to "remember my preference" and put that in localStorage, changing the subsequent display as a result
+  * deal with 400 error "user already registered" when trying to sign up and user exists
+  * complete auth flow for success in signing up new user by email and password (currently nothing changes, no redirect, no notification)

@@ -15,7 +15,7 @@
 	let acceptedTerms,
 		acceptedUpdates,
 		continueToSignup = false;
-	continueToSignup = true;
+	continueToSignup = false;
 	$: mounted ? setTooltip(acceptedTerms) : null;
 	$: currentUser.set(supabase.auth.user());
 	$: $currentUser ? (loggedIn = true) : (loggedIn = false);
@@ -57,18 +57,7 @@
 		password,
 		scorePassword(password)
 	);
-	// $: console.log(
-	// 	`🚀 ~ file: index.svelte ~ line 47 ~ scorePassword(password)`,
-	// 	scorePassword(password)
-	// );
-	// $: console.log(
-	// 	`🚀 ~ file: index.svelte ~ line 48 ~ passwordScore`,
-	// 	passwordScore
-	// );
-	// $: console.log(
-	// 	`🚀 ~ file: index.svelte ~ line 49 ~ passwordStrength`,
-	// 	passwordStrength
-	// );
+
 	const icons = {
 		google: "flat-color-icons:google",
 		twitter: "logos:twitter",
@@ -83,14 +72,30 @@
 		mounted = true;
 	});
 
-	// $: console.log(`🚀 ~ file: index.svelte ~ line 53 ~ isValidEmail`, isValidEmail);
 	function checkIsValidEmail() {
 		isValidEmail = EmailValidator.validate(email);
 	}
-	function checkPasswordStrength() {
-		console.log(`Current password: ${password}`);
-		passwordScore = scorePassword(password);
+
+
+	function setTooltip(e) {
+		console.log(`🚀 ~ file: index.svelte ~ line 53 ~ setTooltip ~ e`, e);
+		if (document.querySelector("#continue-signup")) {
+			let btn = tippy(document.querySelector("#continue-signup"));
+			btn.setProps({
+				onShow(instance) {
+					acceptedTerms
+						? instance.setContent(
+								"Continue to select a password for your new account"
+						  )
+						: instance.setContent(
+								"You must accept the terms and conditions to continue"
+						  );
+				},
+			});
+		}
 	}
+
+
 	function handleSubmit(msg, provider) {
 		if (!acceptedTerms) {
 			return;
@@ -114,10 +119,7 @@
 				continueToSignup = true;
 			}
 		} else if (msg === "password") {
-			event === "signin" ? signInWithPassword() : false;
-			event === "signup" ? signUpWithPassword() : false;
-			event === "update" ? updatePassword() : false;
-			event === "reset" ? resetPassword() : false;
+			signUpWithPassword();
 		} else if (msg === "user") {
 			event === "signout" ? signOut() : false;
 		} else if (msg === "social") {
@@ -129,50 +131,8 @@
 		}
 	}
 
-	function setTooltip(e) {
-		console.log(`🚀 ~ file: index.svelte ~ line 53 ~ setTooltip ~ e`, e);
-		if (document.querySelector("#continue-signup")) {
-			let btn = tippy(document.querySelector("#continue-signup"));
-			btn.setProps({
-				onShow(instance) {
-					acceptedTerms
-						? instance.setContent(
-								"Continue to select a password for your new account"
-						  )
-						: instance.setContent(
-								"You must accept the terms and conditions to continue"
-						  );
-				},
-			});
-		}
-	}
 
-	async function signInWithPassword() {
-		try {
-			loading = true;
-			const { user, error } = await supabase.auth.signIn({
-				email,
-				password,
-			});
-			console.log(
-				`🚀 ~ file: index.svelte ~ line 38 ~ signInWithPassword ~ user`,
-				user
-			);
-			if (error) throw error;
-			// return user
-		} catch (error) {
-			console.error(error);
-			console.error(error.status, typeof error.status);
-			console.error(error.message);
-			// alert(error.error_description || error.message);
-			if (error.status >= 400 && error.status < 500) {
-				console.log(`conditional in received 400-series error`);
-				passwordError = true;
-			}
-		} finally {
-			loading = false;
-		}
-	}
+
 	async function signUpWithPassword() {
 		try {
 			loading = true;
@@ -210,45 +170,6 @@
 			if (error) throw error;
 			// return user
 			alert(`Welcome! Check your email for a verification link.`);
-		} catch (error) {
-			console.error(error);
-			alert(error.error_description || error.message);
-		} finally {
-			loading = false;
-		}
-	}
-	async function resetPassword() {
-		try {
-			loading = true;
-			const { data, error } =
-				await supabase.auth.api.resetPasswordForEmail(email);
-			console.log(
-				`🚀 ~ file: index.svelte ~ line 98 ~ resetPassword ~ email ${typeof email}: `,
-				email
-			);
-			console.log(
-				`🚀 ~ file: index.svelte ~ line 102 ~ resetPassword ~ data`,
-				data
-			);
-			if (error) throw error;
-			// return user
-		} catch (error) {
-			console.error(error);
-			alert(error.error_description || error.message);
-		} finally {
-			loading = false;
-		}
-	}
-	async function updatePassword() {
-		try {
-			loading = true;
-			const { user, error } = await supabase.auth.update({ password });
-			console.log(
-				`🚀 ~ file: index.svelte ~ line 111 ~ updatePassword ~ user`,
-				user
-			);
-			if (error) throw error;
-			// return user
 		} catch (error) {
 			console.error(error);
 			alert(error.error_description || error.message);
@@ -478,7 +399,7 @@
 										: "Oops! We lost your email. Please re-enter it."}
 								</div>
 								<a
-									href=""
+									class="underline text-sm"
 									on:click={() =>
 										(changeEmail = !changeEmail)}>Change</a>
 							</div>
@@ -577,7 +498,7 @@
 											title={symbols}>
 											symbol
 										</div>
-										 or a number
+										or a number
 									</div>
 								</li>
 							</ul>
@@ -590,7 +511,7 @@
 								type="submit"
 								on:hover={(e) => console.log(e)}
 								on:click|preventDefault={() =>
-									handleSubmit("email")}
+									handleSubmit("password")}
 								>Create account</button>
 						</div>
 					</form>
@@ -632,7 +553,7 @@
 				<Icon icon={icons.github} class="w-6 h-6 mr-2" />
 				<div class="flex">Sign in with Github</div></button>
 			<p class="text-sm m-4">
-				Already have an account? <a href="/" class="underline"
+				Already have an account? <a href="/signin" class="underline"
 					>Sign in</a>
 			</p>
 			<div class="mb-4" />
