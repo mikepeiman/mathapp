@@ -3,16 +3,12 @@
 	import { currentUser } from "$stores/auth.js";
 	import tippy from "tippy.js";
 	import * as EmailValidator from "email-validator";
-	import { Switch } from "@rgossiaux/svelte-headlessui";
-	import {
-		Tab,
-		TabGroup,
-		TabList,
-		TabPanel,
-		TabPanels,
-		Transition,
-		TransitionChild,
-	} from "@rgossiaux/svelte-headlessui";
+	// import zxcvbn from "zxcvbn";
+	import tooltip from "$utils/tooltip";
+	import { onMount } from "svelte";
+	import Checkbox from "$components/Checkbox.svelte";
+	import Icon from "@iconify/svelte";
+	import { getWorksheetsFromSupabase, worksheets } from "$stores/math";
 	let loggedIn = false;
 	let mounted = false;
 	let isValidEmail = true;
@@ -27,24 +23,27 @@
 		`🚀 ~ file: index.svelte ~ line 16 ~ currentUser`,
 		$currentUser
 	);
-	$: console.log(`score password: `,scorePassword(password))
+	$: console.log(`score password: `, scorePassword(password));
+	// $: window !== undefined ? console.log(`zxcvbn: `,zxcvbn(password)) : null;
 	supabase.auth.onAuthStateChange((_, session) => {
 		if (session?.user) {
 			currentUser.set(session?.user);
 		}
 	});
-
-	import tooltip from "$utils/tooltip";
-	import { onMount } from "svelte";
-	import Checkbox from "$components/Checkbox.svelte";
-	import Icon from "@iconify/svelte";
-	import { getWorksheetsFromSupabase, worksheets } from "$stores/math";
 	let loading = false;
 	let email,
 		changeEmail,
 		password,
 		passwordError = false;
-
+	const passwordStrengths = [
+		"Insufficient",
+		"Weak",
+		"Fair",
+		"Good",
+		"Strong",
+		"Very Strong",
+	];
+	let passwordStrength = passwordStrengths[0];
 	const icons = {
 		google: "flat-color-icons:google",
 		twitter: "logos:twitter",
@@ -287,6 +286,18 @@
 			variationCount += variations[check] == true ? 1 : 0;
 		}
 		score += (variationCount - 1) * 10;
+		// console.log(`zxcvbn: `,zxcvbn(password))
+		let s = parseInt(score);
+		s < 20 ? (passwordStrength = passwordStrengths[0]) : "";
+		s > 20 ? (passwordStrength = passwordStrengths[1]) : "";
+		s > 35 ? (passwordStrength = passwordStrengths[2]) : "";
+		s > 50 ? (passwordStrength = passwordStrengths[3]) : "";
+		s > 75 ? (passwordStrength = passwordStrengths[4]) : "";
+		s > 90 ? (passwordStrength = passwordStrengths[5]) : "";
+		console.log(
+			`🚀 ~ file: index.svelte ~ line 289 ~ scorePassword ~ passwordStrength`,
+			passwordStrength
+		);
 
 		return parseInt(score);
 	}
@@ -300,6 +311,11 @@
 		return "";
 	}
 </script>
+
+<!-- 
+<svelte:head>
+	<script type="text/javascript" src="C:/webdev/LIBRARIES and COMPONENTS/zxcvbn.js"></script>
+</svelte:head> -->
 
 <div
 	class="flex flex-col z-0 relative font-montserrat items-center justify-start bg-gradient-to-br from-winterblues-500 via-winterblues-900 to-fuchsia-400 w-full h-full">
@@ -465,7 +481,7 @@
 							</label>
 							<ul class="w-full items-center justify-center">
 								<p class="text-center font-bold text-sm mb-2">
-									Password strength: weak
+									Password strength: {passwordStrength}
 								</p>
 								<li class="flex items-center justify-start">
 									<Icon
