@@ -102,6 +102,12 @@
 			sideMenuContent = !sideMenuContent;
 		}, 300);
 	}
+
+	async function freshDbCallForWorksheets() {
+	let s =	await getWorksheetsFromSupabase();
+    console.log(`🚀 ~ file: LeftMenu.svelte ~ line 108 ~ freshDbCallForWorksheets ~ s`, s)
+	return s.length < 1 ?  'No saved sheets found' :  s;
+	}
 </script>
 
 <div
@@ -134,11 +140,11 @@
 				>
 					You must be logged in to save and load worksheets.
 				</div>
-			{:else if !sheets.length}
-				{getWorksheetsFromSupabase()}
+			{:else if !sheets || !sheets.length}
+				{freshDbCallForWorksheets()}
 			{/if}
 			<div class="flex flex-col justify-between w-full">
-				{#if sheets && sheets.length}
+				{#if sheets && sheets.length > 0}
 					{#each sheets as cur, i}
 						<div class="relative group">
 							<div

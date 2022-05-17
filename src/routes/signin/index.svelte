@@ -1,7 +1,7 @@
 <script>
-	import { supabase } from '$lib/supabaseClient.js';
-	import { currentUser } from '$stores/auth.js';
-	import { Switch } from '@rgossiaux/svelte-headlessui';
+	import { supabase } from "$lib/supabaseClient.js";
+	import { currentUser } from "$stores/auth.js";
+	import { Switch } from "@rgossiaux/svelte-headlessui";
 	import {
 		Tab,
 		TabGroup,
@@ -9,35 +9,38 @@
 		TabPanel,
 		TabPanels,
 		Transition,
-		TransitionChild
-	} from '@rgossiaux/svelte-headlessui';
+		TransitionChild,
+	} from "@rgossiaux/svelte-headlessui";
 	let loggedIn = false;
 	let acceptedTerms,
 		acceptedUpdates = false;
 	$: currentUser.set(supabase.auth.user());
 	$: $currentUser ? (loggedIn = true) : (loggedIn = false);
-	$: console.log(`🚀 ~ file: index.svelte ~ line 16 ~ currentUser`, $currentUser);
+	$: console.log(
+		`🚀 ~ file: index.svelte ~ line 16 ~ currentUser`,
+		$currentUser
+	);
 	supabase.auth.onAuthStateChange((_, session) => {
 		if (session?.user) {
 			currentUser.set(session?.user);
 		}
 	});
-	import tooltip from '$utils/tooltip';
-	import { onMount } from 'svelte';
-	import Checkbox from '$components/Checkbox.svelte';
-	import Icon from '@iconify/svelte';
-import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
+	import tooltip from "$utils/tooltip";
+	import { onMount } from "svelte";
+	import Checkbox from "$components/Checkbox.svelte";
+	import Icon from "@iconify/svelte";
+	import { getWorksheetsFromSupabase, worksheets } from "$stores/math";
 	let loading = false;
 	let email,
 		password,
 		passwordError = false;
 
 	const icons = {
-		google: 'flat-color-icons:google',
-		twitter: 'logos:twitter',
-		facebook: 'simple-icons:facebook',
-		github: 'ant-design:github-filled',
-		asterisk: 'el:asterisk',
+		google: "flat-color-icons:google",
+		twitter: "logos:twitter",
+		facebook: "simple-icons:facebook",
+		github: "ant-design:github-filled",
+		asterisk: "el:asterisk",
 	};
 
 	onMount(() => {});
@@ -47,9 +50,12 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 			loading = true;
 			const { user, error } = await supabase.auth.signIn({
 				email,
-				password
+				password,
 			});
-			console.log(`🚀 ~ file: index.svelte ~ line 38 ~ signInWithPassword ~ user`, user);
+			console.log(
+				`🚀 ~ file: index.svelte ~ line 38 ~ signInWithPassword ~ user`,
+				user
+			);
 			if (error) throw error;
 			// return user
 		} catch (error) {
@@ -70,9 +76,12 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 			loading = true;
 			const { user, error } = await supabase.auth.signUp({
 				email,
-				password
+				password,
 			});
-			console.log(`🚀 ~ file: index.svelte ~ line 62 ~ signUpWithPassword ~ user`, user);
+			console.log(
+				`🚀 ~ file: index.svelte ~ line 62 ~ signUpWithPassword ~ user`,
+				user
+			);
 			if (error) throw error;
 		} catch (error) {
 			console.error(error);
@@ -90,9 +99,12 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 		try {
 			loading = true;
 			const { user, error } = await supabase.auth.signIn({
-				email
+				email,
 			});
-			console.log(`🚀 ~ file: Auth.svelte ~ line 21 ~ signInWithEmail ~ user`, user);
+			console.log(
+				`🚀 ~ file: Auth.svelte ~ line 21 ~ signInWithEmail ~ user`,
+				user
+			);
 			if (error) throw error;
 			// return user
 			alert(`Welcome! Check your email for a verification link.`);
@@ -106,12 +118,16 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 	async function resetPassword() {
 		try {
 			loading = true;
-			const { data, error } = await supabase.auth.api.resetPasswordForEmail(email);
+			const { data, error } =
+				await supabase.auth.api.resetPasswordForEmail(email);
 			console.log(
 				`🚀 ~ file: index.svelte ~ line 98 ~ resetPassword ~ email ${typeof email}: `,
 				email
 			);
-			console.log(`🚀 ~ file: index.svelte ~ line 102 ~ resetPassword ~ data`, data);
+			console.log(
+				`🚀 ~ file: index.svelte ~ line 102 ~ resetPassword ~ data`,
+				data
+			);
 			if (error) throw error;
 			// return user
 		} catch (error) {
@@ -125,7 +141,10 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 		try {
 			loading = true;
 			const { user, error } = await supabase.auth.update({ password });
-			console.log(`🚀 ~ file: index.svelte ~ line 111 ~ updatePassword ~ user`, user);
+			console.log(
+				`🚀 ~ file: index.svelte ~ line 111 ~ updatePassword ~ user`,
+				user
+			);
 			if (error) throw error;
 			// return user
 		} catch (error) {
@@ -137,22 +156,22 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 	}
 
 	function handleSubmit(msg, provider) {
-		if(!acceptedTerms) {
+		if (!acceptedTerms) {
 			return;
 		}
 		console.log(
 			`🚀 ~ file: Auth.svelte ~ line 21 ~ handleSubmit ~ msg ${msg}, provider ${provider}`
 		);
-		if (msg === 'magic') {
+		if (msg === "magic") {
 			signInWithEmail();
-		} else if (msg === 'password') {
-			event === 'signin' ? signInWithPassword() : false;
-			event === 'signup' ? signUpWithPassword() : false;
-			event === 'update' ? updatePassword() : false;
-			event === 'reset' ? resetPassword() : false;
-		} else if (msg === 'user') {
-			event === 'signout' ? signOut() : false;
-		} else if (msg === 'social') {
+		} else if (msg === "password") {
+			event === "signin" ? signInWithPassword() : false;
+			event === "signup" ? signUpWithPassword() : false;
+			event === "update" ? updatePassword() : false;
+			event === "reset" ? resetPassword() : false;
+		} else if (msg === "user") {
+			event === "signout" ? signOut() : false;
+		} else if (msg === "social") {
 			signInWithSocial(provider);
 		}
 	}
@@ -161,12 +180,18 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 		try {
 			loading = true;
 			const { user, session, error } = await supabase.auth.signIn({
-				provider: provider
+				provider: provider,
 			});
-			console.log(`🚀 ~ file: index.svelte ~ line 138 ~ signInWithSocial ~ user`, user);
+			console.log(
+				`🚀 ~ file: index.svelte ~ line 138 ~ signInWithSocial ~ user`,
+				user
+			);
 			currentUser.set(user);
-			getWorksheetsFromSupabase()
-			console.log(`🚀 ~ file: index.svelte ~ line 159 ~ signInWithSocial ~ session`, session)
+			getWorksheetsFromSupabase();
+			console.log(
+				`🚀 ~ file: index.svelte ~ line 159 ~ signInWithSocial ~ session`,
+				session
+			);
 			// if (error) throw error;
 			// return user
 		} catch (error) {
@@ -180,26 +205,42 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 	async function signOut() {
 		const { error } = await supabase.auth.signOut();
 		error ? console.error(error) : (loggedIn = false);
-		currentUser.set({email: "logged out"});
+		currentUser.set({ email: "logged out" });
 		worksheets.set([]);
+	}
+
+	function setTooltip(e) {
+		console.log(`🚀 ~ file: index.svelte ~ line 53 ~ setTooltip ~ e`, e);
+		if (document.querySelector("#continue-signup")) {
+			let btn = tippy(document.querySelector("#continue-signup"));
+			btn.setProps({
+				onShow(instance) {
+					acceptedTerms
+						? instance.setContent(
+								"Continue to select a password for your new account"
+						  )
+						: instance.setContent(
+								"You must accept the terms and conditions to continue"
+						  );
+				},
+			});
+		}
 	}
 </script>
 
 <div
-	class="flex flex-col z-0 relative font-montserrat items-center justify-start bg-gradient-to-br from-winterblues-500 via-winterblues-900 to-fuchsia-400 w-full h-full"
->
+	class="flex flex-col z-0 relative font-montserrat items-center justify-start bg-gradient-to-br from-winterblues-500 via-winterblues-900 to-fuchsia-400 w-full h-full">
 	<!-- <div class="bg-fuchsia-500 absolute top-0 left-0 w-full h-full bg-opacity-50 z-2"></div> -->
 	<!-- <div class="bg-white absolute top-0 left-0 w-full h-full bg-opacity-50 z-1"></div> -->
-	<div class="bg-black absolute top-0 left-0 w-full h-full bg-opacity-50 z-1" />
 	<div
-		class="text-3xl  w-full text-center absolute top-0 left-0 z-2 py-3 bg-gradient-to-r from-winterblues-700 via-winterblues-900 to-fuchsia-800 bg-opacity-40 lg:py-4 lg:rounded-t-lg border-b-[1px] border-lightBlue-300"
-	>
+		class="bg-black absolute top-0 left-0 w-full h-full bg-opacity-50 z-1" />
+	<div
+		class="text-3xl  w-full text-center absolute top-0 left-0 z-2 py-3 bg-gradient-to-r from-winterblues-700 via-winterblues-900 to-fuchsia-800 bg-opacity-40 lg:py-4 lg:rounded-t-lg border-b-[1px] border-lightBlue-300">
 		<a href="/">Math App</a>
 		<h2 class="text-lg text-gray-400">Curriculum For Life</h2>
 	</div>
 	<div
-		class="flex flex-col absolute top-28 z-0 items-center justify-start  bg-opacity-50 w-[22rem] rounded-lg  "
-	>
+		class="flex flex-col absolute top-28 z-0 items-center justify-start  bg-opacity-50 w-[22rem] rounded-lg  ">
 		<h1 class="text-3xl text-white font-serif mt-8 font-light">Sign in</h1>
 		<!-- {$currentUser ? $currentUser.email : 'not signed in'}
 		{#if $currentUser}
@@ -210,10 +251,11 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 			>
 		{/if} -->
 		<div class="flex flex-col w-full items-center justify-center">
-			<div class="flex flex-col items-center justify-center p-2">
+			<div class="flex flex-col items-center justify-center p-2 w-full">
 				<!-- <div class="flex flex-col"> -->
-				<form>
-					<div class=" w-auto mb-1 flex flex-col tooltip items-center justify-between">
+				<form class="w-full">
+					<div
+						class=" w-auto mb-1 flex flex-col tooltip items-center justify-between">
 						<label
 							for="email"
 							use:tooltip
@@ -225,93 +267,60 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 								bind:value={email}
 								autocomplete="on"
 								placeholder="Email address"
-								class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none"
-							/>
+								class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
 						</label>
-						<ul class="w-full">
-							<li class="flex items-start justify-start">
-								<Checkbox
-									name="showAnswers"
-									size="1.25rem"
-									bind:checked={acceptedTerms}
-									class="  rounded-none m-2 ml-0 mt-0"
-								/>
-								<label for="showAnswers" class=" items-center w-full text-sm text-left inline inline-block"
-									>I agree to Math App & Curriculum For Life's
-									<div class="flex">
-										<a href="/terms-of-service" class="underline">Terms Of Service </a>
-										<p class="mx-1"> and </p>
-										<a href="/privacy" class="underline"> Privacy Policy.</a><Icon icon="{icons.asterisk}" class="text-red-500 text-xs mx-1" />
-									</div>
-								</label>
-							</li>
-							<li class="flex items-start justify-start mt-2 mb-1">
-								<Checkbox
-									name="showAnswers"
-									size="1.25rem"
-									bind:checked={acceptedUpdates}
-									class="  rounded-none m-2 ml-0 mt-0"
-								/>
-								<label for="showAnswers" class=" items-center w-full text-sm text-left"
-									>Curriculum For Life may use my email address to provide me with occasional
-									updates on our apps. I can opt out at any time.
-								</label>
-							</li>
-						</ul>
+
 						<button
-							class="w-full p-2 m-4  rounded-xl  transition-all duration-200
-							{acceptedTerms ? 'bg-winterblues-700 hover:bg-winterblues-500 hover:text-black' : 'bg-gray-500 cursor-default'}"
+							class="w-full p-2  rounded-xl  transition-all duration-200 bg-winterblues-600 hover:bg-winterblues-800 "
 							type="submit"
-							use:tooltip
-							data-tippy-content="{acceptedTerms ? 'Sign up with your email address.' : 'You must accept the terms of service and privacy policy to continue'}"
-							
-							on:click|preventDefault={() => handleSubmit('magic')}>Continue</button
-						>
+							on:click|preventDefault={() =>
+								handleSubmit("magic")}>Next</button>
+						<button
+							class="w-full p-2 m-2  rounded-xl  transition-all duration-200 text-black bg-white hover:bg-gray-300"
+							type="submit"
+							on:click|preventDefault={() =>
+								handleSubmit("magic")}>Continue</button>
 					</div>
 				</form>
 			</div>
 			<div class="flex items-center justify-between w-auto">
 				<div
-					class="flex flex-col items-center justify-center bg-gradient-to-l from-lightBlue-400 to-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl"
-				/>
+					class="flex flex-col items-center justify-center bg-gradient-to-l from-lightBlue-400 to-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl" />
 				<div class="flex text-lightBlue-400">or</div>
 				<div
-					class="flex flex-col items-center justify-center bg-gradient-to-l to-lightBlue-400 from-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl"
-				/>
+					class="flex flex-col items-center justify-center bg-gradient-to-l to-lightBlue-400 from-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl" />
 			</div>
 			<button
 				class="w-full flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
 				type="submit"
-				on:click|preventDefault={() => handleSubmit('social', 'google')}
-			>
+				on:click|preventDefault={() =>
+					handleSubmit("social", "google")}>
 				<Icon icon={icons.google} class="w-6 h-6 mr-2" />
-				<div class="flex">Sign in with Google</div></button
-			>
+				<div class="flex">Sign in with Google</div></button>
 			<button
 				class="w-full flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
 				type="submit"
-				on:click|preventDefault={() => handleSubmit('social', 'twitter')}
-			>
+				on:click|preventDefault={() =>
+					handleSubmit("social", "twitter")}>
 				<Icon icon={icons.twitter} class="w-6 h-6 mr-2" />
-				<div class="flex">Sign in with Twitter</div></button
-			>
+				<div class="flex">Sign in with Twitter</div></button>
 			<button
 				class="w-full flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
 				type="submit"
-				on:click|preventDefault={() => handleSubmit('social', 'facebook')}
-			>
+				on:click|preventDefault={() =>
+					handleSubmit("social", "facebook")}>
 				<Icon icon={icons.facebook} class="w-6 h-6 mr-2" />
-				<div class="flex">Sign in with Facebook</div></button
-			>
+				<div class="flex">Sign in with Facebook</div></button>
 			<button
 				class="w-full flex items-center justify-center p-2 m-2 text-winterblues-700 hover:bg-winterblues-800 hover:text-white hover:border-white border-[1px] border-winterblues-500 rounded-xl transition-all duration-100"
 				type="submit"
-				on:click|preventDefault={() => handleSubmit('social', 'github')}
-			>
+				on:click|preventDefault={() =>
+					handleSubmit("social", "github")}>
 				<Icon icon={icons.github} class="w-6 h-6 mr-2" />
-				<div class="flex">Sign in with Github</div></button
-			>
-			<p class="text-sm m-4">Need an account? <a href="/signup" class="underline">Sign up</a></p>
+				<div class="flex">Sign in with Github</div></button>
+			<p class="text-sm m-4">
+				Need an account? <a href="/signup" class="underline">Sign up</a>
+			</p>
 			<div class="mb-4" />
 		</div>
 	</div>
@@ -329,7 +338,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 		align-items: center;
 		width: 100%;
 	}
-	:global(div[role='tablist']) {
+	:global(div[role="tablist"]) {
 		width: 100%;
 	}
 	.headless-tab {
@@ -406,7 +415,7 @@ import { getWorksheetsFromSupabase, worksheets } from '$stores/math';
 	select:-webkit-autofill:focus {
 		border-bottom: 1px solid var(--color-winterblues-300);
 		-webkit-text-fill-color: white;
-		font-family: 'Montserrat', sans-serif;
+		font-family: "Montserrat", sans-serif;
 		font-size: 1rem;
 		-webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.25) inset;
 		transition: background-color 5000s ease-in-out 0s;

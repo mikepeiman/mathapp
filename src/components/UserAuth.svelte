@@ -36,7 +36,7 @@
 
 {#if !$currentUser}
 <a
-href="/login"
+href="/signin"
 class="flex group items-center justify-center text-lg xl:text-xl text-center p-2 mx-2 rounded bg-winterblues-700 hover:bg-winterblues-600 hover:text-white cursor-pointer transition-all duration-100"
 >
 <span>Log In</span>
