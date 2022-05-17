@@ -15,7 +15,6 @@
 	let acceptedTerms,
 		acceptedUpdates,
 		continueToSignup = false;
-	continueToSignup = false;
 	$: mounted ? setTooltip(acceptedTerms) : null;
 	$: currentUser.set(supabase.auth.user());
 	$: $currentUser ? (loggedIn = true) : (loggedIn = false);
@@ -294,7 +293,7 @@
 		<div class="flex flex-col w-full items-center justify-center">
 			{#if !continueToSignup}
 				<div
-					class="flex flex-col w-full items-center justify-center p-2">
+					class="flex flex-col w-full items-center justify-center">
 					<form class="w-full">
 						<div
 							class=" w-auto mb-1 flex flex-col items-center justify-between">

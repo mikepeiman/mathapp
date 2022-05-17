@@ -1,6 +1,7 @@
 <script>
 	import { supabase } from "$lib/supabaseClient.js";
 	import { currentUser } from "$stores/auth.js";
+	import * as EmailValidator from "email-validator";
 	import { Switch } from "@rgossiaux/svelte-headlessui";
 	import {
 		Tab,
@@ -13,7 +14,9 @@
 	} from "@rgossiaux/svelte-headlessui";
 	let loggedIn = false;
 	let acceptedTerms,
-		acceptedUpdates = false;
+		acceptedUpdates,
+		continueToPasswordSignin, 
+		error = false;
 	$: currentUser.set(supabase.auth.user());
 	$: $currentUser ? (loggedIn = true) : (loggedIn = false);
 	$: console.log(
@@ -115,45 +118,7 @@
 			loading = false;
 		}
 	}
-	async function resetPassword() {
-		try {
-			loading = true;
-			const { data, error } =
-				await supabase.auth.api.resetPasswordForEmail(email);
-			console.log(
-				`🚀 ~ file: index.svelte ~ line 98 ~ resetPassword ~ email ${typeof email}: `,
-				email
-			);
-			console.log(
-				`🚀 ~ file: index.svelte ~ line 102 ~ resetPassword ~ data`,
-				data
-			);
-			if (error) throw error;
-			// return user
-		} catch (error) {
-			console.error(error);
-			alert(error.error_description || error.message);
-		} finally {
-			loading = false;
-		}
-	}
-	async function updatePassword() {
-		try {
-			loading = true;
-			const { user, error } = await supabase.auth.update({ password });
-			console.log(
-				`🚀 ~ file: index.svelte ~ line 111 ~ updatePassword ~ user`,
-				user
-			);
-			if (error) throw error;
-			// return user
-		} catch (error) {
-			console.error(error);
-			alert(error.error_description || error.message);
-		} finally {
-			loading = false;
-		}
-	}
+
 
 	function handleSubmit(msg, provider) {
 		if (!acceptedTerms) {
@@ -164,6 +129,19 @@
 		);
 		if (msg === "magic") {
 			signInWithEmail();
+		} 		else if (msg === "email") {
+			isValidEmail = EmailValidator.validate(email);
+			console.log(
+				`🚀 ~ file: Auth.svelte ~ line 28 ~ handleSubmit ~ email`,
+				email
+			);
+			console.log(
+				`🚀 ~ file: index.svelte ~ line 63 ~ handleSubmit ~ isValidEmail`,
+				isValidEmail
+			);
+			if (isValidEmail) {
+				continueToPasswordSignin = true;
+			}
 		} else if (msg === "password") {
 			event === "signin" ? signInWithPassword() : false;
 			event === "signup" ? signUpWithPassword() : false;
@@ -209,23 +187,7 @@
 		worksheets.set([]);
 	}
 
-	function setTooltip(e) {
-		console.log(`🚀 ~ file: index.svelte ~ line 53 ~ setTooltip ~ e`, e);
-		if (document.querySelector("#continue-signup")) {
-			let btn = tippy(document.querySelector("#continue-signup"));
-			btn.setProps({
-				onShow(instance) {
-					acceptedTerms
-						? instance.setContent(
-								"Continue to select a password for your new account"
-						  )
-						: instance.setContent(
-								"You must accept the terms and conditions to continue"
-						  );
-				},
-			});
-		}
-	}
+
 </script>
 
 <div
@@ -251,7 +213,8 @@
 			>
 		{/if} -->
 		<div class="flex flex-col w-full items-center justify-center">
-			<div class="flex flex-col items-center justify-center p-2 w-full">
+			{#if !continueToPasswordSignin}
+			<div class="flex flex-col items-center justify-center  w-full">
 				<!-- <div class="flex flex-col"> -->
 				<form class="w-full">
 					<div
@@ -274,15 +237,56 @@
 							class="w-full p-2  rounded-xl  transition-all duration-200 bg-winterblues-600 hover:bg-winterblues-800 "
 							type="submit"
 							on:click|preventDefault={() =>
-								handleSubmit("magic")}>Next</button>
+								handleSubmit("email")}>Next</button>
+								{#if error}
+									<div class="text-red-500 text-sm">{error}</div>
+								{/if}
 						<button
-							class="w-full p-2 m-2  rounded-xl  transition-all duration-200 text-black bg-white hover:bg-gray-300"
+							class="w-full p-2 m-2  rounded-xl  transition-all duration-200 text-black bg-white bg-opacity-70 hover:bg-gray-300"
 							type="submit"
 							on:click|preventDefault={() =>
-								handleSubmit("magic")}>Continue</button>
+								handleSubmit("magic")}>Email a sign in link</button>
 					</div>
 				</form>
 			</div>
+			{:else}
+			<div class="flex flex-col items-center justify-center  w-full">
+				<!-- <div class="flex flex-col"> -->
+				<form class="w-full">
+					<div
+						class=" w-auto mb-1 flex flex-col tooltip items-center justify-between">
+						<label
+							for="email"
+							use:tooltip
+							class="w-full border-[1px] m-4 mb-6 border-white"
+							title="Sign in via magic link with just your email address."
+							><input
+								type="text"
+								name="email"
+								bind:value={email}
+								autocomplete="on"
+								placeholder="Password"
+								class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
+						</label>
+
+						<button
+							class="w-full p-2  rounded-xl  transition-all duration-200 bg-winterblues-600 hover:bg-winterblues-800 "
+							type="submit"
+							on:click|preventDefault={() =>
+								handleSubmit("email")}>Next</button>
+								{#if error}
+									<div class="text-red-500 text-sm">{error}</div>
+								{/if}
+						<button
+							class="w-full p-2 m-2  rounded-xl  transition-all duration-200 text-black bg-white bg-opacity-70 hover:bg-gray-300"
+							type="submit"
+							on:click|preventDefault={() =>
+								handleSubmit("magic")}>Email a sign in link</button>
+					</div>
+				</form>
+			</div>
+
+				{/if}
 			<div class="flex items-center justify-between w-auto">
 				<div
 					class="flex flex-col items-center justify-center bg-gradient-to-l from-lightBlue-400 to-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl" />

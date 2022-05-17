@@ -85,3 +85,4 @@
   * put all auth options on one modal page, offer user option to "remember my preference" and put that in localStorage, changing the subsequent display as a result
   * deal with 400 error "user already registered" when trying to sign up and user exists
   * complete auth flow for success in signing up new user by email and password (currently nothing changes, no redirect, no notification)
+  * UI: need to mask password with * asterisks
