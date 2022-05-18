@@ -12,6 +12,7 @@
 </script>
 
 <script>
+	  import { SvelteToast } from '@zerodevx/svelte-toast'
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import BasicCalculationForm from '$components/BasicCalculationForm.svelte';

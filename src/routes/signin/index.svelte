@@ -2,6 +2,7 @@
 	import { supabase } from "$lib/supabaseClient.js";
 	import { currentUser } from "$stores/auth.js";
 	import * as EmailValidator from "email-validator";
+	import { SvelteToast, toast } from '@zerodevx/svelte-toast'
 	import { Switch } from "@rgossiaux/svelte-headlessui";
 	import {
 		Tab,
@@ -15,8 +16,13 @@
 	let loggedIn = false;
 	let acceptedTerms,
 		acceptedUpdates,
-		continueToPasswordSignin, 
+		isValidEmail,
+		continueToPasswordSignin,
 		error = false;
+	$: console.log(
+		`🚀 ~ file: index.svelte ~ line 21 ~ continueToPasswordSignin`,
+		continueToPasswordSignin
+	);
 	$: currentUser.set(supabase.auth.user());
 	$: $currentUser ? (loggedIn = true) : (loggedIn = false);
 	$: console.log(
@@ -119,17 +125,14 @@
 		}
 	}
 
-
 	function handleSubmit(msg, provider) {
-		if (!acceptedTerms) {
-			return;
-		}
+
 		console.log(
 			`🚀 ~ file: Auth.svelte ~ line 21 ~ handleSubmit ~ msg ${msg}, provider ${provider}`
 		);
 		if (msg === "magic") {
 			signInWithEmail();
-		} 		else if (msg === "email") {
+		} else if (msg === "email") {
 			isValidEmail = EmailValidator.validate(email);
 			console.log(
 				`🚀 ~ file: Auth.svelte ~ line 28 ~ handleSubmit ~ email`,
@@ -141,6 +144,8 @@
 			);
 			if (isValidEmail) {
 				continueToPasswordSignin = true;
+			} else {
+				showErrorMessage()
 			}
 		} else if (msg === "password") {
 			event === "signin" ? signInWithPassword() : false;
@@ -152,6 +157,11 @@
 		} else if (msg === "social") {
 			signInWithSocial(provider);
 		}
+	}
+
+	function showErrorMessage() {
+        console.log(`🚀 ~ file: index.svelte ~ line 163 ~ showErrorMessage ~ showErrorMessage`, toast)
+		toast.push(`That email doesn't look quite right, please check it`, {target: 'email'})
 	}
 
 	async function signInWithSocial(provider) {
@@ -187,6 +197,24 @@
 		worksheets.set([]);
 	}
 
+	
+	function setTooltip(e) {
+		console.log(`🚀 ~ file: index.svelte ~ line 53 ~ setTooltip ~ e`, e);
+		if (document.querySelector("#continue-signup")) {
+			let btn = tippy(document.querySelector("#continue-signup"));
+			btn.setProps({
+				onShow(instance) {
+					isValidEmail
+						? instance.setContent(
+								"Continue to select a password for your new account"
+						  )
+						: instance.setContent(
+								"That email address doesn't look quite right"
+						  );
+				},
+			});
+		}
+	}
 
 </script>
 
@@ -214,79 +242,78 @@
 		{/if} -->
 		<div class="flex flex-col w-full items-center justify-center">
 			{#if !continueToPasswordSignin}
-			<div class="flex flex-col items-center justify-center  w-full">
-				<!-- <div class="flex flex-col"> -->
-				<form class="w-full">
-					<div
-						class=" w-auto mb-1 flex flex-col tooltip items-center justify-between">
-						<label
-							for="email"
-							use:tooltip
-							class="w-full border-[1px] m-4 mb-6 border-white"
-							title="Sign in via magic link with just your email address."
-							><input
-								type="text"
-								name="email"
-								bind:value={email}
-								autocomplete="on"
-								placeholder="Email address"
-								class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
-						</label>
-
-						<button
-							class="w-full p-2  rounded-xl  transition-all duration-200 bg-winterblues-600 hover:bg-winterblues-800 "
-							type="submit"
-							on:click|preventDefault={() =>
-								handleSubmit("email")}>Next</button>
-								{#if error}
-									<div class="text-red-500 text-sm">{error}</div>
-								{/if}
-						<button
-							class="w-full p-2 m-2  rounded-xl  transition-all duration-200 text-black bg-white bg-opacity-70 hover:bg-gray-300"
-							type="submit"
-							on:click|preventDefault={() =>
-								handleSubmit("magic")}>Email a sign in link</button>
-					</div>
-				</form>
-			</div>
+				<div class="flex flex-col items-center justify-center  w-full">
+					<!-- <div class="flex flex-col"> -->
+					<form class="w-full">
+						<div
+							class=" w-auto mb-1 flex flex-col tooltip items-center justify-between">
+							<label
+								for="email"
+								class="w-full border-[1px] m-4 mb-6 border-white"
+								><input
+									type="text"
+									name="email"
+									bind:value={email}
+									autocomplete="on"
+									placeholder="Email address"
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
+							</label>
+							<SvelteToast class="flex" target="email" />
+							<button
+								class="w-full p-2  rounded-xl  transition-all duration-200 bg-winterblues-600 hover:bg-winterblues-800 "
+								type="submit"
+								on:click|preventDefault={() =>
+									handleSubmit("email")}>Next</button>
+							{#if error}
+								<div class="text-red-500 text-sm">{error}</div>
+							{/if}
+							<button
+								class="w-full p-2 m-2  rounded-xl  transition-all duration-200 text-black bg-white bg-opacity-70 hover:bg-gray-300"
+								type="submit"
+								on:click|preventDefault={() =>
+									handleSubmit("magic")}
+								>Email a sign in link</button>
+						</div>
+					</form>
+				</div>
 			{:else}
-			<div class="flex flex-col items-center justify-center  w-full">
-				<!-- <div class="flex flex-col"> -->
-				<form class="w-full">
-					<div
-						class=" w-auto mb-1 flex flex-col tooltip items-center justify-between">
-						<label
-							for="email"
-							use:tooltip
-							class="w-full border-[1px] m-4 mb-6 border-white"
-							title="Sign in via magic link with just your email address."
-							><input
-								type="text"
-								name="email"
-								bind:value={email}
-								autocomplete="on"
-								placeholder="Password"
-								class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
-						</label>
+				<div class="flex flex-col items-center justify-center  w-full">
+					<!-- <div class="flex flex-col"> -->
+					<form class="w-full">
+						<div
+							class=" w-auto mb-1 flex flex-col tooltip items-center justify-between">
+							<label
+								for="email"
+								use:tooltip
+								class="w-full border-[1px] m-4 mb-6 border-white"
+								title="Sign in via magic link with just your email address."
+								><input
+									type="text"
+									name="email"
+									bind:value={email}
+									autocomplete="on"
+									placeholder="Password"
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
+							</label>
 
-						<button
-							class="w-full p-2  rounded-xl  transition-all duration-200 bg-winterblues-600 hover:bg-winterblues-800 "
-							type="submit"
-							on:click|preventDefault={() =>
-								handleSubmit("email")}>Next</button>
-								{#if error}
-									<div class="text-red-500 text-sm">{error}</div>
-								{/if}
-						<button
-							class="w-full p-2 m-2  rounded-xl  transition-all duration-200 text-black bg-white bg-opacity-70 hover:bg-gray-300"
-							type="submit"
-							on:click|preventDefault={() =>
-								handleSubmit("magic")}>Email a sign in link</button>
-					</div>
-				</form>
-			</div>
-
-				{/if}
+							<button
+								class="w-full p-2  rounded-xl  transition-all duration-200 bg-winterblues-600 hover:bg-winterblues-800 "
+								type="submit"
+								on:click|preventDefault={() =>
+									handleSubmit("email")}>Next</button>
+							{#if error}
+								<div class="text-red-500 text-sm">{error}</div>
+							{/if}
+							<button
+								class="w-full p-2 m-2  rounded-xl  transition-all duration-200 text-black bg-white bg-opacity-70 hover:bg-gray-300"
+								type="submit"
+								on:click|preventDefault={() =>
+									handleSubmit("magic")}
+								>Email a sign in link</button>
+						</div>
+					</form>
+				</div>
+			{/if}
 			<div class="flex items-center justify-between w-auto">
 				<div
 					class="flex flex-col items-center justify-center bg-gradient-to-l from-lightBlue-400 to-winterblues-800 bg-opacity-50 w-36 h-[2px] my-4 rounded-xl" />
