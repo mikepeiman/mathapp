@@ -18,7 +18,10 @@
 		acceptedUpdates,
 		isValidEmail,
 		continueToPasswordSignin,
+		showPassword,
 		error = false;
+		continueToPasswordSignin = true
+		let passwordType = "password"
 	$: console.log(
 		`🚀 ~ file: index.svelte ~ line 21 ~ continueToPasswordSignin`,
 		continueToPasswordSignin
@@ -50,6 +53,8 @@
 		facebook: "simple-icons:facebook",
 		github: "ant-design:github-filled",
 		asterisk: "el:asterisk",
+		eyeClosed: 'ant-design:eye-invisible-filled',
+		eyeOpen: 'ant-design:eye-filled',
 	};
 
 	onMount(() => {});
@@ -143,7 +148,7 @@
 				isValidEmail
 			);
 			if (isValidEmail) {
-				continueToPasswordSignin = true;
+				continueToPasswordSignin = !continueToPasswordSignin;
 			} else {
 				showErrorMessage()
 			}
@@ -162,6 +167,15 @@
 	function showErrorMessage() {
         console.log(`🚀 ~ file: index.svelte ~ line 163 ~ showErrorMessage ~ showErrorMessage`, toast)
 		toast.push(`That email doesn't look quite right, please check it`, {target: 'email'})
+	}
+
+	function toggleShowPassword() {
+		showPassword = !showPassword
+		showPassword ? passwordType = 'text' : passwordType = 'password'
+		let pwdField = document.getElementById('password')
+		pwdField.type = passwordType
+        console.log(`🚀 ~ file: index.svelte ~ line 176 ~ toggleShowPassword ~ pwdField`, pwdField)
+
 	}
 
 	async function signInWithSocial(provider) {
@@ -197,24 +211,7 @@
 		worksheets.set([]);
 	}
 
-	
-	function setTooltip(e) {
-		console.log(`🚀 ~ file: index.svelte ~ line 53 ~ setTooltip ~ e`, e);
-		if (document.querySelector("#continue-signup")) {
-			let btn = tippy(document.querySelector("#continue-signup"));
-			btn.setProps({
-				onShow(instance) {
-					isValidEmail
-						? instance.setContent(
-								"Continue to select a password for your new account"
-						  )
-						: instance.setContent(
-								"That email address doesn't look quite right"
-						  );
-				},
-			});
-		}
-	}
+
 
 </script>
 
@@ -249,7 +246,7 @@
 							class=" w-auto mb-1 flex flex-col tooltip items-center justify-between">
 							<label
 								for="email"
-								class="w-full border-[1px] m-4 mb-6 border-white"
+								class="w-full border-[1px] m-4 mb-6 border-white relative"
 								><input
 									type="text"
 									name="email"
@@ -258,7 +255,8 @@
 									placeholder="Email address"
 									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
 							</label>
-							<SvelteToast class="flex" target="email" />
+							<SvelteToast  target="email" options={{ duration: 8000, intro: { y: -64 } }}  />
+							{isValidEmail ? 'That looks good' : `That doesn't look right`}
 							<button
 								class="w-full p-2  rounded-xl  transition-all duration-200 bg-winterblues-600 hover:bg-winterblues-800 "
 								type="submit"
@@ -282,25 +280,41 @@
 					<form class="w-full">
 						<div
 							class=" w-auto mb-1 flex flex-col tooltip items-center justify-between">
+							<div class="flex items-center justify-center">
+								<div class="flex m-2">
+									{email !== undefined
+										? email
+										: "Oops! We lost your email. Please re-enter it."}
+								</div>
+								<a
+									class="underline text-sm"
+									on:click={() =>
+										(changeEmail = !changeEmail)}>Change</a>
+							</div>
 							<label
 								for="email"
-								use:tooltip
-								class="w-full border-[1px] m-4 mb-6 border-white"
-								title="Sign in via magic link with just your email address."
+								class="w-full border-[1px] m-4 mb-6 border-white flex relative items-center"
+
 								><input
-									type="text"
-									name="email"
-									bind:value={email}
+									type="password"
+									id="password"
+									name="password"
+									bind:value={password}
 									autocomplete="on"
 									placeholder="Password"
 									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
+	
+									<div class="flex items-center  cursor-pointer" on:click={() => toggleShowPassword()}>
+										<Icon icon={showPassword ? icons.eyeOpen : icons.eyeClosed} class="w-6 h-6 mr-2 
+										{showPassword ? 'text-green-300' : 'text-amber-200'}"  />
+									</div>
 							</label>
 
 							<button
 								class="w-full p-2  rounded-xl  transition-all duration-200 bg-winterblues-600 hover:bg-winterblues-800 "
 								type="submit"
 								on:click|preventDefault={() =>
-									handleSubmit("email")}>Next</button>
+									handleSubmit("email")}>Sign in</button>
 							{#if error}
 								<div class="text-red-500 text-sm">{error}</div>
 							{/if}
