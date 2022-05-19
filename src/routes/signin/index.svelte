@@ -465,4 +465,9 @@
 		-webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0.25) inset;
 		transition: background-color 5000s ease-in-out 0s;
 	}
+	input[type="password"] {
+		font-family:'Courier New', Courier, monospace;
+		font-size: 1rem;
+		font-weight: bold;
+	}
 </style>
