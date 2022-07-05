@@ -17,10 +17,10 @@
 	let acceptedTerms,
 		acceptedUpdates,
 		isValidEmail,
-		continueToPasswordSignin,
+		continueToPasswordSignin = true,
 		showPassword,
-		error = false;
-		continueToPasswordSignin = true
+		error = false,
+		changeEmail = false;
 		let passwordType = "password"
 	$: console.log(
 		`🚀 ~ file: index.svelte ~ line 21 ~ continueToPasswordSignin`,
@@ -281,16 +281,33 @@
 						<div
 							class=" w-auto mb-1 flex flex-col tooltip items-center justify-between">
 							<div class="flex items-center justify-center">
+								{#if email}
 								<div class="flex m-2">
 									{email !== undefined
 										? email
 										: "Oops! We lost your email. Please re-enter it."}
 								</div>
+
 								<a
 									class="underline text-sm"
 									on:click={() =>
 										(changeEmail = !changeEmail)}>Change</a>
+																		{/if}
 							</div>
+							{#if changeEmail || email === undefined}
+							<label
+								for="email"
+								class="w-full border-[1px] mt-4 border-white"
+								><input
+									type="email"
+									required
+									name="email"
+									bind:value={email}
+									autocomplete="on"
+									placeholder="Email address"
+									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
+							</label>
+						{/if}
 							<label
 								for="email"
 								class="w-full border-[1px] m-4 mb-6 border-white flex relative items-center"
