@@ -14,7 +14,10 @@
 	let isValidEmail = true;
 	let acceptedTerms,
 		acceptedUpdates,
+		showPassword,
 		continueToSignup = false;
+		continueToSignup = true;
+
 	$: mounted ? setTooltip(acceptedTerms) : null;
 	$: currentUser.set(supabase.auth.user());
 	$: $currentUser ? (loggedIn = true) : (loggedIn = false);
@@ -31,6 +34,7 @@
 	let loading = false;
 	let email,
 		changeEmail,
+		passwordType,
 		passwordError = false;
 	const passwordStrengths = [
 		"",
@@ -65,6 +69,9 @@
 		asterisk: "el:asterisk",
 		checkmark: "eva:checkmark-circle-2-fill",
 		xFill: "akar-icons:circle-x-fill",
+		asterisk: "el:asterisk",
+		eyeClosed: 'ant-design:eye-invisible-filled',
+		eyeOpen: 'ant-design:eye-filled',
 	};
 
 	onMount(() => {
@@ -76,6 +83,16 @@
 	}
 
 
+	function toggleShowPassword() {
+		showPassword = !showPassword
+		showPassword ? passwordType = 'text' : passwordType = 'password'
+		
+		let pwdField = document.getElementById('password')
+		pwdField.classList.toggle('showPassword')
+		pwdField.type = passwordType
+        console.log(`🚀 ~ file: index.svelte ~ line 176 ~ toggleShowPassword ~ pwdField`, pwdField)
+
+	}
 	function setTooltip(e) {
 		console.log(`🚀 ~ file: index.svelte ~ line 53 ~ setTooltip ~ e`, e);
 		if (document.querySelector("#continue-signup")) {
@@ -418,16 +435,21 @@
 							{/if}
 							<label
 								for="email"
-								class="w-full border-[1px] m-4 mb-6 border-white"
+								class="w-full border-[1px] m-4 mb-6 border-white flex relative items-center"
+
 								><input
-									type="email"
-									required
-									name="email"
+									type="password"
+									id="password"
+									name="password"
 									bind:value={password}
 									autocomplete="on"
 									placeholder="Password"
-									on:input={() => scorePassword(password)}
 									class=" outline-none w-full bg-transparent border-transparent border-b-1 border-b-winterblues-700 p-2 focus:ring-0 focus:border-transparent focus:border-b-winterblues-500 active:outline-none active:border-none" />
+	
+									<div class="flex items-center  cursor-pointer" on:click={() => toggleShowPassword()}>
+										<Icon icon={showPassword ? icons.eyeOpen : icons.eyeClosed} class="w-6 h-6 mr-2 
+										{showPassword ? 'text-green-300' : 'text-amber-200'}"  />
+									</div>
 							</label>
 							<div class="flex w-full items-stretch mb-2 -mt-2 ">
 								<meter
@@ -686,5 +708,15 @@
 	/* Gecko based browsers */
 	meter[value="0"]::-moz-meter-bar {
 		background: black;
+	}
+
+	input[type="password"] {
+		font-family:'Courier New', Courier, monospace;
+			font-weight: bold;
+			font-size: .9rem;
+	}
+	input[type="text"] {
+		font-family: "Montserrat";
+			// font-size: 1rem;
 	}
 </style>
