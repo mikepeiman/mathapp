@@ -172,7 +172,9 @@
 	function toggleShowPassword() {
 		showPassword = !showPassword
 		showPassword ? passwordType = 'text' : passwordType = 'password'
+		
 		let pwdField = document.getElementById('password')
+		pwdField.classList.toggle('showPassword')
 		pwdField.type = passwordType
         console.log(`🚀 ~ file: index.svelte ~ line 176 ~ toggleShowPassword ~ pwdField`, pwdField)
 
@@ -484,7 +486,11 @@
 	}
 	input[type="password"] {
 		font-family:'Courier New', Courier, monospace;
-		font-size: 1rem;
-		font-weight: bold;
+			font-weight: bold;
+			font-size: .9rem;
+	}
+	input[type="text"] {
+		font-family: "Montserrat";
+			// font-size: 1rem;
 	}
 </style>
