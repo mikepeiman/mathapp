@@ -415,7 +415,7 @@
 										: "Oops! We lost your email. Please re-enter it."}
 								</div>
 								<a
-									class="underline text-sm"
+									class="underline text-sm cursor-pointer"
 									on:click={() =>
 										(changeEmail = !changeEmail)}>Change</a>
 							</div>
