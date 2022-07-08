@@ -16,7 +16,7 @@
 		acceptedUpdates,
 		showPassword,
 		continueToSignup = false;
-		continueToSignup = true;
+
 
 	$: mounted ? setTooltip(acceptedTerms) : null;
 	$: currentUser.set(supabase.auth.user());
@@ -114,6 +114,7 @@
 
 	function handleSubmit(msg, provider) {
 		if (!acceptedTerms) {
+            console.log(`🚀 ~ file: index.svelte ~ line 117 ~ handleSubmit ~ !acceptedTerms`, !acceptedTerms)
 			return;
 		}
 		console.log(
@@ -712,14 +713,15 @@
 
 	input[type="password"] {
 		// font-family:'Courier New', Courier, monospace;
-			font-weight: bold;
-			font-size: 1.35rem;
-	}
-	:global(input.showPassword) {
-		// font-family:'Courier New', Courier, monospace;
-			// font-weight: 400;
+			// font-weight: bold;
+			// font-size: 1.35rem;
 			font-size: .9rem;
 	}
+	// :global(input.showPassword) {
+	// 	// font-family:'Courier New', Courier, monospace;
+	// 		// font-weight: 400;
+	// 		font-size: .9rem;
+	// }
 	input[type="text"] {
 		font-family: "Montserrat";
 			// font-size: 1rem;

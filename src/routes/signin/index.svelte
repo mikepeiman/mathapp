@@ -486,14 +486,15 @@
 	}
 	input[type="password"] {
 		// font-family:'Courier New', Courier, monospace;
-			font-weight: bold;
-			font-size: 1.35rem;
-	}
-	:global(input.showPassword) {
-		// font-family:'Courier New', Courier, monospace;
-			// font-weight: 400;
+			// font-weight: bold;
+			// font-size: 1.35rem;
 			font-size: .9rem;
 	}
+	// :global(input.showPassword) {
+	// 	// font-family:'Courier New', Courier, monospace;
+	// 		// font-weight: 400;
+	// 		font-size: .9rem;
+	// }
 
 	input[type="text"] {
 		font-family: "Montserrat";
