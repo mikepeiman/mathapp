@@ -91,7 +91,7 @@
 	</div>
 
 	<div class="auth flex h-full justify-end items-center">
-		<UserAuth />
+		<UserAuth inOrUp="in" />
 	</div>
 </div>
 

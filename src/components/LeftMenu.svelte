@@ -16,6 +16,7 @@
 	} from '$stores/math';
 	import { page } from '$app/stores';
 	import { onMount, afterUpdate } from 'svelte';
+import UserAuth from './UserAuth.svelte';
 
 	$: sheets = get(worksheets) || [];
 	$: user = get(currentUser) || null
@@ -139,6 +140,14 @@
 				{sideMenuContent ? 'opacity-100' : ''}"
 				>
 					You must be logged in to save and load worksheets.
+				</div>
+				<div class="auth flex flex-col h-full justify-center items-stretch">
+					<div class="p-2">
+						<UserAuth inOrUp="in" />
+					</div>
+					<div class="p-2">
+						<UserAuth inOrUp="up" />
+					</div>
 				</div>
 			{:else if !sheets || !sheets.length}
 				{freshDbCallForWorksheets()}

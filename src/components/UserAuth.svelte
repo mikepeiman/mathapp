@@ -15,6 +15,9 @@
 	});
 	import tooltip from '$utils/tooltip';
 	import { onMount } from 'svelte';
+	export let inOrUp
+    $: console.log(`🚀 ~ file: UserAuth.svelte ~ line 19 ~ inOrUp`, inOrUp)
+	
 	let loading = false;
 	let email, password;
 
@@ -35,6 +38,7 @@
 </script>
 
 {#if !$currentUser}
+{#if inOrUp === "in"}
 <a
 href="/signin"
 class="flex group items-center justify-center text-lg xl:text-xl text-center p-2 mx-2 rounded bg-winterblues-700 hover:bg-winterblues-600 hover:text-white cursor-pointer transition-all duration-100"
@@ -42,6 +46,15 @@ class="flex group items-center justify-center text-lg xl:text-xl text-center p-2
 <span>Log In</span>
 <Icon icon={iconify.user} class="ml-1 mr-2 text-winterblues-100  transition-all" />
 </a>
+{:else}
+<a
+href="/signup"
+class="flex group items-center justify-center text-lg xl:text-xl text-center p-2 mx-2 rounded bg-winterblues-700 hover:bg-winterblues-600 hover:text-white cursor-pointer transition-all duration-100"
+>
+<span>Sign Up</span>
+<Icon icon={iconify.user} class="ml-1 mr-2 text-winterblues-100  transition-all" />
+</a>
+{/if}
 {:else}
 	{$currentUser.email}
 	<button
