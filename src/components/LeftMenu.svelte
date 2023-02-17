@@ -150,7 +150,12 @@ import UserAuth from './UserAuth.svelte';
 					</div>
 				</div>
 			{:else if !sheets || !sheets.length}
-				{freshDbCallForWorksheets()}
+			<div
+			class="m-4 text-center text-base text-amber-300 transition-all opacity-0
+		{sideMenuContent ? 'opacity-100' : ''}"
+		>
+			No saved worksheets found
+		</div>
 			{/if}
 			<div class="flex flex-col justify-between w-full">
 				{#if sheets && sheets.length > 0}
