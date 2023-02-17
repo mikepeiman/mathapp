@@ -1,3 +1,5 @@
+<script>let email</script>
+
 <form >
     <div class=" w-full mb-1 flex flex-col tooltip items-center justify-between">
         <label
