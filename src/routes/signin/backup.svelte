@@ -1,4 +1,4 @@
-<script>let email</script>
+<script>let email, option1</script>
 
 <form >
     <div class=" w-full mb-1 flex flex-col tooltip items-center justify-between">
