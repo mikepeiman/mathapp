@@ -19,6 +19,7 @@
   * for state management, probably best UX if every change to worksheet is saved immediately to LS, which save/load from DB are user actions
   * eventually, longterm: worksheets and collections (curriculums/courses) can be made public; they can be viewed by author or searched/filtered; authors can be followed and favorited; view of public sheets/collections offers default view of all-time best-rated, new sheets/authors, as well as hot (average ratings over recent period)
   * implement a product tour for new users to show them the features and how to use the app
+  * provide a font selection for users; at least several fonts embedded, or possibly all of Google Fonts 
 
 ## UI
 * use range sliders for number of digits and precision inputs
