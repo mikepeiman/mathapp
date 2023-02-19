@@ -1,10 +1,16 @@
 <script>
 	import Icon from "@iconify/svelte";
 	import tooltip from "$utils/tooltip";
-	import { saveWorksheetSupabase } from "$stores/math";
+	import { saveWorksheetSupabase, problemsPerPage, worksheet, LScheckForWorksheet, LSgetWorksheet, loadWorksheet } from "$stores/math";
+	import { generateNewWorksheet, newProblemWithRandomValues } from '$utils/math_operations';
+	import { setWorksheetValuesToDOM, resizeAllInputs } from '$utils/dom_operations.js';
+	import { afterUpdate, onMount } from 'svelte';
 	import MathSettings from "./MathSettings.svelte";
 	$: collapsed = true;
 	$: sideMenuContent = false;
+	$: sheet = $worksheet || {};
+	let loaded = false;
+	$: saved = $worksheet.saved || false;
 	const icons = {
 		// 'equalizer-1': 'ph:equalizer-bold',
 		// 'equalizer-2': 'mdi:equalizer',
@@ -24,6 +30,20 @@
 		reload: "ic:outline-settings-backup-restore",
 		save: "bxs:save",
 	};
+
+	onMount(async () => {
+		LScheckForWorksheet()
+			? (sheet = await LSgetWorksheet())
+			: (sheet = await generateNewWorksheet());
+		loaded = true;
+		saved = sheet.saved;
+		console.log(`🚀 ~ file: RightMenu.svelte:37 ~ onMount ~ sheet`, sheet)
+		console.log(`🚀 ~ file: RightMenu.svelte:37 ~ onMount ~ saved`, saved)
+		loadWorksheet(sheet);
+		await setWorksheetValuesToDOM(sheet);
+	});
+		console.log(`🚀 ~ file: RightMenu.svelte:41 ~ onMount ~ sheet`, sheet)
+
 	function collapseMenu() {
 		collapsed = !collapsed;
 		setTimeout(() => {
@@ -33,6 +53,27 @@
 	function saveWorksheet() {
 		console.log(`saveworksheet`);
 		saveWorksheetSupabase();
+	}
+
+	function updateSheetProblems() {
+		console.log(`🚀 ~ file: RightMenu.svelte:59 ~ updateSheetProblems ~ updateSheetProblems`,)
+		if (sheet.problems?.length < $problemsPerPage) {
+			let diff = $problemsPerPage - sheet.problems?.length;
+			for (let i = 0; i < diff; i++) {
+				let problem = newProblemWithRandomValues();
+				console.log(
+					`🚀 ~ file: Worksheet.svelte ~ line 51 ~ updateSheetProblems ~ problem`,
+					problem
+				);
+				sheet.problems.push(newProblemWithRandomValues());
+			}
+		} else if (sheet.problems?.length > $problemsPerPage) {
+			let diff = sheet.problems?.length - $problemsPerPage;
+			for (let i = 0; i < diff; i++) {
+				sheet.problems.pop();
+			}
+		}
+		worksheet.set(sheet);
 	}
 </script>
 
@@ -97,6 +138,7 @@
 	<div
 		class="tooltip py-2 pr-2 relative group flex items-center justify-end transition-all hover:bg-trueGray-900"
 		use:tooltip
+		on:click={() => updateSheetProblems()}
 		title="New random values">
 		<label
 			class="text-sm transition-all pr-2 group-hover:text-winterblues-300 w-[20ch] text-right

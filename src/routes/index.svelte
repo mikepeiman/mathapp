@@ -29,7 +29,7 @@
 
 	import { onMount, beforeUpdate } from 'svelte';
 	import { get } from 'svelte/store';
-	import RighMenu from '$components/RighMenu.svelte';
+	import RightMenu from '$components/RightMenu.svelte';
 import LeftMenu from '$components/LeftMenu.svelte';
 	// $page
 	$: console.log(`🚀 ~ file: index.svelte ~ line 30 ~ $page`, $page);
@@ -88,7 +88,7 @@ import LeftMenu from '$components/LeftMenu.svelte';
 <div id="worksheet-layout" class="layout-main w-full h-full">
 	<OperationsMenu on:operationSelect={(msg) => handleOperationSelect(msg)} />
 	<LeftMenu />
-	<RighMenu />
+	<RightMenu />
 	<Worksheet />
 </div>
 

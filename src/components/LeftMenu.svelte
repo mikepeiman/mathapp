@@ -113,8 +113,12 @@
 	}
 
 	async function collapseMenu() {
-		console.log(`🚀 ~ file: LeftMenu.svelte:116 ~ collapseMenu ~ collapseMenu ${collapseMenu === true ? "closed drawer" : "open drawer"}`, )
-		collapsed ? sheets = await getWorksheetsFromSupabase() : sheets
+		console.log(
+			`🚀 ~ file: LeftMenu.svelte:116 ~ collapseMenu ~ collapseMenu ${
+				collapseMenu === true ? "closed drawer" : "open drawer"
+			}`
+		);
+		collapsed ? (sheets = await getWorksheetsFromSupabase()) : sheets;
 		collapsed = !collapsed;
 		setTimeout(() => {
 			sideMenuContent = !sideMenuContent;
@@ -149,7 +153,32 @@
 		<div
 			class="mt-12 top-12 -translate-x-[12rem] opacity-0 transition-all duration-100 flex flex-col items-center justify-center
 	{!collapsed ? 'opacity-100 w-full translate-x-0' : ''}">
-			<h3 class="border-b-[1px] border-winterblues-400 text-base">
+	<div
+	class="opacity-100 transition-all duration-300 text-3xl flex items-center gap-4 text-orange-300
+{collapsed ? 'opacity-100' : ''}">
+	<div
+		class="tooltip my-2 group"
+		use:tooltip
+		title="Saved worksheets">
+		<Icon
+			icon={icons.pages}
+			class="group-hover:text-winterblues-500" />
+	</div>
+	<div class="tooltip my-2 group" use:tooltip title="New worksheet">
+		<Icon
+			icon={icons.addSheet}
+			class="group-hover:text-winterblues-500" />
+	</div>
+	<div
+		class="tooltip my-2 group"
+		use:tooltip
+		title="Worksheet settings">
+		<Icon
+			icon={icons.settings}
+			class="group-hover:text-winterblues-500" />
+	</div>
+</div>
+			<h3 class="border-b-[1px] border-winterblues-400 text-base mt-4">
 				Saved Worksheets
 			</h3>
 			{#if !$currentUser}
@@ -219,7 +248,7 @@
 	{:else}
 		<div
 			class="mt-12 top-12 opacity-0 transition-all duration-300 text-3xl flex flex-col items-center justify-start
-	{collapsed ? 'opacity-100' : ''}">
+		{collapsed ? 'opacity-100' : ''}">
 			<div
 				class="tooltip my-2 group"
 				use:tooltip

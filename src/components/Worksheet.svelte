@@ -20,30 +20,15 @@
 	let inputLengths = { longestA: 0, longestB: 0, longestResult: 0 };
 	let longestProblemLengthInChars = Object.values(inputLengths).reduce((a, b) => a + b);
 	$: console.log(`🚀 ~ file: Worksheet.svelte ~ line 22 ~ longestProblemLengthInChars`, longestProblemLengthInChars);
-	// $: console.log(`🚀 ~ file: Worksheet.svelte ~ line 15 ~ $: sheet`, sheet);
-	// $: console.log(`🚀 ~ file: Worksheet.svelte ~ line 33 ~ $: saved`, saved);
-	onMount(async () => {
-		// console.log(
-		// 	`🚀 ~ file: Worksheet.svelte ~ line 38 ~ onMount ~ LScheckForWorksheet()`,
-		// 	LScheckForWorksheet()
-		// );
 
+	onMount(async () => {
 		LScheckForWorksheet()
 			? (sheet = await LSgetWorksheet())
 			: (sheet = await generateNewWorksheet());
-		// sheet = await generateNewWorksheet();
 		loaded = true;
-		// console.log(`🚀 ~ file: Worksheet.svelte ~ line 28 ~ onMount ~ sheet`, sheet);
 		saved = sheet.saved;
 		loadWorksheet(sheet);
-		// selectedOperation.set(sheet.operation);
-		// worksheet.set(sheet);
-		// pageColumns.set(sheet.columns);
-		// problemsPerPage.set(sheet.problems.length);
 		await setWorksheetValuesToDOM(sheet);
-		// setTimeout(() => {
-		// resizeAllInputs()
-		// }, 300);
 	});
 
 	function updateSheetProblems() {
